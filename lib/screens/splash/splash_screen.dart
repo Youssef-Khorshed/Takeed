@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
       }
     });
     return Container(
-        child:Image.asset(AppAssets.lightSplashImgUrl, fit: BoxFit.fill)
+        child:Image.asset(MyAppAssets.lightSplashImgUrl, fit: BoxFit.fill)
     );
   }
 }
