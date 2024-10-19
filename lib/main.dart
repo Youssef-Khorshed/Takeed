@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:takeed/config/theme/my_theme.dart';
 import 'package:takeed/core/app_routes.dart';
 import 'package:takeed/screens/home/home_screen.dart';
-import 'package:takeed/screens/search/flight_search_screen.dart';
+import 'package:takeed/screens/search/flight_search_screen/flight_search_screen.dart';
 import 'package:takeed/screens/splash/splash_screen.dart';
 
 void main() {

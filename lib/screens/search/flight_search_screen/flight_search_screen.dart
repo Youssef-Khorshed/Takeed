@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../components/choicec_chips.dart';
+
 class FlightSearchScreen extends StatelessWidget {
   const FlightSearchScreen({super.key});
 
@@ -20,14 +22,15 @@ class FlightSearchScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Switch for One Way / Round / Multicity
+
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ChoiceChip(label: Text('One way'), selected: true),
-                  ChoiceChip(label: Text('Round'), selected: false),
-
+                 // ChoiceChip(label: Text('One way'), selected: true),
+                //  ChoiceChip(label: Text('Round'), selected: false),
+                  ChoiceChips(),
                 ],
               ),
             ),

@@ -5,7 +5,7 @@ import 'package:takeed/core/app_routes.dart';
 import 'package:takeed/screens/home/home_tabs/home_tab.dart';
 import 'package:takeed/screens/home/home_tabs/inbox_tab.dart';
 import 'package:takeed/screens/home/home_tabs/profile_tab.dart';
-import 'package:takeed/screens/search/flight_search_screen.dart';
+import 'package:takeed/screens/search/flight_search_screen/flight_search_screen.dart';
 
 import '../../core/app_assets.dart';
 import 'home_tabs/offer_tab.dart';

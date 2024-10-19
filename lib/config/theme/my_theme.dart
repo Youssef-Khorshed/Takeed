@@ -15,5 +15,11 @@ class MyTheme{
         showSelectedLabels: true,
       type: BottomNavigationBarType.fixed
     ),
+    textTheme: TextTheme(
+      titleMedium: TextStyle(
+        fontSize: 50,fontWeight: FontWeight.w500
+      )
+    )
+
   );
 }
