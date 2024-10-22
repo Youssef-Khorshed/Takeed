@@ -6,4 +6,5 @@ class Routes {
   static const String search = '/search';
   static const String flightDetails = '/flightDetails';
   static const String payment = '/payment';
+  static const String boardingPass = '/boardingPass';
 }

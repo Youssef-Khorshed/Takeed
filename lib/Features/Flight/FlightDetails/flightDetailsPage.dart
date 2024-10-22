@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsBody.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsFooter.dart';
-import 'package:takeed/components/FlightTicketRow/flightTicketRow.dart';
+import 'package:takeed/components/Flight/flightTicketRow.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/button/button2.dart';
 import 'package:takeed/components/text_box/text_box.dart';

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:takeed/Features/BoardingPass/boardingPass.dart';
 import 'package:takeed/Features/Payment/PaymentPage.dart';
+import 'package:takeed/Features/home/Home/HomeScreen.dart';
 import 'package:takeed/core/Routes/routes.dart';
-import 'package:takeed/Features/home/homeScreen.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultPage.dart';
 
 class AppRoutes {
@@ -15,6 +16,9 @@ class AppRoutes {
 
       case Routes.payment:
         return MaterialPageRoute(builder: (context) => PaymentScreen());
+
+      case Routes.boardingPass:
+        return MaterialPageRoute(builder: (context) => BoardingPass());
 
       default:
         return MaterialPageRoute(

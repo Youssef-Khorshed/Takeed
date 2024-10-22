@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/home/HomeScreen_Body.dart';
-import 'package:takeed/Features/home/HomeScreen_Footer.dart';
+import 'package:takeed/Features/home/Home/HomeScreen_Body.dart';
+import 'package:takeed/Features/home/Home/HomeScreen_Footer.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/core/Extensions/navigation.dart';
 import 'package:takeed/core/Routes/routes.dart';
@@ -228,32 +228,42 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   Widget _buildDateSelectors() {
-    return Row(
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
-        Expanded(
-          child: _buildDateInput(
-            label: __PickdepartureDateFirstTime == false
-                ? 'Departure'
-                : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
-            date: _departureDate,
-            onTap: () => _selectDate(context, isDeparture: true),
-          ),
+        Container(
+          color: Colors.amber,
+          height: 70.h,
         ),
-        SizedBox(width: 16.w),
-        _tripType == 'Round'
-            ? Expanded(
-                child: _buildDateInput(
-                  label: __PickReturnDateFirstTime == false
-                      ? 'Return'
-                      : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
-                  date: _returnDate,
-                  prefixIcon: _tripType == 'Round'
-                      ? Icons.date_range
-                      : Icons.add_box_outlined,
-                  onTap: () => _goToRound(),
-                ),
-              )
-            : Container(),
+        Row(
+          children: [
+            Expanded(
+              child: _buildDateInput(
+                label: __PickdepartureDateFirstTime == false
+                    ? 'Departure'
+                    : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
+                date: _departureDate,
+                onTap: () => _selectDate(context, isDeparture: true),
+              ),
+            ),
+            _tripType == 'Round' ? SizedBox(width: 16.w) : Container(),
+            _tripType == 'Round'
+                ? Expanded(
+                    child: _buildDateInput(
+                      label: __PickReturnDateFirstTime == false
+                          ? 'Return'
+                          : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
+                      date: _returnDate,
+                      prefixIcon: _tripType == 'Round'
+                          ? Icons.date_range
+                          : Icons.add_box_outlined,
+                      onTap: () => _goToRound(),
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
+        Positioned(top: 0, left: 10, child: Text('data'))
       ],
     );
   }

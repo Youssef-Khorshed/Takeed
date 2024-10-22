@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/components/FlightTicketRow/flightTicketRow.dart';
-import 'package:takeed/components/text_box/text_box.dart';
-import 'package:takeed/core/Theme/Color/colors.dart';
+import 'package:takeed/components/Flight/airportDetails.dart';
+import 'package:takeed/components/Flight/flightDateTime.dart';
+import 'package:takeed/components/Flight/flightTicketRow.dart';
+import 'package:takeed/components/Line/line.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class Flightdetailsbody extends StatelessWidget {
@@ -44,67 +45,12 @@ class Flightdetailsbody extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              height: 1.h,
-              width: double.infinity,
-              color: ColorManager.GrayColor2,
-            ),
-            SizedBox(height: 16.h),
+            Line(upperpadding: 0, lowerpadding: 16),
             Flightticketrow(),
-            Row(
-              children: [
-                Container(
-                  width: 97.w,
-                  child: Text('Indira Gandhi\nInternational Airport',
-                      textAlign: TextAlign.center,
-                      style: TextStyles.font12RegularDarkGray),
-                ),
-                Spacer(),
-                Container(
-                  width: 97.w,
-                  child: Text('Subhash Chandra Bose\nInternational Airport',
-                      textAlign: TextAlign.center,
-                      style: TextStyles.font12RegularDarkGray),
-                ),
-              ],
-            ),
-            SizedBox(height: 6.h),
-            Container(
-              height: 1.h,
-              width: double.infinity,
-              color: ColorManager.GrayColor2,
-            ),
-            SizedBox(height: 6.h),
-            Row(
-              children: [
-                Expanded(
-                  child: MyTextBox(
-                    prefixIcon: Icon(Icons.calendar_today),
-                    readonly: false,
-                    labelText: '15/07/2022',
-                    hintText: 'hintText',
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                  child: MyTextBox(
-                    prefixIcon: Icon(Icons.timer_outlined),
-                    readonly: false,
-                    labelText: '09.30',
-                    hintText: 'hintText',
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 6.h),
-            Container(
-              height: 1.h,
-              width: double.infinity,
-              color: ColorManager.GrayColor2,
-            ),
-            SizedBox(height: 10),
+            Airportdetails(),
+            Line(upperpadding: 6, lowerpadding: 6),
+            Flightdatetime(),
+            Line(upperpadding: 6, lowerpadding: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

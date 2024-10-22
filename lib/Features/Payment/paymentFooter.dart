@@ -25,7 +25,7 @@ class Paymentfooter extends StatelessWidget {
                   buttonText: 'Confirm',
                   textStyle: TextStyles.font18WhiteRegular,
                   onPressed: () {
-                    //  context.pushNamed(Routes.payment);
+                    context.pushNamed(Routes.boardingPass);
                   }),
               SizedBox(
                 height: 13.w,

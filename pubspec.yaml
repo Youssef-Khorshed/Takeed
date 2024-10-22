@@ -36,6 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_screenutil:
+  screenshot:    # For taking screenshots
+  pdf:          # For generating PDF
+  path_provider:  # To save the file to device storage
+  qr_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter
