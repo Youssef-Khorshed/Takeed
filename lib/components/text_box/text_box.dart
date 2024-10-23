@@ -11,7 +11,7 @@ class MyTextBox extends StatefulWidget {
   final TextInputType inputType;
 
   const MyTextBox({
-    Key? key,
+    super.key,
     required this.labelText,
     this.prefixIcon,
     required this.readonly,
@@ -19,7 +19,7 @@ class MyTextBox extends StatefulWidget {
     // required this.controller,
     this.isPassword = false,
     this.inputType = TextInputType.text,
-  }) : super(key: key);
+  });
 
   @override
   State<MyTextBox> createState() => _MyTextBoxState();

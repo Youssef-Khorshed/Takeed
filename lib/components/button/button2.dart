@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/core/Theme/Color/colors.dart';
 
 class OutlinedTextButton extends StatelessWidget {
   final double? borderRadius;

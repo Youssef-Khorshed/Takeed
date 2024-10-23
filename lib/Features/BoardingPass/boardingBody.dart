@@ -19,8 +19,8 @@ class Boardingbody extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 30,
-              child: Text('D', style: TextStyles.font14WhiteRegular),
               backgroundColor: ColorManager.primaryOrnage,
+              child: Text('D', style: TextStyles.font14WhiteRegular),
             ),
             SizedBox(width: 16.w),
             Column(
@@ -33,20 +33,20 @@ class Boardingbody extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("Passenger"),
+                const Text("Passenger"),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Text('Indigo', style: TextStyles.font14DarkBlueRegular),
           ],
         ),
         SizedBox(height: 24.h),
         // Flight Details
         Line(upperpadding: 6, lowerpadding: 6),
-        Flightticketrow(),
-        Airportdetails(),
-        Flightdatetime(),
-        SizedBox(height: 24),
+        const Flightticketrow(),
+        const Airportdetails(),
+        const Flightdatetime(),
+        const SizedBox(height: 24),
         // Flight Info
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,11 +67,11 @@ class Boardingbody extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(color: Colors.grey),
+          style: const TextStyle(color: Colors.grey),
         ),
         Text(
           value,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ],
     );

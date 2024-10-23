@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchFlightCard.dart';
+import 'package:takeed/Features/home/Home/HomeScreen.dart';
 
 class FlightSearchResultPage extends StatelessWidget {
+  const FlightSearchResultPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Result'),
+        title: const Text('Search Result'),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showBottomSheet(context),
+        child: Icon(Icons.add),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,6 +65,32 @@ class FlightSearchResultPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Container(
+            height:
+                MediaQuery.of(context).size.height * 0.8, // Adjust as needed
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: Homescreen(
+                  showINsheet: false,
+                )), // Show your existing content
+                // Add more widgets here if needed
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

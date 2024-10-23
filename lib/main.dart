@@ -22,14 +22,19 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       child: MaterialApp(
         theme: ThemeData(
-          primaryColor: ColorManager.primaryOrnage,
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: ColorManager.primaryOrnage),
+          //   primaryColorLight: ColorManager.primaryOrnage,
+          bottomNavigationBarTheme:
+              BottomNavigationBarThemeData(backgroundColor: Colors.black),
+          // primaryColor: ColorManager.primaryOrnage,
           appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
           scaffoldBackgroundColor: Colors.white,
         ),
         themeMode: ThemeMode.light,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: appRoutes.generateroute,
-        initialRoute: Routes.home,
+        initialRoute: Routes.bottomnavigation,
       ),
     );
   }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:takeed/Features/BoardingPass/BoardingFooter.dart';
 import 'package:takeed/Features/BoardingPass/boardingBody.dart';
-import 'package:takeed/core/Theme/Color/colors.dart';
-import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class BoardingPass extends StatefulWidget {
+  const BoardingPass({super.key});
+
   @override
   State<BoardingPass> createState() => _BoardingPassState();
 }
@@ -19,8 +19,12 @@ class _BoardingPassState extends State<BoardingPass> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Colors.black),
-        title: Text(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back, color: Colors.black)),
+        title: const Text(
           "Boarding Pass",
           style: TextStyle(color: Colors.black),
         ),
@@ -33,7 +37,7 @@ class _BoardingPassState extends State<BoardingPass> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Boardingbody(),
+              const Boardingbody(),
               Boardingfooter(
                 screenshotController: screenshotController,
               )

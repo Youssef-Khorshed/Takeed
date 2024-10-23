@@ -40,6 +40,12 @@ dependencies:
   pdf:          # For generating PDF
   path_provider:  # To save the file to device storage
   qr_flutter:
+  shared_preferences:
+  flutter_secure_storage:
+  carousel_slider:
+  equatable:
+  bloc:
+  flutter_bloc:
 dev_dependencies:
   flutter_test:
     sdk: flutter

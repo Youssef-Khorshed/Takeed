@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/home/Home/HomeScreen_Body.dart';
-import 'package:takeed/Features/home/Home/HomeScreen_Footer.dart';
+import 'package:takeed/Features/home/Home/Logic/Cubit/cubit/cubit_example_cubit.dart';
+import 'package:takeed/Features/home/Home/buildCity.dart';
+import 'package:takeed/Features/home/Home/drawer.dart';
+import 'package:takeed/Features/home/Home/itemSelected.dart';
+import 'package:takeed/components/LabelItem/labelItem.dart';
 import 'package:takeed/components/button/button.dart';
-import 'package:takeed/core/Extensions/navigation.dart';
-import 'package:takeed/core/Routes/routes.dart';
+import 'package:takeed/core/Routes/app_routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class Homescreen extends StatefulWidget {
+  bool showINsheet = true;
+
+  Homescreen({super.key, this.showINsheet = true});
+
   @override
   _HomescreenState createState() => _HomescreenState();
 }
@@ -23,40 +31,17 @@ class _HomescreenState extends State<Homescreen> {
   String _classType = 'Economy';
   bool __PickdepartureDateFirstTime = false;
   bool __PickReturnDateFirstTime = false;
-
-  Future<void> _selectDate(BuildContext context,
-      {required bool isDeparture}) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: isDeparture ? _departureDate : _returnDate ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2030),
-    );
-
-    if (pickedDate != null) {
-      setState(() {
-        if (isDeparture) {
-          _departureDate = pickedDate;
-          __PickdepartureDateFirstTime = true;
-
-          print(__PickReturnDateFirstTime);
-        } else {
-          _returnDate = pickedDate;
-          __PickReturnDateFirstTime = true;
-        }
-      });
-    }
-  }
-
+  bool _swap = true;
+  TextEditingController fromCityController = TextEditingController();
+  TextEditingController toCityController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.homescreenBackgroundColor,
+      drawer: buildDrawer(context: context),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text('Book Flight'),
+        title: const Text('Book Flight'),
         centerTitle: true,
-        actions: [IconButton(icon: Icon(Icons.menu), onPressed: () {})],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,14 +50,13 @@ class _HomescreenState extends State<Homescreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTripTypeSelector(),
-              SizedBox(height: 16),
-              _OneWay(),
-              HomescreenBody()
+              SizedBox(height: 8.h),
+              _OneWay(context: context),
+              widget.showINsheet ? const HomescreenBody() : Container()
             ],
           ),
         ),
       ),
-      bottomNavigationBar: HomescreenFooter(),
     );
   }
 
@@ -80,12 +64,13 @@ class _HomescreenState extends State<Homescreen> {
     final tripTypes = ['One way', 'Round'];
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(32.r),
+      borderRadius: BorderRadius.circular(16.r),
       child: Card(
         elevation: 2,
         child: Container(
+          height: 36.h,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32.r), color: Colors.white),
+              borderRadius: BorderRadius.circular(16.r), color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: tripTypes.map((type) {
@@ -106,12 +91,14 @@ class _HomescreenState extends State<Homescreen> {
                             : Colors.white,
                         borderRadius: BorderRadius.circular(32.r),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 12),
                       alignment: Alignment.center,
                       child: Text(
                         type,
                         style: TextStyle(
-                          color: isSelected ? Colors.white : Colors.black,
+                          fontSize: 12.sp,
+                          color: isSelected
+                              ? Colors.white
+                              : ColorManager.DarkGrayColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -126,144 +113,42 @@ class _HomescreenState extends State<Homescreen> {
     );
   }
 
-  Widget _buildCityInput(
-      {required String label, required String hint, required IconData icon}) {
-    final List<String> cities = [
-      'Delhi',
-      'Kolkata',
-      'Mumbai',
-      'Chennai',
-      'Bangalore',
-      'Hyderabad',
-      'Ahmedabad',
-      'Pune',
-      'Jaipur',
-      'Lucknow',
-      // Add more cities as needed
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Text(label,
-        //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-
-        SizedBox(height: 8),
-        Autocomplete<String>(
-          optionsBuilder: (TextEditingValue textEditingValue) {
-            if (textEditingValue.text.isEmpty) {
-              return const Iterable<String>.empty();
-            }
-            return cities.where((String city) {
-              return city
-                  .toLowerCase()
-                  .contains(textEditingValue.text.toLowerCase());
-            });
-          },
-          onSelected: (String selectedCity) {
-            setState(() {
-              if (label == 'From') {
-                _fromCity = selectedCity;
-              } else {
-                _toCity = selectedCity;
-              }
-            });
-          },
-          fieldViewBuilder: (BuildContext context,
-              TextEditingController textEditingController,
-              FocusNode focusNode,
-              VoidCallback onFieldSubmitted) {
-            return TextFormField(
-              controller: textEditingController,
-              focusNode: focusNode,
-              decoration: InputDecoration(
-                hintText: hint,
-                labelText: label,
-                labelStyle: TextStyles.font14GrayRegular,
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                    borderSide: BorderSide(
-                      color: ColorManager.primaryOrnage,
-                    )),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                    borderSide: BorderSide(
-                      color: ColorManager.GrayColor,
-                    )),
-                prefixIcon: Icon(icon),
-              ),
-            );
-          },
-          optionsViewBuilder: (BuildContext context,
-              AutocompleteOnSelected<String> onSelected,
-              Iterable<String> options) {
-            return Align(
-              alignment: Alignment.topLeft,
-              child: Material(
-                elevation: 4.0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width - 32,
-                  child: ListView.builder(
-                    padding: EdgeInsets.all(8.0),
-                    itemCount: options.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final String option = options.elementAt(index);
-                      return GestureDetector(
-                        onTap: () {
-                          onSelected(option);
-                        },
-                        child: ListTile(
-                          title: Text(option),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
   Widget _buildDateSelectors() {
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Row(
       children: [
-        Container(
-          color: Colors.amber,
-          height: 70.h,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: _buildDateInput(
-                label: __PickdepartureDateFirstTime == false
-                    ? 'Departure'
-                    : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
-                date: _departureDate,
-                onTap: () => _selectDate(context, isDeparture: true),
-              ),
+        Expanded(
+          child: Labelitem(
+            label: 'Departure',
+            labelStyle: TextStyles.font12RegularDarkGray,
+            containerheight: 70,
+            child: _buildDateInput(
+              label: __PickdepartureDateFirstTime == false
+                  ? ''
+                  : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
+              date: _departureDate,
+              onTap: () => _selectDate(context, isDeparture: true),
             ),
-            _tripType == 'Round' ? SizedBox(width: 16.w) : Container(),
-            _tripType == 'Round'
-                ? Expanded(
-                    child: _buildDateInput(
-                      label: __PickReturnDateFirstTime == false
-                          ? 'Return'
-                          : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
-                      date: _returnDate,
-                      prefixIcon: _tripType == 'Round'
-                          ? Icons.date_range
-                          : Icons.add_box_outlined,
-                      onTap: () => _goToRound(),
-                    ),
-                  )
-                : Container(),
-          ],
+          ),
         ),
-        Positioned(top: 0, left: 10, child: Text('data'))
+        _tripType == 'Round' ? SizedBox(width: 16.w) : Container(),
+        _tripType == 'Round'
+            ? Expanded(
+                child: Labelitem(
+                label: 'Return',
+                labelStyle: TextStyles.font12RegularDarkGray,
+                containerheight: 70,
+                child: _buildDateInput(
+                  label: __PickReturnDateFirstTime == false
+                      ? ''
+                      : '${_departureDate.day}/${_departureDate.month}/${_departureDate.year}',
+                  date: _returnDate,
+                  prefixIcon: _tripType == 'Round'
+                      ? Icons.date_range
+                      : Icons.add_box_outlined,
+                  onTap: () => _goToRound(),
+                ),
+              ))
+            : Container(),
       ],
     );
   }
@@ -290,7 +175,9 @@ class _HomescreenState extends State<Homescreen> {
             hintText: date != null
                 ? '${date.day}/${date.month}/${date.year}'
                 : '+ Add Return Date',
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ),
             prefixIcon: Icon(
               prefixIcon ?? Icons.date_range,
             ),
@@ -300,58 +187,77 @@ class _HomescreenState extends State<Homescreen> {
     );
   }
 
-  Widget _buildDropdownSelectors() {
-    return Row(
+  Widget _OneWay({required BuildContext context}) {
+    return Column(
       children: [
-        Expanded(
-          child: DropdownButtonFormField<int>(
-            value: _adults,
-            decoration: InputDecoration(labelText: 'Traveller'),
-            items: List.generate(
-              9,
-              (index) => DropdownMenuItem(
-                  child: Text('${index + 1} Adult'), value: index + 1),
-            ),
-            onChanged: (value) {
-              setState(() {
-                _adults = value!;
-              });
-            },
-          ),
+        Stack(
+          alignment: Alignment.centerRight,
+          children: [
+            _swap
+                ? Column(
+                    children: [
+                      BuildCity(
+                          label: 'Form',
+                          icon: Icons.flight_takeoff,
+                          controller: fromCityController),
+                      BuildCity(
+                          label: 'To',
+                          icon: Icons.flight_land,
+                          controller: toCityController)
+                    ],
+                  )
+                : Column(
+                    children: [
+                      BuildCity(
+                          label: 'To',
+                          icon: Icons.flight_land,
+                          controller: toCityController),
+                      BuildCity(
+                          label: 'From',
+                          icon: Icons.flight_takeoff,
+                          controller: fromCityController)
+                    ],
+                  ),
+            CircleAvatar(
+                child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _swap = !_swap;
+                      });
+                    },
+                    icon: Icon(Icons.thumbs_up_down_outlined)))
+          ],
         ),
-        SizedBox(width: 16),
-        Expanded(
-          child: DropdownButtonFormField<String>(
-            value: _classType,
-            decoration: InputDecoration(labelText: 'Class'),
-            items: ['Economy', 'Business']
-                .map((classType) =>
-                    DropdownMenuItem(child: Text(classType), value: classType))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                _classType = value!;
-              });
-            },
-          ),
-        ),
+        SizedBox(height: 10.h),
+        _buildDateSelectors(),
+        SizedBox(height: 10.h),
+        ItemSelected(),
+        SizedBox(height: 10.h),
       ],
     );
   }
 
-  Widget _OneWay() {
-    return Column(
-      children: [
-        _buildCityInput(
-            label: 'From', hint: _fromCity, icon: Icons.flight_takeoff),
-        SizedBox(height: 16),
-        _buildCityInput(label: 'To', hint: _toCity, icon: Icons.flight_land),
-        SizedBox(height: 16),
-        _buildDateSelectors(),
-        SizedBox(height: 16),
-        _buildDropdownSelectors(),
-        SizedBox(height: 16),
-      ],
+  Future<void> _selectDate(BuildContext context,
+      {required bool isDeparture}) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: isDeparture ? _departureDate : _returnDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
     );
+
+    if (pickedDate != null) {
+      setState(() {
+        if (isDeparture) {
+          _departureDate = pickedDate;
+          __PickdepartureDateFirstTime = true;
+
+          print(__PickReturnDateFirstTime);
+        } else {
+          _returnDate = pickedDate;
+          __PickReturnDateFirstTime = true;
+        }
+      });
+    }
   }
 }

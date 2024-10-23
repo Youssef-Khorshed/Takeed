@@ -12,16 +12,18 @@ import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class FlightDetailsPage extends StatelessWidget {
+  const FlightDetailsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flight details'),
+        title: const Text('Flight details'),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -30,13 +32,13 @@ class FlightDetailsPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Flightdetailsbody(),
+              const Flightdetailsbody(),
               SizedBox(height: 30.h),
-              Flightdetailsfooter()
+              const Flightdetailsfooter()
             ],
           ),
         ),

@@ -60,10 +60,20 @@ class TextStyles {
       fontSize: 12.sp,
       color: ColorManager.DarkGrayColor);
 
+  static TextStyle font14orangeRegular = TextStyle(
+      fontWeight: FontWeightHelper.regular,
+      fontSize: 18.sp,
+      color: ColorManager.primaryOrnage);
+
   static TextStyle font18orangeRegular = TextStyle(
       fontWeight: FontWeightHelper.regular,
       fontSize: 18.sp,
       color: ColorManager.primaryOrnage);
+
+  static TextStyle font18BlackBold = TextStyle(
+      fontWeight: FontWeightHelper.bold,
+      fontSize: 18.sp,
+      color: ColorManager.textcolor);
 
   static TextStyle font22orangeBold = TextStyle(
       fontWeight: FontWeightHelper.bold,

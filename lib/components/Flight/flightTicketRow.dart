@@ -31,7 +31,7 @@ class Flightticketrow extends StatelessWidget {
               height: 2.h,
               color: ColorManager.GrayColor,
             ),
-            CircleAvatar(
+            const CircleAvatar(
                 backgroundColor: ColorManager.primaryOrnage,
                 child: Icon(Icons.airplanemode_active, color: Colors.white)),
             Container(

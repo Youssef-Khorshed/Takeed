@@ -13,7 +13,7 @@ class Flightdatetime extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
+        const Expanded(
           child: MyTextBox(
             prefixIcon: Icon(Icons.calendar_today),
             readonly: false,
@@ -24,7 +24,7 @@ class Flightdatetime extends StatelessWidget {
         SizedBox(
           width: 10.w,
         ),
-        Expanded(
+        const Expanded(
           child: MyTextBox(
             prefixIcon: Icon(Icons.timer_outlined),
             readonly: false,

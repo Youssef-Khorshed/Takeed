@@ -26,14 +26,14 @@ class Flightdetailsbody extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 1,
               blurRadius: 8,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: 90.h,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -46,10 +46,10 @@ class Flightdetailsbody extends StatelessWidget {
               ),
             ),
             Line(upperpadding: 0, lowerpadding: 16),
-            Flightticketrow(),
-            Airportdetails(),
+            const Flightticketrow(),
+            const Airportdetails(),
             Line(upperpadding: 6, lowerpadding: 6),
-            Flightdatetime(),
+            const Flightdatetime(),
             Line(upperpadding: 6, lowerpadding: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -22,8 +22,8 @@ class Paymentbody extends StatelessWidget {
               Row(
                 children: [
                   Text('Indigo', style: TextStyles.font14DarkBlueRegular),
-                  Spacer(),
-                  Icon(Icons.calendar_month_outlined),
+                  const Spacer(),
+                  const Icon(Icons.calendar_month_outlined),
                   SizedBox(width: 10.w),
                   Text(
                     '15/7/2022',
@@ -32,7 +32,7 @@ class Paymentbody extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30.h),
-              Flightticketrow(),
+              const Flightticketrow(),
               SizedBox(height: 25.h),
               Row(
                 children: [
@@ -40,7 +40,7 @@ class Paymentbody extends StatelessWidget {
                     'Total',
                     style: TextStyles.font14BlackRegular,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     '\$ 230',
                     style: TextStyles.font22orangeBold,
@@ -58,7 +58,7 @@ class Paymentbody extends StatelessWidget {
               'Card number',
               style: TextStyles.font16BlackRegular,
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 hintText: '0000 0000 0000 0000',
               ),
@@ -73,7 +73,7 @@ class Paymentbody extends StatelessWidget {
               'Card holder name',
               style: TextStyles.font16BlackRegular,
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 hintText: 'John Doe',
               ),
@@ -91,7 +91,7 @@ class Paymentbody extends StatelessWidget {
                     'CVV',
                     style: TextStyles.font16BlackRegular,
                   ),
-                  TextField(
+                  const TextField(
                     decoration: InputDecoration(
                       hintText: '000',
                     ),
@@ -99,7 +99,7 @@ class Paymentbody extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +108,7 @@ class Paymentbody extends StatelessWidget {
                     'Expiry date',
                     style: TextStyles.font16BlackRegular,
                   ),
-                  TextField(
+                  const TextField(
                     decoration: InputDecoration(
                       hintText: '9/26',
                     ),

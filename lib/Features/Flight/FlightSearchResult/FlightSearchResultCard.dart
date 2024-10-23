@@ -18,7 +18,8 @@ class FlightCard extends StatelessWidget {
   final String arrivalAirport;
   final int price;
 
-  FlightCard({
+  const FlightCard({
+    super.key,
     this.airlineLogo,
     required this.airlineName,
     required this.flightNumber,
@@ -32,7 +33,7 @@ class FlightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 328.w,
       height: 224.h,
       child: Card(
@@ -44,7 +45,7 @@ class FlightCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: 85.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,10 +53,11 @@ class FlightCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(airlineName,
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                         SizedBox(width: 8.0.w),
                         Text(flightNumber),
-                        Spacer(),
+                        const Spacer(),
                         Text(duration, style: TextStyles.font12RegularDarkGray),
                       ],
                     ),
@@ -65,7 +67,7 @@ class FlightCard extends StatelessWidget {
                         Column(
                           children: [
                             Text(departureTime,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold)),
                             Text(departureAirport),
                           ],
@@ -81,7 +83,7 @@ class FlightCard extends StatelessWidget {
                               height: 2.h,
                               color: ColorManager.GrayColor,
                             ),
-                            CircleAvatar(
+                            const CircleAvatar(
                                 backgroundColor: ColorManager.primaryOrnage,
                                 child: Icon(Icons.airplanemode_active,
                                     color: Colors.white)),
@@ -114,7 +116,7 @@ class FlightCard extends StatelessWidget {
               SizedBox(height: 10.0.h),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.chair_outlined,
                     color: ColorManager.DarkGrayColor,
                   ),
@@ -125,7 +127,7 @@ class FlightCard extends StatelessWidget {
                     'Business Class',
                     style: TextStyles.font10RegularDarkGray,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text('From ', style: TextStyles.font12RegularDarkGray),
                   Text(
                     '\$$price',

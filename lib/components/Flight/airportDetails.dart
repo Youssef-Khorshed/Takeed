@@ -9,14 +9,14 @@ class Airportdetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 97.w,
           child: Text('Indira Gandhi\nInternational Airport',
               textAlign: TextAlign.center,
               style: TextStyles.font12RegularDarkGray),
         ),
-        Spacer(),
-        Container(
+        const Spacer(),
+        SizedBox(
           width: 97.w,
           child: Text('Subhash Chandra Bose\nInternational Airport',
               textAlign: TextAlign.center,

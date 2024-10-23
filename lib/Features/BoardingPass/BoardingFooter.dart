@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:takeed/components/button/button.dart';
+import 'package:takeed/core/Extensions/navigation.dart';
+import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -29,8 +31,8 @@ class _BoardingfooterState extends State<Boardingfooter> {
           child: Column(
             children: [
               Qr(data: 'IND222B589659', size: 150),
-              SizedBox(height: 8),
-              Text("IND222B589659"),
+              const SizedBox(height: 8),
+              const Text("IND222B589659"),
             ],
           ),
         ),
@@ -42,12 +44,15 @@ class _BoardingfooterState extends State<Boardingfooter> {
         AppTextButton(
             buttonText: 'Download',
             textStyle: TextStyles.font18WhiteRegular,
-            onPressed: () {}),
+            onPressed: () async {
+              await _captureAndSaveAsPDF();
+              // SharedPrefHelper.setData( "barcode", value)
+            }),
         SizedBox(height: 14.h),
 
         TextButton(
-          onPressed: () async {
-            await _captureAndSaveAsPDF();
+          onPressed: () {
+            context.pushNamed(Routes.search);
           },
           child: Text(
             "Book another flight",
