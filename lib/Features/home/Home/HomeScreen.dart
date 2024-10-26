@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/Theme/themecubit.dart';
 import 'package:takeed/Features/home/Home/HomeScreen_Body.dart';
-import 'package:takeed/Features/home/Home/Logic/Cubit/cubit/cubit_example_cubit.dart';
 import 'package:takeed/Features/home/Home/buildCity.dart';
 import 'package:takeed/Features/home/Home/drawer.dart';
 import 'package:takeed/Features/home/Home/itemSelected.dart';
@@ -36,12 +36,14 @@ class _HomescreenState extends State<Homescreen> {
   TextEditingController toCityController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final themcubit = context.watch<ThemeCubit>();
     return Scaffold(
       backgroundColor: ColorManager.homescreenBackgroundColor,
-      drawer: buildDrawer(context: context),
+      drawer: buildDrawer(context: context, themcubit: themcubit),
       appBar: AppBar(
         title: const Text('Book Flight'),
         centerTitle: true,
+        automaticallyImplyLeading: widget.showINsheet,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -218,14 +220,17 @@ class _HomescreenState extends State<Homescreen> {
                           controller: fromCityController)
                     ],
                   ),
-            CircleAvatar(
-                child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _swap = !_swap;
-                      });
-                    },
-                    icon: Icon(Icons.thumbs_up_down_outlined)))
+            Positioned(
+              right: 30.w,
+              child: CircleAvatar(
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _swap = !_swap;
+                        });
+                      },
+                      icon: Icon(Icons.thumbs_up_down_outlined))),
+            )
           ],
         ),
         SizedBox(height: 10.h),

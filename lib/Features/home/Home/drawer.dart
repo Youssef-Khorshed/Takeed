@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/Theme/themecubit.dart';
+import 'package:takeed/core/Extensions/navigation.dart';
+import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 
-Widget buildDrawer({required BuildContext context}) {
+Widget buildDrawer(
+    {required BuildContext context, required ThemeCubit themcubit}) {
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
@@ -50,10 +55,10 @@ Widget buildDrawer({required BuildContext context}) {
         ),
         ListTile(
           leading: const Icon(Icons.history),
-          title: const Text('History'),
-          onTap: () {
-            // Handle history action
-            Navigator.pop(context);
+          title: const Text('Theme'),
+          onTap: () async {
+            ThemeCubit themeCubit = context.read<ThemeCubit>();
+            themeCubit.toggleTheme();
           },
         ),
         ListTile(
@@ -77,7 +82,7 @@ Widget buildDrawer({required BuildContext context}) {
           title: const Text('Logout'),
           onTap: () {
             // Handle logout action
-            Navigator.pop(context);
+            context.pushNamed(Routes.login);
           },
         ),
       ],

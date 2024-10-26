@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/home/Home/Carosaloffers.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/core/Extensions/navigation.dart';
@@ -28,15 +29,9 @@ class _HomescreenBodyState extends State<HomescreenBody> {
               'Hot Offers',
               style: TextStyles.font18BlackBold,
             ),
-            Spacer(),
-            TextButton(
-                onPressed: () {},
-                child: Text(
-                  'See all',
-                  style: TextStyles.font14orangeRegular,
-                ))
           ],
         ),
+        SizedBox(height: 12.h),
         OfferCarousel()
       ],
     );

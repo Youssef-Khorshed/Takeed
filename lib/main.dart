@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/Theme/themecubit.dart';
 import 'package:takeed/core/Routes/app_routes.dart';
 import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
@@ -17,25 +19,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 874),
-      minTextAdapt: true,
-      child: MaterialApp(
-        theme: ThemeData(
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: ColorManager.primaryOrnage),
-          //   primaryColorLight: ColorManager.primaryOrnage,
-          bottomNavigationBarTheme:
-              BottomNavigationBarThemeData(backgroundColor: Colors.black),
-          // primaryColor: ColorManager.primaryOrnage,
-          appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        themeMode: ThemeMode.light,
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: appRoutes.generateroute,
-        initialRoute: Routes.bottomnavigation,
-      ),
-    );
+    return BlocProvider(
+        create: (context) => ThemeCubit(),
+        child: BlocBuilder<ThemeCubit, ThemeData>(builder: (context, theme) {
+          return ScreenUtilInit(
+            designSize: const Size(360, 874),
+            minTextAdapt: true,
+            child: MaterialApp(
+              theme: theme,
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: appRoutes.generateroute,
+              initialRoute: Routes.login,
+            ),
+          );
+        }));
   }
 }

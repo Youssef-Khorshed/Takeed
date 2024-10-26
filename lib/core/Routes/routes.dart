@@ -10,6 +10,7 @@ class Routes {
   static const String flightDetails = '/flightDetails';
   static const String payment = '/payment';
   static const String boardingPass = '/boardingPass';
+  static const String otp = '/otp';
   static const String bottomnavigation = '/bottomnavigation';
   static const String mybookingdetails = '/mybookingdetails';
 }

@@ -31,7 +31,7 @@ class _OfferCarouselState extends State<OfferCarousel> {
     return Center(
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 100.0,
+          height: 130.0,
           autoPlay: true,
           enlargeCenterPage: true,
           aspectRatio: 16 / 9,

@@ -17,11 +17,7 @@ class Mybooking extends StatelessWidget {
         appBar: AppBar(
           title: const Text('My Booking'),
           centerTitle: true,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.arrow_back_ios_new_sharp)),
+          automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
