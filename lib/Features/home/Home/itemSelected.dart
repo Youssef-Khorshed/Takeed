@@ -13,7 +13,7 @@ class ItemSelected extends StatefulWidget {
 }
 
 class _ItemSelectedState extends State<ItemSelected> {
-  String _classType = 'Economy';
+  final String _classType = 'Economy';
   bool _switchValue = true;
   int travellers = 0;
   String classType = 'Economy';
@@ -87,14 +87,14 @@ class _ItemSelectedState extends State<ItemSelected> {
             labelStyle: TextStyles.font10RegularDarkGray,
             containerheight: 75.h,
             child: Container(
-              padding: EdgeInsetsDirectional.all(5),
+              padding: const EdgeInsetsDirectional.all(5),
               height: 60.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(color: ColorManager.GrayColor)),
               child: DropdownButtonFormField<String>(
                 value: classType,
-                decoration: InputDecoration(border: InputBorder.none),
+                decoration: const InputDecoration(border: InputBorder.none),
                 items: ['Economy', 'Business', 'Special', 'Premium Economy']
                     .map((classType) => DropdownMenuItem(
                         value: classType, child: Text(classType)))
@@ -118,7 +118,7 @@ class CounterRow extends StatefulWidget {
   int counter;
   int get getCounter => counter;
 
-  CounterRow({required this.label, required this.counter});
+  CounterRow({super.key, required this.label, required this.counter});
 
   @override
   _CounterRowState createState() => _CounterRowState();
@@ -144,15 +144,15 @@ class _CounterRowState extends State<CounterRow> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(widget.label, style: TextStyle(fontSize: 18)),
-        SizedBox(width: 20),
+        Text(widget.label, style: const TextStyle(fontSize: 18)),
+        const SizedBox(width: 20),
         IconButton(
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
           onPressed: increment,
         ),
-        Text('${widget.counter}', style: TextStyle(fontSize: 18)),
+        Text('${widget.counter}', style: const TextStyle(fontSize: 18)),
         IconButton(
-          icon: Icon(Icons.remove),
+          icon: const Icon(Icons.remove),
           onPressed: decrement,
         ),
       ],

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/components/Flight/airportDetails.dart';
-import 'package:takeed/components/Line/line.dart';
 import 'package:takeed/components/text_box/text_box.dart';
-import 'package:takeed/core/Theme/Color/colors.dart';
-import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class Flightdatetime extends StatelessWidget {
   const Flightdatetime({super.key});

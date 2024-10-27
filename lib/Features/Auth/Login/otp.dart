@@ -6,6 +6,8 @@ import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class OtpScreen extends StatefulWidget {
+  const OtpScreen({super.key});
+
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
@@ -61,7 +63,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             AppTextButton(
                 buttonText: 'Verify',
                 buttonHeight: 48.h,
@@ -82,9 +84,9 @@ class _OtpScreenState extends State<OtpScreen> {
         controller: controller,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 24),
+        style: const TextStyle(fontSize: 24),
         maxLength: 1,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           counterText: '',
           border: OutlineInputBorder(),
         ),

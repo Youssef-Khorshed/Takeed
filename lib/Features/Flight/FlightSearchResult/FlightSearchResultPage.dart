@@ -21,12 +21,12 @@ class FlightSearchResultPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showBottomSheet(context),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
         physics: const BouncingScrollPhysics(),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FlightCard(
@@ -75,7 +75,7 @@ class FlightSearchResultPage extends StatelessWidget {
       builder: (context) {
         return Padding(
           padding: MediaQuery.of(context).viewInsets,
-          child: Container(
+          child: SizedBox(
             height:
                 MediaQuery.of(context).size.height * 0.8, // Adjust as needed
             child: Column(

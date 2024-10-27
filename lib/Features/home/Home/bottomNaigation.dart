@@ -25,7 +25,6 @@ class _HomeScreenButtomNavigationState
         _selectedIndex = index;
       }
 
-      ;
     });
   }
 

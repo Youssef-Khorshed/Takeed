@@ -9,18 +9,18 @@ class Mybookingdetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Booking Details'),
+        title: const Text('Booking Details'),
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_new_sharp)),
+            icon: const Icon(Icons.arrow_back_ios_new_sharp)),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
-          child: Column(
+          child: const Column(
             children: [Boardingbody()],
           ),
         ),

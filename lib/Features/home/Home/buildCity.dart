@@ -83,7 +83,7 @@ class _BuildCityState extends State<BuildCity> {
                         onPressed: () => setState(() {
                               widget.controller.clear();
                             }),
-                        icon: Icon(Icons.close_rounded))
+                        icon: const Icon(Icons.close_rounded))
                     : null,
               ),
             );

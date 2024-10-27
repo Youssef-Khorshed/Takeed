@@ -9,7 +9,7 @@ import 'package:takeed/core/Validation/check_emptyText.dart';
 
 class ToggleEmailPhone extends StatefulWidget {
   String? selectedChoice;
-  ToggleEmailPhone({Key? key, this.selectedChoice}) : super(key: key);
+  ToggleEmailPhone({super.key, this.selectedChoice});
 
   @override
   State<ToggleEmailPhone> createState() => _ToggleEmailPhoneState();

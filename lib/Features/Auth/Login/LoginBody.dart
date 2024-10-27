@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:takeed/Features/Auth/Logic/LoginCubit/loginState.dart';
-import 'package:takeed/Features/Auth/Logic/LoginCubit/logincubit.dart';
 import 'package:takeed/Features/Auth/Login/LoginLogic.dart';
 import 'package:takeed/Features/Auth/Login/email_phoneChoice.dart';
 import 'package:takeed/components/button/button.dart';

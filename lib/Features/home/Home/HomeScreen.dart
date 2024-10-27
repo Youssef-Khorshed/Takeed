@@ -23,12 +23,12 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   String _tripType = 'One way';
-  String _fromCity = 'Delhi';
-  String _toCity = 'Kolkata';
+  final String _fromCity = 'Delhi';
+  final String _toCity = 'Kolkata';
   DateTime _departureDate = DateTime.now();
   DateTime? _returnDate;
-  int _adults = 1;
-  String _classType = 'Economy';
+  final int _adults = 1;
+  final String _classType = 'Economy';
   bool __PickdepartureDateFirstTime = false;
   bool __PickReturnDateFirstTime = false;
   bool _swap = true;
@@ -229,14 +229,14 @@ class _HomescreenState extends State<Homescreen> {
                           _swap = !_swap;
                         });
                       },
-                      icon: Icon(Icons.thumbs_up_down_outlined))),
+                      icon: const Icon(Icons.thumbs_up_down_outlined))),
             )
           ],
         ),
         SizedBox(height: 10.h),
         _buildDateSelectors(),
         SizedBox(height: 10.h),
-        ItemSelected(),
+        const ItemSelected(),
         SizedBox(height: 10.h),
       ],
     );

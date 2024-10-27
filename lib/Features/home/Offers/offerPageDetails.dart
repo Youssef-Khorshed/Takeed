@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OfferDetailPage extends StatelessWidget {
   final FlightOffer offer;
 
-  OfferDetailPage({required this.offer});
+  const OfferDetailPage({super.key, required this.offer});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +15,11 @@ class OfferDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(offer.title,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            Text('Price: ${offer.price}', style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
-            Text(offer.description, style: TextStyle(fontSize: 16)),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            Text('Price: ${offer.price}', style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
+            Text(offer.description, style: const TextStyle(fontSize: 16)),
           ],
         ),
       ),

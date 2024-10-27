@@ -2,14 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsBody.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsFooter.dart';
-import 'package:takeed/components/Flight/flightTicketRow.dart';
-import 'package:takeed/components/button/button.dart';
-import 'package:takeed/components/button/button2.dart';
-import 'package:takeed/components/text_box/text_box.dart';
-import 'package:takeed/core/Extensions/navigation.dart';
-import 'package:takeed/core/Routes/routes.dart';
-import 'package:takeed/core/Theme/Color/colors.dart';
-import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class FlightDetailsPage extends StatelessWidget {
   const FlightDetailsPage({super.key});

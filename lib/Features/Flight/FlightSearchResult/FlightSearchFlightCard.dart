@@ -25,7 +25,7 @@ class FlightSearchResultPage extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
         physics: const BouncingScrollPhysics(),
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FlightCard(
@@ -202,7 +202,7 @@ class FlightCard extends StatelessWidget {
                   textStyle: TextStyles.font18WhiteRegular,
                   onPressed: () {
                     context.pushPage(Routes.flightDetails,
-                        page: FlightDetailsPage());
+                        page: const FlightDetailsPage());
                   })
             ],
           ),

@@ -141,7 +141,7 @@ class FlightCard extends StatelessWidget {
                   textStyle: TextStyles.font18WhiteRegular,
                   onPressed: () {
                     context.pushPage(Routes.flightDetails,
-                        page: FlightDetailsPage());
+                        page: const FlightDetailsPage());
                   })
             ],
           ),
