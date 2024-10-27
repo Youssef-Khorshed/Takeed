@@ -20,7 +20,7 @@ class Mybooking extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.all(16.0.w),
             child: Column(
@@ -31,8 +31,8 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(),
-                      Airportdetails(),
+                      const Flightticketrow(),
+                      const Airportdetails(),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],
                   ),
@@ -43,8 +43,8 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(),
-                      Airportdetails(),
+                      const Flightticketrow(),
+                      const Airportdetails(),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],
                   ),
@@ -55,8 +55,8 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(),
-                      Airportdetails(),
+                      const Flightticketrow(),
+                      const Airportdetails(),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],
                   ),
@@ -67,8 +67,8 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(),
-                      Airportdetails(),
+                      const Flightticketrow(),
+                      const Airportdetails(),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],
                   ),
@@ -82,7 +82,7 @@ class Mybooking extends StatelessWidget {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          Mybookingdetails(),
+          const Mybookingdetails(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0); // Start from the right
         const end = Offset.zero; // End at the original position

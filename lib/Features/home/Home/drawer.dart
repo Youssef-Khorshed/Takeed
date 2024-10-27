@@ -13,7 +13,7 @@ Widget buildDrawer(
       padding: EdgeInsets.zero,
       children: [
         DrawerHeader(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: ColorManager.primaryOrnage,
           ),
           child: Column(

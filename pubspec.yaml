@@ -50,6 +50,8 @@ dependencies:
   # An SVG rendering and widget library for Flutter, which allows painting 
   flutter_svg: 
   country_list_pick:
+  gallery_picker: 
+  google_mlkit_text_recognition: 
 dev_dependencies:
   flutter_test:
     sdk: flutter

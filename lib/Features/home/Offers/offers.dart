@@ -8,6 +8,8 @@ class OffersPage extends StatelessWidget {
     FlightOffer("Flight to Tokyo", "400 USD", "Experience Japan."),
   ];
 
+  OffersPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
