@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/Theme/themecubit.dart';
 import 'package:takeed/core/Routes/app_routes.dart';
 import 'package:takeed/core/Routes/routes.dart';
-import 'package:takeed/core/Theme/Color/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
