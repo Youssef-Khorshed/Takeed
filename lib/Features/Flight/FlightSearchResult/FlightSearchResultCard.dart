@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsPage.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/core/Extensions/navigation.dart';
 import 'package:takeed/core/Routes/routes.dart';
@@ -16,11 +17,13 @@ class FlightCard extends StatelessWidget {
   final String duration;
   final String departureAirport;
   final String arrivalAirport;
-  final int price;
+  final String price;
+  final FlightSearchData index;
 
-  const FlightCard({
+  FlightCard({
     super.key,
     this.airlineLogo,
+    required this.index,
     required this.airlineName,
     required this.flightNumber,
     required this.departureTime,
@@ -30,6 +33,15 @@ class FlightCard extends StatelessWidget {
     required this.arrivalAirport,
     required this.price,
   });
+  static String getDate({required String time}) {
+    DateTime dateTime = DateTime.parse(time);
+    return "${dateTime.day}/${dateTime.month}/${dateTime.year}"; // e.g., "5/11/2024"
+  }
+
+  static String getTime({required String time}) {
+    DateTime dateTime = DateTime.parse(time);
+    return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}"; // e.g., "17:55"
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +78,16 @@ class FlightCard extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            Text(departureTime,
+                            Text(getDate(time: departureTime),
                                 style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold)),
-                            Text(departureAirport),
+                            Row(
+                              children: [
+                                Text(getTime(time: departureTime)),
+                                SizedBox(width: 3.0.w),
+                                Text(departureAirport),
+                              ],
+                            ),
                           ],
                         ),
                         Row(
@@ -100,11 +118,15 @@ class FlightCard extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            Text(arrivalTime,
-                                style: TextStyles.font16BlackRegular),
-                            Text(
-                              arrivalAirport,
-                              style: TextStyles.font10RegularDarkGray,
+                            Text(getDate(time: arrivalTime),
+                                style: const TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold)),
+                            Row(
+                              children: [
+                                Text(getTime(time: arrivalTime)),
+                                SizedBox(width: 3.0.w),
+                                Text(arrivalAirport),
+                              ],
                             ),
                           ],
                         ),
@@ -141,7 +163,9 @@ class FlightCard extends StatelessWidget {
                   textStyle: TextStyles.font18WhiteRegular,
                   onPressed: () {
                     context.pushPage(Routes.flightDetails,
-                        page: const FlightDetailsPage());
+                        page: FlightDetailsPage(
+                          flightdetails: index,
+                        ));
                   })
             ],
           ),

@@ -1,10 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultCard.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
-class Flightticketrow extends StatelessWidget {
-  const Flightticketrow({super.key});
+// ignore: must_be_immutable
+class Flightticketrow extends StatefulWidget {
+  FlightSearchData flightdetails;
+
+  Flightticketrow({super.key, required this.flightdetails});
+
+  @override
+  State<Flightticketrow> createState() => _FlightticketrowState();
+}
+
+class _FlightticketrowState extends State<Flightticketrow> {
+  initState() {
+    widget.flightdetails.itineraries ??= [
+      Itineraries(duration: "PT1H30M", segments: [
+        Segments(
+          id: "1",
+          numberOfStops: 0,
+          blacklistedInEU: false,
+          carrierCode: "AA",
+          number: "1",
+          duration: "PT1H30M",
+          departure: Departure(
+              iataCode: "JFK", terminal: "T2", at: "2022-07-26T22:30:00"),
+          arrival: Departure(
+              iataCode: "JFK", terminal: "T2", at: "2022-07-26T22:30:00"),
+          aircraft: Aircraft(
+            code: "320",
+          ),
+        )
+      ])
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +46,17 @@ class Flightticketrow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('5.50', style: TextStyles.font24BlackBold),
-                Text('DEL', style: TextStyles.font16BlackRegular),
+                Text(
+                    FlightCard.getTime(
+                        time: widget.flightdetails!.itineraries!.first.segments!
+                            .first.departure!.at!),
+                    style: TextStyles.font18BlackBold),
+                Text(
+                    widget.flightdetails!.itineraries!.first.segments!.first
+                        .departure!.iataCode!,
+                    style: TextStyles.font14BlackRegular),
               ],
             ),
             SizedBox(
@@ -47,9 +87,17 @@ class Flightticketrow extends StatelessWidget {
               width: 25.w,
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('7.30', style: TextStyles.font24BlackBold),
-                Text('CUU', style: TextStyles.font16BlackRegular),
+                Text(
+                    FlightCard.getTime(
+                        time: widget.flightdetails!.itineraries!.first.segments!
+                            .first.arrival!.at!),
+                    style: TextStyles.font18BlackBold),
+                Text(
+                    widget.flightdetails!.itineraries!.first.segments!.first
+                        .arrival!.iataCode!,
+                    style: TextStyles.font14BlackRegular),
               ],
             ),
           ],

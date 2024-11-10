@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/itemSelected.dart';
 import 'package:takeed/components/Flight/airportDetails.dart';
 import 'package:takeed/components/Flight/flightDateTime.dart';
 import 'package:takeed/components/Flight/flightTicketRow.dart';
@@ -7,14 +11,16 @@ import 'package:takeed/components/Line/line.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class Flightdetailsbody extends StatelessWidget {
-  const Flightdetailsbody({super.key});
+  FlightSearchData flightdetails;
+
+  Flightdetailsbody({super.key, required this.flightdetails});
 
   @override
   Widget build(BuildContext context) {
-    return _filghtDetailsBody();
+    return _filghtDetailsBody(context: context);
   }
 
-  Widget _filghtDetailsBody() => Container(
+  Widget _filghtDetailsBody({required BuildContext context}) => Container(
         width: 328.w,
         height: 417.h,
         padding: EdgeInsets.symmetric(horizontal: 20.h),
@@ -39,15 +45,19 @@ class Flightdetailsbody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Indiago',
+                    'Tayer',
                     style: TextStyles.font32BlueBold,
                   )
                 ],
               ),
             ),
             Line(upperpadding: 0, lowerpadding: 16),
-            const Flightticketrow(),
-            const Airportdetails(),
+            Flightticketrow(
+              flightdetails: flightdetails,
+            ),
+            Airportdetails(
+              flightSearchData: flightdetails,
+            ),
             Line(upperpadding: 6, lowerpadding: 6),
             const Flightdatetime(),
             Line(upperpadding: 6, lowerpadding: 10),
@@ -58,7 +68,8 @@ class Flightdetailsbody extends StatelessWidget {
                   'Price',
                   style: TextStyles.font24BlackRegular,
                 ),
-                Text(' \$230', style: TextStyles.font32BlackBold),
+                Text(' \$${flightdetails.price!.grandTotal}',
+                    style: TextStyles.font32BlackBold),
               ],
             ),
           ],

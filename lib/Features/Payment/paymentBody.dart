@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 import 'package:takeed/components/Flight/flightTicketRow.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class Paymentbody extends StatelessWidget {
-  const Paymentbody({super.key});
+  FlightSearchData flightdetails;
+
+  Paymentbody({super.key, required this.flightdetails});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,9 @@ class Paymentbody extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30.h),
-              const Flightticketrow(),
+              Flightticketrow(
+                flightdetails: flightdetails,
+              ),
               SizedBox(height: 25.h),
               Row(
                 children: [

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/Payment/paymentBody.dart';
 import 'package:takeed/Features/Payment/paymentFooter.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 
 class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({super.key});
+  FlightSearchData flightdetails;
+
+  PaymentScreen({super.key, required this.flightdetails});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,9 @@ class PaymentScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Paymentbody(),
+              Paymentbody(
+                flightdetails: flightdetails,
+              ),
               SizedBox(height: 20.h),
               const Paymentfooter()
             ],

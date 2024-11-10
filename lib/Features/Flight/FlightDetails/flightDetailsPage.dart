@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsBody.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsFooter.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 
 class FlightDetailsPage extends StatelessWidget {
-  const FlightDetailsPage({super.key});
+  FlightSearchData flightdetails;
+  FlightDetailsPage({super.key, required this.flightdetails});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class FlightDetailsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Flightdetailsbody(),
+              Flightdetailsbody(
+                flightdetails: flightdetails,
+              ),
               SizedBox(height: 30.h),
               const Flightdetailsfooter()
             ],
