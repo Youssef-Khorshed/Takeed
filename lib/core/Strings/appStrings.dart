@@ -2,7 +2,7 @@ import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flghtRequestMod
 
 class Appstrings {
   static String airPortsSuggestions({required String keyword}) =>
-      'http://api.taiiar.com/api/v1/air/utilities/airport-city-localized-search-by-keyword?keyword=$keyword';
+      'Add your API ?keyword=$keyword';
 
   static String searchFlights(
           {required String originLocationCode,
