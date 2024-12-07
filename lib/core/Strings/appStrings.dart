@@ -14,11 +14,9 @@ class Appstrings {
           required String children,
           required String infants,
           required String max}) =>
-      'http://api.taiiar.com/api/v1/air/search_and_shopping/get-flight-offers?OriginLocationCode=$originLocationCode&DestinationLocationCode=$destinationLocationCode&DepartureDate=$departureDate&Adults=$adults&CurrencyCode=$currencyCode&travelClass=ECONOMY&ReturnDate=$returnDate&Children=$children&Infants=$infants&max=$max';
-
+'ADD your API'
   static String createFilghtUrl =
-      'http://api.taiiar.com/api/v1/air/booking/flight-create-orders';
-
+'App your API';
   static Map<String, dynamic> createFilghtParameters(
           {required FlightRequest flightRequest,
           required List<Travelers> travelers,
