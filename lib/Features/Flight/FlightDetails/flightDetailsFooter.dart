@@ -1,15 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/button/button2.dart';
-import 'package:takeed/core/Extensions/navigation.dart';
-import 'package:takeed/core/Routes/routes.dart';
+
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
+// ignore: must_be_immutable
 class Flightdetailsfooter extends StatelessWidget {
-  const Flightdetailsfooter({super.key});
+  FlightSearchData flightSearchData;
+  Flightdetailsfooter({
+    super.key,
+    required this.flightSearchData,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,13 @@ class Flightdetailsfooter extends StatelessWidget {
                   buttonText: 'Confirm',
                   textStyle: TextStyles.font18WhiteRegular,
                   onPressed: () {
-                    context.pushNamed(Routes.payment);
+                    // context.watch<FlightCubit>().createFlightOrder
+                    // (flightRequest:FlightRequest(data: Data(flightOffers: [FlightOffers()])), travelers:  travelers,
+                    //  remarks: flightSearchData.fareRules., contacts: contacts,
+                    //   ticketingAgreement:
+                    //    ticketingAgreement)
+
+                    //context.pushNamed(Routes.payment);
                   }),
             ),
           ],

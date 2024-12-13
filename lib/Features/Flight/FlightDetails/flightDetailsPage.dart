@@ -34,7 +34,9 @@ class FlightDetailsPage extends StatelessWidget {
                 flightdetails: flightdetails,
               ),
               SizedBox(height: 30.h),
-              const Flightdetailsfooter()
+              Flightdetailsfooter(
+                flightSearchData: flightdetails,
+              )
             ],
           ),
         ),

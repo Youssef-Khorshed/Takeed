@@ -30,9 +30,31 @@ class Appstrings {
           "type": "<string>",
           "flightOffers": [flightRequest.toJson()],
           "travelers": [for (var element in travelers) element.toJson()],
-          "remarks": remarks.toJson(),
-          "contacts": [for (var contract in contacts) contract.toJson()],
-          "ticketingAgreement": ticketingAgreement.toJson()
+          // "remarks": remarks.toJson(),
+          //  "contacts": [for (var contract in contacts) contract.toJson()],
+          //  "ticketingAgreement": ticketingAgreement.toJson()
+
+          "remarks": {
+            "general": [
+              {
+                "subType": "GENERAL_MISCELLANEOUS",
+                "text": "ONLINE BOOKING FROM INCREIBLE VIAJE"
+              }
+            ]
+          },
+          "contacts": [
+            {
+              "emailAddress": "mahmoudsabiha51@gmail.com",
+              "phones": [
+                {
+                  "deviceType": "MOBILE",
+                  "countryCallingCode": "20",
+                  "number": "1008895982"
+                }
+              ]
+            }
+          ],
+          "ticketingAgreement": {"option": "DELAY_TO_CANCEL", "delay": "6D"}
         }
       };
 
