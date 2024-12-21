@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/traveller.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultCard.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/ariportsModel.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flghtRequestModel.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/RepoImplementation/repoimplementation.dart';
 part 'flight_state.dart';
 
@@ -13,24 +15,26 @@ class FlightCubit extends Cubit<FlightState> {
   FlightsRepositoryImplementation flightsRepositoryImplementation;
   TextEditingController fromCityController = TextEditingController();
   TextEditingController toCityController = TextEditingController();
-
   List<AirportData> fromairports = [];
   List<AirportData> toAirports = [];
+  FlightOfferFromPricing flightOfferFromPricing = FlightOfferFromPricing();
   List<String> currencyCode = ['SAR', 'USD'];
   AirportData fromairport = AirportData();
   AirportData toairport = AirportData();
   DateTime departureDate = DateTime.now();
   bool pickdepartureDateFirstTime = false;
   bool pickReturnDateFirstTime = false;
+  CreateFlightOrder flightOrder = CreateFlightOrder();
   DateTime? returnDate;
-  Flightsearchmodel flightsearchmodel = Flightsearchmodel();
+  List<Traveller> travellers = [];
+  List<GetFlightOffers> flightsearchmodel = [];
   String classType = 'Economy';
   Map<String, int> getTravelersCount = {
-    'Adults': 0,
+    'Adults': 1,
     'Children': 0,
     'Infants': 0
   };
-  List<FlightSearchData> filterList = [];
+  List<GetFlightOffers> filterList = [];
   FlightCubit({required this.flightsRepositoryImplementation})
       : super(FlightInitial());
 
@@ -101,20 +105,17 @@ class FlightCubit extends Cubit<FlightState> {
   }
 
   Future<void> createFlightOrder(
-      {required FlightRequest flightRequest,
-      required List<Travelers> travelers,
-      required Remarks remarks,
-      required List<Contacts> contacts,
-      required TicketingAgreement ticketingAgreement}) async {
+      {required FlightOfferFromPricing flightRequest,
+      required List<Traveller> travelers}) async {
     emit(FlightLoading());
     final result = await flightsRepositoryImplementation.createFlightOrder(
-        flightRequest: flightRequest,
-        travelers: travelers,
-        remarks: remarks,
-        contacts: contacts,
-        ticketingAgreement: ticketingAgreement);
-    result.fold((r) => emit(GetFlightOrderResult()),
-        (l) => emit(FlightError(error: l.message)));
+      flightRequest: flightRequest,
+      travelers: travelers,
+    );
+    result.fold((r) {
+      flightOrder = r;
+      emit(GetFlightOrderResult(flight: flightOrder));
+    }, (l) => emit(FlightError(error: l)));
   }
 
   Future<void> getSearchedFlights(
@@ -143,6 +144,19 @@ class FlightCubit extends Cubit<FlightState> {
       emit(GetSearchedFlightsResult(flightsearchmodel: flightsearchmodel));
     }, (onError) {
       debugPrint(onError.message.toString());
+      emit(FlightError(error: onError.message));
+    });
+  }
+
+  Future<void> createFlightOfferFromPricing(
+      {required GetFlightOffers flightoffer}) async {
+    emit(FlightLoading());
+    final res = await flightsRepositoryImplementation
+        .createFlightOfferFromPricing(flightoffer: flightoffer);
+    res.fold((onSuccess) {
+      flightOfferFromPricing = onSuccess;
+      emit(GetFlightOfferFromPricingResult());
+    }, (onError) {
       emit(FlightError(error: onError.message));
     });
   }
@@ -179,7 +193,7 @@ class FlightCubit extends Cubit<FlightState> {
   }
 
   filterFlights(
-      {required List<FlightSearchData> flights,
+      {required List<GetFlightOffers> flights,
       required int stopsnumber,
       required int maxPrice,
       required int minPrice,
@@ -217,13 +231,14 @@ class FlightCubit extends Cubit<FlightState> {
   }
 
   filterByPrice({
-    required List<FlightSearchData> flights,
+    required List<GetFlightOffers> flights,
     required int maxPrice,
     required int minPrice,
   }) {
     filterList.clear();
     filterList = flights.where((flight) {
-      final flightPrice = int.parse(flight.price!.grandTotal!);
+      String input = flight.price!.grandTotal!.replaceAll(',', '.');
+      final flightPrice = double.parse(input);
       final matchprice = flightPrice >= minPrice && flightPrice <= maxPrice;
       return matchprice;
     }).toList();
@@ -233,7 +248,7 @@ class FlightCubit extends Cubit<FlightState> {
   }
 
   filterByArrivalTime({
-    required List<FlightSearchData> flights,
+    required List<GetFlightOffers> flights,
     required String arrivalTime,
   }) {
     filterList.clear();
@@ -252,7 +267,7 @@ class FlightCubit extends Cubit<FlightState> {
   }
 
   filterByDepatureTime({
-    required List<FlightSearchData> flights,
+    required List<GetFlightOffers> flights,
     required String depatureTime,
   }) {
     filterList = flights.where((flight) {
@@ -269,7 +284,7 @@ class FlightCubit extends Cubit<FlightState> {
   }
 
   filterByStops({
-    required List<FlightSearchData> flights,
+    required List<GetFlightOffers> flights,
     required int stopsnumber,
   }) {
     filterList.clear();

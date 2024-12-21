@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/HomeScreen.dart';
 import 'package:takeed/Features/BottomNavigation/MyBooking/mybooking.dart';
 import 'package:takeed/Features/BottomNavigation/Offers/offers.dart';
@@ -51,7 +51,7 @@ class _HomeScreenButtomNavigationState
   final List<Widget> _pages = [
     Homescreen(),
     Mybooking(
-      flightdetails: FlightSearchData(),
+      flightdetails: FlightOfferFromPricing(),
     ),
     OffersPage(),
     ProfilePage()

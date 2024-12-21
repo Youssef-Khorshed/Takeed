@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultCard.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
+// ignore: must_be_immutable
 class Airportdetails extends StatefulWidget {
-  FlightSearchData flightSearchData;
+  FlightOfferFromPricing flightSearchData;
 
   Airportdetails({super.key, required this.flightSearchData});
 
@@ -16,25 +17,26 @@ class Airportdetails extends StatefulWidget {
 class _AirportdetailsState extends State<Airportdetails> {
   @override
   void initState() {
-    widget.flightSearchData.itineraries ??= [
-      Itineraries(duration: "PT1H30M", segments: [
-        Segments(
-          id: "1",
-          numberOfStops: 0,
-          blacklistedInEU: false,
-          carrierCode: "AA",
-          number: "1",
-          duration: "PT1H30M",
-          departure: Departure(
-              iataCode: "JFK", terminal: "T2", at: "2022-07-26T22:30:00"),
-          arrival: Departure(
-              iataCode: "JFK", terminal: "T2", at: "2022-07-26T22:30:00"),
-          aircraft: Aircraft(
-            code: "320",
-          ),
-        )
-      ])
-    ];
+    // widget.flightSearchData.itineraries ??= [
+    //   Itineraries(duration: "PT1H30M", segments: [
+    //     Segments(
+    //       id: "1",
+    //       numberOfStops: 0,
+    //       blacklistedInEU: false,
+    //       carrierCode: "AA",
+    //       number: "1",
+    //       duration: "PT1H30M",
+    //       departure: Departure(
+    //           iataCode: "JFK", terminal: "T2", at: "2022-07-26T22:30:00"),
+    //       arrival: Departure(
+    //           iataCode: "JFK", terminal: "T2", at: "2022-07-26T22:30:00"),
+    //       aircraft: Aircraft(
+    //         code: "320",
+    //       ),
+    //     )
+    //   ])
+    // ];
+
     super.initState();
   }
 

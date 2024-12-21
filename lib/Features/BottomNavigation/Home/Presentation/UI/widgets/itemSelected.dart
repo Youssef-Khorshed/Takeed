@@ -8,7 +8,7 @@ import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class ItemSelected extends StatefulWidget {
-  ItemSelected({super.key});
+  const ItemSelected({super.key});
 
   @override
   State<ItemSelected> createState() => _ItemSelectedState();
@@ -62,7 +62,6 @@ class _ItemSelectedState extends State<ItemSelected> {
                             } else {
                               setState(() => _switchValue = !_switchValue);
                             }
-                            ;
                           },
                           child: Text(
                             'OK',
@@ -148,7 +147,7 @@ class _ItemSelectedState extends State<ItemSelected> {
 class CounterRow extends StatelessWidget {
   final String label;
 
-  CounterRow({super.key, required this.label});
+  const CounterRow({super.key, required this.label});
 
   @override
   Widget build(BuildContext context) {

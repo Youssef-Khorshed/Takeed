@@ -8,7 +8,7 @@ import 'package:takeed/core/Theme/Styles/textStyles.dart';
 class BuildFromCity extends StatefulWidget {
   final String label;
   final IconData icon;
-  BuildFromCity({
+  const BuildFromCity({
     super.key,
     required this.label,
     required this.icon,
@@ -41,7 +41,7 @@ class _BuildFromCityState extends State<BuildFromCity> {
               return null;
             },
             controller: controller,
-            onChanged: (query) {
+            onChanged: (query) async {
               setState(() {
                 controller.text = query;
               });

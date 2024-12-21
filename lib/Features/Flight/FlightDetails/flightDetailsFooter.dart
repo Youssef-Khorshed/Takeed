@@ -2,16 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
+import 'package:takeed/Features/Flight/FlightDetails/travellerDetails.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/button/button2.dart';
+import 'package:takeed/core/Routes/routes.dart';
 
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 // ignore: must_be_immutable
 class Flightdetailsfooter extends StatelessWidget {
-  FlightSearchData flightSearchData;
+  FlightOfferFromPricing flightSearchData;
   Flightdetailsfooter({
     super.key,
     required this.flightSearchData,
@@ -28,38 +30,43 @@ class Flightdetailsfooter extends StatelessWidget {
             children: <Widget>[
               buildTravelers(context: context),
             ]),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: OutlinedTextButton(
-                  buttonText: 'Cancel',
-                  buttonWidth: 156.w,
-                  buttonHeight: 56.h,
-                  textStyle: TextStyles.font18orangeRegular,
-                  onPressed: () {}),
-            ),
-            SizedBox(
-              width: 15.w,
-            ),
-            Expanded(
-              child: AppTextButton(
-                  buttonHeight: 56.h,
-                  buttonWidth: 156.w,
-                  buttonText: 'Confirm',
-                  textStyle: TextStyles.font18WhiteRegular,
-                  onPressed: () {
-                    // context.watch<FlightCubit>().createFlightOrder
-                    // (flightRequest:FlightRequest(data: Data(flightOffers: [FlightOffers()])), travelers:  travelers,
-                    //  remarks: flightSearchData.fareRules., contacts: contacts,
-                    //   ticketingAgreement:
-                    //    ticketingAgreement)
-
-                    //context.pushNamed(Routes.payment);
-                  }),
-            ),
-          ],
+        SizedBox(
+          height: 15.w,
         ),
+        context.watch<FlightCubit>().state is FlightLoading
+            ? const CircularProgressIndicator()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: OutlinedTextButton(
+                        buttonText: 'Cancel',
+                        buttonWidth: 156.w,
+                        buttonHeight: 56.h,
+                        textStyle: TextStyles.font18orangeRegular,
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(Routes.bottomnavigation);
+                        }),
+                  ),
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  Expanded(
+                    child: AppTextButton(
+                        buttonHeight: 56.h,
+                        buttonWidth: 156.w,
+                        buttonText: 'Confirm',
+                        textStyle: TextStyles.font18WhiteRegular,
+                        onPressed: () {
+                          context.read<FlightCubit>().createFlightOrder(
+                              flightRequest: flightSearchData,
+                              travelers:
+                                  context.read<FlightCubit>().travellers);
+                        }),
+                  ),
+                ],
+              ),
       ],
     );
   }
@@ -72,22 +79,32 @@ class Flightdetailsfooter extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: travelers.entries.expand((element) {
-          // Create a ListTile for each traveler
-          if (element.value > 1) {
-            // If value is greater than one, create a list of items
+          if (element.value >= 1) {
             return List.generate(element.value, (index) {
               return ListTile(
+                onTap: () {
+                  showBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return SizedBox(
+                            child: TravellerForm(
+                                onSubmit: (traveller) => context
+                                    .read<FlightCubit>()
+                                    .travellers
+                                    .add(traveller)));
+                      });
+                },
                 title: Text(element.key),
                 trailing: Text('${index + 1}'),
               );
             });
           } else {
-            // If value is one, just return a single ListTile
             return [
-              ListTile(
-                title: Text(element.key),
-                trailing: Text('${element.value}'),
-              ),
+              const SizedBox()
+              // ListTile(
+              //   title: Text(element.key),
+              //   trailing: Text('${element.value}'),
+              // ),
             ];
           }
         }).toList());

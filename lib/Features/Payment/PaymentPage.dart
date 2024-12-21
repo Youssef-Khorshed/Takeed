@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/Payment/paymentBody.dart';
 import 'package:takeed/Features/Payment/paymentFooter.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 
 class PaymentScreen extends StatelessWidget {
-  FlightSearchData flightdetails;
+  CreateFlightOrder flightdetails;
 
   PaymentScreen({super.key, required this.flightdetails});
 
@@ -33,7 +33,6 @@ class PaymentScreen extends StatelessWidget {
                 flightdetails: flightdetails,
               ),
               SizedBox(height: 20.h),
-              const Paymentfooter()
             ],
           ),
         ),

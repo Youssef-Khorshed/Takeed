@@ -42,8 +42,8 @@ class ProfilePage extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 50,
-                child: user.profilePicture,
                 backgroundColor: ColorManager.GrayColor,
+                child: user.profilePicture,
               ),
               SizedBox(height: 10.h),
               Text(

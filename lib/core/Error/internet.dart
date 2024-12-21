@@ -1,30 +1,23 @@
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:takeed/core/Error/appException.dart';
-import 'package:takeed/core/Error/either.dart';
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
-abstract class ConnectivityService {
-  Future<FetchResult<bool, AppException>> isConnectedToInternet();
+abstract class InternetConnectivity {
+  InternetConnectivity({required internetConnectivity});
+
+  Future<bool> get isConnected;
+  Stream<List<ConnectivityResult>> get onConnectivityChanged;
 }
 
-class ConnectivityServiceImpl implements ConnectivityService {
-  ConnectivityService connectivityService;
-  ConnectivityServiceImpl({required this.connectivityService});
+class MobileConnectivity implements InternetConnectivity {
+  Connectivity connectivity;
+  MobileConnectivity({required this.connectivity});
   @override
-  Future<FetchResult<bool, AppException>> isConnectedToInternet() async {
-    try {
-      final bool result = await InternetConnectionChecker().hasConnection;
-
-      if (result) {
-        return FetchResult.success(true);
-      } else {
-        return FetchResult.error(AppException('Not connected to any network',
-            code: 'NO_CONNECTION'));
-      }
-    } catch (e) {
-      print('Error checking connectivity: $e');
-      return FetchResult.error(AppException(
-          'Error checking connectivity: ${e.toString()}',
-          code: 'CHECK_ERROR'));
-    }
+  Future<bool> get isConnected async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult.last != ConnectivityResult.none;
   }
+
+  @override
+  Stream<List<ConnectivityResult>> get onConnectivityChanged =>
+      connectivity.onConnectivityChanged;
 }

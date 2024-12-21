@@ -88,7 +88,7 @@ class _ToggleEmailPhoneState extends State<ToggleEmailPhone> {
                     CountryListPick(
                         theme:
                             CountryTheme(isShowTitle: false, isShowCode: false),
-                        initialSelection: '+20',
+                        initialSelection: '+966',
                         onChanged: (value) {}),
                     Container(
                       width: 2.w,

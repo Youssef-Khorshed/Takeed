@@ -38,15 +38,9 @@ class _HomescreenState extends State<Homescreen> {
     return BlocConsumer<FlightCubit, FlightState>(
       listener: (context, state) {
         if (context.read<FlightCubit>().state is GetSearchedFlightsResult) {
-          if (context
-              .read<FlightCubit>()
-              .flightsearchmodel
-              .tayarResult!
-              .data!
-              .isNotEmpty) {
+          if (context.read<FlightCubit>().flightsearchmodel.isNotEmpty) {
             context.pushNamed(Routes.search,
-                arguments:
-                    context.read<FlightCubit>().flightsearchmodel.tayarResult);
+                arguments: context.read<FlightCubit>().flightsearchmodel);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('No flights found')));

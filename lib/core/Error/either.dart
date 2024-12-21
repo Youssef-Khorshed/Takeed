@@ -23,9 +23,9 @@ class FetchResult<T, E> {
   // Fold method to handle success and error cases
   R fold<R>(R Function(T success) onSuccess, R Function(E error) onError) {
     if (isSuccess) {
-      return onSuccess(success!); // Use ! to assert non-null
+      return onSuccess(success as T); // Use ! to assert non-null
     } else {
-      return onError(error!); // Use ! to assert non-null
+      return onError(error as E); // Use ! to assert non-null
     }
   }
 }

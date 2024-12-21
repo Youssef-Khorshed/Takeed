@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
-import 'package:takeed/components/Flight/flightTicketRow.dart';
+import 'package:moyasar/moyasar.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
+import 'package:takeed/Features/Payment/paymentFooter.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
+// ignore: must_be_immutable
 class Paymentbody extends StatelessWidget {
-  FlightSearchData flightdetails;
+  CreateFlightOrder flightdetails;
 
   Paymentbody({super.key, required this.flightdetails});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _username = TextEditingController();
+    TextEditingController _expiredate = TextEditingController();
+    TextEditingController _cvv = TextEditingController();
+    TextEditingController _cardnumber = TextEditingController();
+
     return Column(
       children: [
         Container(
@@ -34,9 +41,6 @@ class Paymentbody extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30.h),
-              Flightticketrow(
-                flightdetails: flightdetails,
-              ),
               SizedBox(height: 25.h),
               Row(
                 children: [
@@ -46,7 +50,7 @@ class Paymentbody extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    '\$ 230',
+                    '\$ ${flightdetails.flightOffers!.first.price!.total}',
                     style: TextStyles.font22orangeBold,
                   )
                 ],
@@ -62,8 +66,9 @@ class Paymentbody extends StatelessWidget {
               'Card number',
               style: TextStyles.font16BlackRegular,
             ),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: _cardnumber,
+              decoration: const InputDecoration(
                 hintText: '0000 0000 0000 0000',
               ),
             ),
@@ -77,8 +82,9 @@ class Paymentbody extends StatelessWidget {
               'Card holder name',
               style: TextStyles.font16BlackRegular,
             ),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: _username,
+              decoration: const InputDecoration(
                 hintText: 'John Doe',
               ),
             ),
@@ -95,8 +101,9 @@ class Paymentbody extends StatelessWidget {
                     'CVV',
                     style: TextStyles.font16BlackRegular,
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
+                  TextField(
+                    controller: _cvv,
+                    decoration: const InputDecoration(
                       hintText: '000',
                     ),
                   ),
@@ -112,9 +119,10 @@ class Paymentbody extends StatelessWidget {
                     'Expiry date',
                     style: TextStyles.font16BlackRegular,
                   ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: '9/26',
+                  TextField(
+                    controller: _expiredate,
+                    decoration: const InputDecoration(
+                      hintText: '09/26',
                     ),
                   ),
                 ],
@@ -122,6 +130,10 @@ class Paymentbody extends StatelessWidget {
             ),
           ],
         ),
+        Paymentfooter(
+          cardFormModel: CardFormModel(),
+          amount: double.parse(flightdetails.flightOffers!.first.price!.total!),
+        )
       ],
     );
   }

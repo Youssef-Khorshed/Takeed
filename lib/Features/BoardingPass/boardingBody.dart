@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
 import 'package:takeed/components/Flight/airportDetails.dart';
 import 'package:takeed/components/Flight/flightDateTime.dart';
 import 'package:takeed/components/Flight/flightTicketRow.dart';
@@ -45,10 +46,10 @@ class Boardingbody extends StatelessWidget {
         // Flight Details
         Line(upperpadding: 6, lowerpadding: 6),
         Flightticketrow(
-          flightdetails: FlightSearchData(),
+          flightdetails: GetFlightOffers(),
         ),
         Airportdetails(
-          flightSearchData: FlightSearchData(),
+          flightSearchData: FlightOfferFromPricing(),
         ),
         const Flightdatetime(),
         const SizedBox(height: 24),

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/itemSelected.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/components/Flight/airportDetails.dart';
 import 'package:takeed/components/Flight/flightDateTime.dart';
-import 'package:takeed/components/Flight/flightTicketRow.dart';
+import 'package:takeed/components/Flight/flightTicketRowForPricing.dart';
 import 'package:takeed/components/Line/line.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
+// ignore: must_be_immutable
 class Flightdetailsbody extends StatelessWidget {
-  FlightSearchData flightdetails;
+  FlightOfferFromPricing flightdetails;
 
   Flightdetailsbody({super.key, required this.flightdetails});
 
@@ -52,7 +50,7 @@ class Flightdetailsbody extends StatelessWidget {
               ),
             ),
             Line(upperpadding: 0, lowerpadding: 16),
-            Flightticketrow(
+            FlightticketrowFromPricing(
               flightdetails: flightdetails,
             ),
             Airportdetails(

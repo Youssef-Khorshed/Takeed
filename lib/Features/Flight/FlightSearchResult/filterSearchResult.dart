@@ -77,7 +77,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
           ],
         ),
       ),
-      actions: <Widget>[],
+      actions: const <Widget>[],
     );
   }
 
@@ -103,7 +103,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
                   final cubit = context.read<FlightCubit>();
                   // Here, you can handle the filters (e.g., pass to a function to fetch flights)
                   // cubit.filterFlights(
-                  //     flights: cubit.flightsearchmodel.tayarResult!.data!,
+                  //     flights: cubit.flightsearchmodel,
                   //     arrivalTime: arrivalTimeValue,
                   //     depatureTime: depatureTimeValue,
                   //     stopsnumber: numberOfStopsValue + 1,
@@ -111,7 +111,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
                   //     minPrice: priceRange.start.round(),
                   //     airlines: []);
                   cubit.filterByStops(
-                      flights: cubit.flightsearchmodel.tayarResult!.data!,
+                      flights: cubit.flightsearchmodel,
                       stopsnumber: numberOfStopsValue + 1);
                   Navigator.of(context).pop();
 
@@ -156,7 +156,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
               final cubit = context.read<FlightCubit>();
               // Here, you can handle the filters (e.g., pass to a function to fetch flights)
               // cubit.filterFlights(
-              //     flights: cubit.flightsearchmodel.tayarResult!.data!,
+              //     flights: cubit.flightsearchmodel,
               //     arrivalTime: arrivalTimeValue,
               //     depatureTime: depatureTimeValue,
               //     stopsnumber: numberOfStopsValue + 1,
@@ -164,7 +164,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
               //     minPrice: priceRange.start.round(),
               //     airlines: []);
               cubit.filterByPrice(
-                flights: cubit.flightsearchmodel.tayarResult!.data!,
+                flights: cubit.flightsearchmodel,
                 maxPrice: priceRange.end.round(),
                 minPrice: priceRange.start.round(),
               );
@@ -209,7 +209,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
                 onPressed: () {
                   final cubit = context.read<FlightCubit>();
                   cubit.filterByDepatureTime(
-                    flights: cubit.flightsearchmodel.tayarResult!.data!,
+                    flights: cubit.flightsearchmodel,
                     depatureTime: depatureTimeValue,
                   );
                   Navigator.of(context).pop();
@@ -254,7 +254,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
                   final cubit = context.read<FlightCubit>();
 
                   cubit.filterByArrivalTime(
-                    flights: cubit.flightsearchmodel.tayarResult!.data!,
+                    flights: cubit.flightsearchmodel,
                     arrivalTime: arrivalTimeValue,
                   );
                   Navigator.of(context).pop();
@@ -285,7 +285,7 @@ class _FlightFilterDialogState extends State<FlightFilterDialog> {
 
             ///  Here, you can handle the filters (e.g., pass to a function to fetch flights)
             cubit.filterFlights(
-                flights: cubit.flightsearchmodel.tayarResult!.data!,
+                flights: cubit.flightsearchmodel,
                 arrivalTime: arrivalTimeValue,
                 depatureTime: depatureTimeValue,
                 stopsnumber: numberOfStopsValue + 1,

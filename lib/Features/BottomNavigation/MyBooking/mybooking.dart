@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/MyBooking/mybookingDetails.dart';
 import 'package:takeed/components/Flight/airportDetails.dart';
-import 'package:takeed/components/Flight/flightTicketRow.dart';
+import 'package:takeed/components/Flight/flightTicketRowForPricing.dart';
 import 'package:takeed/components/Line/line.dart';
 
+// ignore: must_be_immutable
 class Mybooking extends StatelessWidget {
-  FlightSearchData flightdetails;
+  FlightOfferFromPricing flightdetails;
   Mybooking({super.key, required this.flightdetails});
 
   @override
@@ -30,11 +31,11 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(
+                      FlightticketrowFromPricing(
                         flightdetails: flightdetails,
                       ),
                       Airportdetails(
-                        flightSearchData: FlightSearchData(),
+                        flightSearchData: FlightOfferFromPricing(),
                       ),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],
@@ -46,11 +47,11 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(
+                      FlightticketrowFromPricing(
                         flightdetails: flightdetails,
                       ),
                       Airportdetails(
-                        flightSearchData: FlightSearchData(),
+                        flightSearchData: FlightOfferFromPricing(),
                       ),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],
@@ -62,11 +63,11 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(
+                      FlightticketrowFromPricing(
                         flightdetails: flightdetails,
                       ),
                       Airportdetails(
-                        flightSearchData: FlightSearchData(),
+                        flightSearchData: FlightOfferFromPricing(),
                       ),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],
@@ -78,11 +79,11 @@ class Mybooking extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      Flightticketrow(
+                      FlightticketrowFromPricing(
                         flightdetails: flightdetails,
                       ),
                       Airportdetails(
-                        flightSearchData: FlightSearchData(),
+                        flightSearchData: FlightOfferFromPricing(),
                       ),
                       Line(upperpadding: 5, lowerpadding: 2),
                     ],

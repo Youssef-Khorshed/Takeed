@@ -42,8 +42,8 @@ class _HomescreenBodyState extends State<HomescreenBody> {
     if (flight.formKey.currentState!.validate()) {
       await flight.getSearchedFlights(
           // required String
-          originLocationCode: flight.fromairport.cityCode!,
-          destinationLocationCode: flight.toairport.cityCode!,
+          originLocationCode: flight.fromairport.cityCode ?? 'CAI',
+          destinationLocationCode: flight.toairport.cityCode ?? "RUH",
           // required String
           departureDate:
               '${flight.departureDate.year}-${flight.departureDate.month}-${flight.departureDate.day}',

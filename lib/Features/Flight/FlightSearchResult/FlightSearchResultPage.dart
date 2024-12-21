@@ -48,7 +48,7 @@ class _FlightSearchResultPageState extends State<FlightSearchResultPage> {
           builder: (context, state) {
             final cubit = context.watch<FlightCubit>();
             final flight = cubit.filterList.isEmpty
-                ? cubit.flightsearchmodel.tayarResult!.data
+                ? cubit.flightsearchmodel
                 : cubit.filterList;
 
             return SingleChildScrollView(

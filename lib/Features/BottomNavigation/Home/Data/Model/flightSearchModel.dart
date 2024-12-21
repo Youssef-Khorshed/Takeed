@@ -36,13 +36,13 @@ class TayarResult {
     if (json['data'] != null) {
       data = <FlightSearchData>[];
       json['data'].forEach((v) {
-        data!.add(new FlightSearchData.fromJson(v));
+        data!.add(FlightSearchData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -99,52 +99,52 @@ class FlightSearchData {
     if (json['itineraries'] != null) {
       itineraries = <Itineraries>[];
       json['itineraries'].forEach((v) {
-        itineraries!.add(new Itineraries.fromJson(v));
+        itineraries!.add(Itineraries.fromJson(v));
       });
     }
-    price = json['price'] != null ? new Price.fromJson(json['price']) : null;
+    price = json['price'] != null ? Price.fromJson(json['price']) : null;
     pricingOptions = json['pricingOptions'] != null
-        ? new PricingOptions.fromJson(json['pricingOptions'])
+        ? PricingOptions.fromJson(json['pricingOptions'])
         : null;
     validatingAirlineCodes = json['validatingAirlineCodes'].cast<String>();
     if (json['travelerPricings'] != null) {
       travelerPricings = <TravelerPricings>[];
       json['travelerPricings'].forEach((v) {
-        travelerPricings!.add(new TravelerPricings.fromJson(v));
+        travelerPricings!.add(TravelerPricings.fromJson(v));
       });
     }
     fareRules = json['fareRules'] != null
-        ? new FareRules.fromJson(json['fareRules'])
+        ? FareRules.fromJson(json['fareRules'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['id'] = this.id;
-    data['source'] = this.source;
-    data['instantTicketingRequired'] = this.instantTicketingRequired;
-    data['nonHomogeneous'] = this.nonHomogeneous;
-    data['oneWay'] = this.oneWay;
-    data['lastTicketingDate'] = this.lastTicketingDate;
-    data['lastTicketingDateTime'] = this.lastTicketingDateTime;
-    data['numberOfBookableSeats'] = this.numberOfBookableSeats;
-    if (this.itineraries != null) {
-      data['itineraries'] = this.itineraries!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['type'] = type;
+    data['id'] = id;
+    data['source'] = source;
+    data['instantTicketingRequired'] = instantTicketingRequired;
+    data['nonHomogeneous'] = nonHomogeneous;
+    data['oneWay'] = oneWay;
+    data['lastTicketingDate'] = lastTicketingDate;
+    data['lastTicketingDateTime'] = lastTicketingDateTime;
+    data['numberOfBookableSeats'] = numberOfBookableSeats;
+    if (itineraries != null) {
+      data['itineraries'] = itineraries!.map((v) => v.toJson()).toList();
     }
-    if (this.price != null) {
-      data['price'] = this.price!.toJson();
+    if (price != null) {
+      data['price'] = price!.toJson();
     }
-    if (this.pricingOptions != null) {
-      data['pricingOptions'] = this.pricingOptions!.toJson();
+    if (pricingOptions != null) {
+      data['pricingOptions'] = pricingOptions!.toJson();
     }
-    data['validatingAirlineCodes'] = this.validatingAirlineCodes;
-    if (this.travelerPricings != null) {
+    data['validatingAirlineCodes'] = validatingAirlineCodes;
+    if (travelerPricings != null) {
       data['travelerPricings'] =
-          this.travelerPricings!.map((v) => v.toJson()).toList();
+          travelerPricings!.map((v) => v.toJson()).toList();
     }
-    if (this.fareRules != null) {
-      data['fareRules'] = this.fareRules!.toJson();
+    if (fareRules != null) {
+      data['fareRules'] = fareRules!.toJson();
     }
     return data;
   }
@@ -161,16 +161,16 @@ class Itineraries {
     if (json['segments'] != null) {
       segments = <Segments>[];
       json['segments'].forEach((v) {
-        segments!.add(new Segments.fromJson(v));
+        segments!.add(Segments.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['duration'] = this.duration;
-    if (this.segments != null) {
-      data['segments'] = this.segments!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['duration'] = duration;
+    if (segments != null) {
+      data['segments'] = segments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -208,38 +208,36 @@ class Segments {
     number = json['number'];
     duration = json['duration'];
     departure = json['departure'] != null
-        ? new Departure.fromJson(json['departure'])
+        ? Departure.fromJson(json['departure'])
         : null;
-    arrival = json['arrival'] != null
-        ? new Departure.fromJson(json['arrival'])
-        : null;
-    aircraft = json['aircraft'] != null
-        ? new Aircraft.fromJson(json['aircraft'])
-        : null;
+    arrival =
+        json['arrival'] != null ? Departure.fromJson(json['arrival']) : null;
+    aircraft =
+        json['aircraft'] != null ? Aircraft.fromJson(json['aircraft']) : null;
     operating = json['operating'] != null
-        ? new Operating.fromJson(json['operating'])
+        ? Operating.fromJson(json['operating'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['numberOfStops'] = this.numberOfStops;
-    data['blacklistedInEU'] = this.blacklistedInEU;
-    data['carrierCode'] = this.carrierCode;
-    data['number'] = this.number;
-    data['duration'] = this.duration;
-    if (this.departure != null) {
-      data['departure'] = this.departure!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['numberOfStops'] = numberOfStops;
+    data['blacklistedInEU'] = blacklistedInEU;
+    data['carrierCode'] = carrierCode;
+    data['number'] = number;
+    data['duration'] = duration;
+    if (departure != null) {
+      data['departure'] = departure!.toJson();
     }
-    if (this.arrival != null) {
-      data['arrival'] = this.arrival!.toJson();
+    if (arrival != null) {
+      data['arrival'] = arrival!.toJson();
     }
-    if (this.aircraft != null) {
-      data['aircraft'] = this.aircraft!.toJson();
+    if (aircraft != null) {
+      data['aircraft'] = aircraft!.toJson();
     }
-    if (this.operating != null) {
-      data['operating'] = this.operating!.toJson();
+    if (operating != null) {
+      data['operating'] = operating!.toJson();
     }
     return data;
   }
@@ -259,10 +257,10 @@ class Departure {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['iataCode'] = this.iataCode;
-    data['terminal'] = this.terminal;
-    data['at'] = this.at;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['iataCode'] = iataCode;
+    data['terminal'] = terminal;
+    data['at'] = at;
     return data;
   }
 }
@@ -277,8 +275,8 @@ class Aircraft {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
     return data;
   }
 }
@@ -293,8 +291,8 @@ class Operating {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['carrierCode'] = this.carrierCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['carrierCode'] = carrierCode;
     return data;
   }
 }
@@ -323,22 +321,22 @@ class Price {
     if (json['fees'] != null) {
       fees = <Fees>[];
       json['fees'].forEach((v) {
-        fees!.add(new Fees.fromJson(v));
+        fees!.add(Fees.fromJson(v));
       });
     }
     refundableTaxes = json['refundableTaxes'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['grandTotal'] = this.grandTotal;
-    data['currency'] = this.currency;
-    data['total'] = this.total;
-    data['base'] = this.base;
-    if (this.fees != null) {
-      data['fees'] = this.fees!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['grandTotal'] = grandTotal;
+    data['currency'] = currency;
+    data['total'] = total;
+    data['base'] = base;
+    if (fees != null) {
+      data['fees'] = fees!.map((v) => v.toJson()).toList();
     }
-    data['refundableTaxes'] = this.refundableTaxes;
+    data['refundableTaxes'] = refundableTaxes;
     return data;
   }
 }
@@ -355,9 +353,9 @@ class Fees {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['amount'] = this.amount;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['amount'] = amount;
+    data['type'] = type;
     return data;
   }
 }
@@ -385,12 +383,12 @@ class PricingOptions {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['includedCheckedBagsOnly'] = this.includedCheckedBagsOnly;
-    data['fareType'] = this.fareType;
-    data['refundableFare'] = this.refundableFare;
-    data['noRestrictionFare'] = this.noRestrictionFare;
-    data['noPenaltyFare'] = this.noPenaltyFare;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['includedCheckedBagsOnly'] = includedCheckedBagsOnly;
+    data['fareType'] = fareType;
+    data['refundableFare'] = refundableFare;
+    data['noRestrictionFare'] = noRestrictionFare;
+    data['noPenaltyFare'] = noPenaltyFare;
     return data;
   }
 }
@@ -408,18 +406,17 @@ class TravelerPricings {
     travelerId = json['travelerId'];
     fareOption = json['fareOption'];
     travelerType = json['travelerType'];
-    price = json['price'] != null
-        ? new AdditionalPrice.fromJson(json['price'])
-        : null;
+    price =
+        json['price'] != null ? AdditionalPrice.fromJson(json['price']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['travelerId'] = this.travelerId;
-    data['fareOption'] = this.fareOption;
-    data['travelerType'] = this.travelerType;
-    if (this.price != null) {
-      data['price'] = this.price!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['travelerId'] = travelerId;
+    data['fareOption'] = fareOption;
+    data['travelerType'] = travelerType;
+    if (price != null) {
+      data['price'] = price!.toJson();
     }
 
     return data;
@@ -449,12 +446,12 @@ class AdditionalPrice {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['grandTotal'] = this.grandTotal;
-    data['currency'] = this.currency;
-    data['total'] = this.total;
-    data['base'] = this.base;
-    data['refundableTaxes'] = this.refundableTaxes;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['grandTotal'] = grandTotal;
+    data['currency'] = currency;
+    data['total'] = total;
+    data['base'] = base;
+    data['refundableTaxes'] = refundableTaxes;
     return data;
   }
 }
@@ -471,9 +468,9 @@ class IncludedCheckedBags {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['quantity'] = this.quantity;
-    data['weight'] = this.weight;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['quantity'] = quantity;
+    data['weight'] = weight;
     return data;
   }
 }
@@ -487,15 +484,15 @@ class FareRules {
     if (json['rules'] != null) {
       rules = <Rules>[];
       json['rules'].forEach((v) {
-        rules!.add(new Rules.fromJson(v));
+        rules!.add(Rules.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.rules != null) {
-      data['rules'] = this.rules!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (rules != null) {
+      data['rules'] = rules!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -515,10 +512,10 @@ class Rules {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category'] = this.category;
-    data['maxPenaltyAmount'] = this.maxPenaltyAmount;
-    data['notApplicable'] = this.notApplicable;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['category'] = category;
+    data['maxPenaltyAmount'] = maxPenaltyAmount;
+    data['notApplicable'] = notApplicable;
     return data;
   }
 }

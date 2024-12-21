@@ -21,9 +21,11 @@ class FilterSearch extends FlightState {}
 class LoadingText extends FlightState {}
 
 class GetSearchedFlightsResult extends FlightState {
-  Flightsearchmodel flightsearchmodel;
+  List<GetFlightOffers> flightsearchmodel;
   GetSearchedFlightsResult({required this.flightsearchmodel});
 }
+
+class GetFlightOfferFromPricingResult extends FlightState {}
 
 class GetFromAirportsResult extends FlightState {
   List<AirportData> ariportsmodel;
@@ -51,7 +53,10 @@ class SelectReturnDate extends FlightState {
   SelectReturnDate({required this.pickeddate, required this.date});
 }
 
-class GetFlightOrderResult extends FlightState {}
+class GetFlightOrderResult extends FlightState {
+  CreateFlightOrder flight;
+  GetFlightOrderResult({required this.flight});
+}
 
 class FlightError extends FlightState {
   final String error;

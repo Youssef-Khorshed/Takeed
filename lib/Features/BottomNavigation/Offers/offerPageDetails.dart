@@ -17,7 +17,7 @@ class OfferDetailPage extends StatelessWidget {
           elevation: 4,
           child: Container(
             height: 160.h,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

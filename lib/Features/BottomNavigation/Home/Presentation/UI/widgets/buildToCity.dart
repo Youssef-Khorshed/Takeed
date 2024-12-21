@@ -38,6 +38,7 @@ class _BuildToCityState extends State<BuildToCity> {
               if (value!.isEmpty) {
                 return 'Please Enter valid city name';
               }
+              return null;
             },
             controller: controller,
             onChanged: (query) {

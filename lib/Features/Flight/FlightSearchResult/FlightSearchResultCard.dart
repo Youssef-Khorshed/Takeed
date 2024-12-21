@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsPage.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/core/Extensions/navigation.dart';
+import 'package:takeed/core/Routes/app_routes.dart';
 import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
@@ -18,9 +21,9 @@ class FlightCard extends StatelessWidget {
   final String departureAirport;
   final String arrivalAirport;
   final String price;
-  final FlightSearchData index;
+  final GetFlightOffers index;
 
-  FlightCard({
+  const FlightCard({
     super.key,
     this.airlineLogo,
     required this.index,
@@ -161,10 +164,15 @@ class FlightCard extends StatelessWidget {
               AppTextButton(
                   buttonText: 'Check',
                   textStyle: TextStyles.font18WhiteRegular,
-                  onPressed: () {
+                  onPressed: () async {
+                    await context
+                        .read<FlightCubit>()
+                        .createFlightOfferFromPricing(flightoffer: index);
                     context.pushPage(Routes.flightDetails,
                         page: FlightDetailsPage(
-                          flightdetails: index,
+                          flightdetails: context
+                              .read<FlightCubit>()
+                              .flightOfferFromPricing,
                         ));
                   })
             ],

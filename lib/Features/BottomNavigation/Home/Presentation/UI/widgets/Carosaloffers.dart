@@ -95,16 +95,16 @@ class _OfferCarouselState extends State<OfferCarousel> {
           children: [
             Image.asset('assets/images/offer.png'),
             SizedBox(width: 10.w),
-            Column(
+            const Column(
               children: [
                 Text('Flight to New York',
-                    style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-                Text('"200 USD"', style: const TextStyle(fontSize: 10)),
-                const SizedBox(height: 10),
+                    style:
+                        TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                SizedBox(height: 10),
+                Text('"200 USD"', style: TextStyle(fontSize: 10)),
+                SizedBox(height: 10),
                 Text('Best offer for New York.',
-                    style: const TextStyle(fontSize: 10)),
+                    style: TextStyle(fontSize: 10)),
               ],
             ),
           ],

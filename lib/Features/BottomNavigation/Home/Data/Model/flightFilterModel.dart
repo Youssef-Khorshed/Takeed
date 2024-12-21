@@ -1,4 +1,4 @@
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flightSearchModel.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
 
 class FlightFilter {
   final String? airlineLogo; // Optional: URL or path for the airline logo
@@ -24,7 +24,7 @@ class FlightFilter {
     required this.price,
   });
 
-  factory FlightFilter.fromJson(FlightSearchData flight) {
+  factory FlightFilter.fromJson(GetFlightOffers flight) {
     final itinerary = flight.itineraries!.first;
     final segment = itinerary.segments!.first;
     return FlightFilter(
