@@ -42,28 +42,32 @@ class _AirportdetailsState extends State<Airportdetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 97.w,
-          child: Text(
-              FlightCard.getDate(
-                  time: widget.flightSearchData.itineraries![0].segments![0]
-                      .departure!.at!),
-              textAlign: TextAlign.center,
-              style: TextStyles.font12RegularDarkGray),
-        ),
-        const Spacer(),
-        SizedBox(
-          width: 97.w,
-          child: Text(
-              FlightCard.getDate(
-                  time: widget.flightSearchData.itineraries![0].segments![0]
-                      .arrival!.at!),
-              textAlign: TextAlign.center,
-              style: TextStyles.font12RegularDarkGray),
-        ),
-      ],
-    );
+    return widget.flightSearchData.flightOffers!.first.itineraries == null
+        ? const Center(
+            child: Text('No Bookings'),
+          )
+        : Row(
+            children: [
+              SizedBox(
+                width: 97.w,
+                child: Text(
+                    FlightCard.getDate(
+                        time: widget.flightSearchData.flightOffers!.first
+                            .itineraries![0].segments![0].departure!.at!),
+                    textAlign: TextAlign.center,
+                    style: TextStyles.font12RegularDarkGray),
+              ),
+              const Spacer(),
+              SizedBox(
+                width: 97.w,
+                child: Text(
+                    FlightCard.getDate(
+                        time: widget.flightSearchData.flightOffers!.first
+                            .itineraries![0].segments![0].arrival!.at!),
+                    textAlign: TextAlign.center,
+                    style: TextStyles.font12RegularDarkGray),
+              ),
+            ],
+          );
   }
 }

@@ -131,7 +131,8 @@ class Paymentbody extends StatelessWidget {
           ],
         ),
         Paymentfooter(
-          cardFormModel: CardFormModel(),
+          cardFormModel: CardFormModel(
+              name: _username.text, cvc: _cvv.text, month: '10', year: '26'),
           amount: double.parse(flightdetails.flightOffers!.first.price!.total!),
         )
       ],

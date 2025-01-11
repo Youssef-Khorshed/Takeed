@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
@@ -155,7 +156,8 @@ class FlightCubit extends Cubit<FlightState> {
         .createFlightOfferFromPricing(flightoffer: flightoffer);
     res.fold((onSuccess) {
       flightOfferFromPricing = onSuccess;
-      emit(GetFlightOfferFromPricingResult());
+
+      emit(GetFlightOfferFromPricingResult(flightOfferFromPricing: onSuccess));
     }, (onError) {
       emit(FlightError(error: onError.message));
     });

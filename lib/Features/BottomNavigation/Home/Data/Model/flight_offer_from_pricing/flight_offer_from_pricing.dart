@@ -1,81 +1,33 @@
-import 'itinerary.dart';
-import 'price.dart';
-import 'pricing_options.dart';
-import 'traveler_pricing.dart';
+import 'booking_requirements.dart';
+import 'flight_offer.dart';
 
 class FlightOfferFromPricing {
   String? type;
-  String? id;
-  String? source;
-  bool? instantTicketingRequired;
-  bool? nonHomogeneous;
-  bool? oneWay;
-  String? lastTicketingDate;
-  int? numberOfBookableSeats;
-  List<Itinerary>? itineraries;
-  Price? price;
-  PricingOptions? pricingOptions;
-  List<String>? validatingAirlineCodes;
-  List<TravelerPricing>? travelerPricings;
+  List<FlightOffer>? flightOffers;
+  BookingRequirements? bookingRequirements;
 
   FlightOfferFromPricing({
     this.type,
-    this.id,
-    this.source,
-    this.instantTicketingRequired,
-    this.nonHomogeneous,
-    this.oneWay,
-    this.lastTicketingDate,
-    this.numberOfBookableSeats,
-    this.itineraries,
-    this.price,
-    this.pricingOptions,
-    this.validatingAirlineCodes,
-    this.travelerPricings,
+    this.flightOffers,
+    this.bookingRequirements,
   });
 
   factory FlightOfferFromPricing.fromJson(Map<String, dynamic> json) {
     return FlightOfferFromPricing(
       type: json['type'] as String?,
-      id: json['id'] as String?,
-      source: json['source'] as String?,
-      instantTicketingRequired: json['instantTicketingRequired'] as bool?,
-      nonHomogeneous: json['nonHomogeneous'] as bool?,
-      oneWay: json['oneWay'] as bool?,
-      lastTicketingDate: json['lastTicketingDate'] as String?,
-      numberOfBookableSeats: json['numberOfBookableSeats'] as int?,
-      itineraries: (json['itineraries'] as List<dynamic>?)
-          ?.map((e) => Itinerary.fromJson(e as Map<String, dynamic>))
+      flightOffers: (json['flightOffers'] as List<dynamic>?)
+          ?.map((e) => FlightOffer.fromJson(e as Map<String, dynamic>))
           .toList(),
-      price: json['price'] == null
+      bookingRequirements: json['bookingRequirements'] == null
           ? null
-          : Price.fromJson(json['price'] as Map<String, dynamic>),
-      pricingOptions: json['pricingOptions'] == null
-          ? null
-          : PricingOptions.fromJson(
-              json['pricingOptions'] as Map<String, dynamic>),
-      validatingAirlineCodes: (json['validatingAirlineCodes'] as List<dynamic>?)
-          ?.map((toElement) => toElement.toString())
-          .toList(),
-      travelerPricings: (json['travelerPricings'] as List<dynamic>?)
-          ?.map((e) => TravelerPricing.fromJson(e as Map<String, dynamic>))
-          .toList(),
+          : BookingRequirements.fromJson(
+              json['bookingRequirements'] as Map<String, dynamic>),
     );
   }
 
   Map<String, dynamic> toJson() => {
         'type': type,
-        'id': id,
-        'source': source,
-        'instantTicketingRequired': instantTicketingRequired,
-        'nonHomogeneous': nonHomogeneous,
-        'oneWay': oneWay,
-        'lastTicketingDate': lastTicketingDate,
-        'numberOfBookableSeats': numberOfBookableSeats,
-        'itineraries': itineraries?.map((e) => e.toJson()).toList(),
-        'price': price?.toJson(),
-        'pricingOptions': pricingOptions?.toJson(),
-        'validatingAirlineCodes': validatingAirlineCodes,
-        'travelerPricings': travelerPricings?.map((e) => e.toJson()).toList(),
+        'flightOffers': flightOffers?.map((e) => e.toJson()).toList(),
+        'bookingRequirements': bookingRequirements?.toJson(),
       };
 }

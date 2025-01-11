@@ -18,6 +18,7 @@ class Flightticketrow extends StatefulWidget {
 class _FlightticketrowState extends State<Flightticketrow> {
   @override
   initState() {
+    super.initState();
     widget.flightdetails.itineraries ??= [];
   }
 

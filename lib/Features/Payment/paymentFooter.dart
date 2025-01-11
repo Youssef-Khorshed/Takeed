@@ -2,11 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:moyasar/moyasar.dart';
-
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/button/button2.dart';
-import 'package:takeed/core/Extensions/navigation.dart';
-import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 // ignore: must_be_immutable
@@ -48,8 +45,8 @@ class Paymentfooter extends StatelessWidget {
                   onPressed: () async {
                     final paymentConfig = PaymentConfig(
                       publishableApiKey:
-                          'pk_test_3XNnbvssL1F9oQbd2THeavNshC8WRiW6uUwyTq1T',
-                      amount: amount.round(),
+                          'sk_test_4QWt1E6vHwuwACr9NzVTLD1xF6TzyQ7xSRuLVAi6',
+                      amount: amount.round() * 100,
                       description: 'order #1324',
                       metadata: {'size': '250g'},
                       creditCard:
@@ -59,11 +56,6 @@ class Paymentfooter extends StatelessWidget {
                         creditCardData: cardFormModel,
                         tokenizeCard: false,
                         manualPayment: false);
-                    final res = await Moyasar.pay(
-                        apiKey:
-                            'pk_test_3XNnbvssL1F9oQbd2THeavNshC8WRiW6uUwyTq1T',
-                        paymentRequest: PaymentRequest(paymentConfig, request));
-                    debugPrint(res);
                   }),
             ],
           ),

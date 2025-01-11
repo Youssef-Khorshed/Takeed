@@ -19,80 +19,84 @@ class Mybooking extends StatelessWidget {
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.all(16.0.w),
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(_createRoute());
-                  },
+        body: flightdetails.flightOffers!.first.itineraries == null
+            ? const Center(
+                child: Text('No Bookings'),
+              )
+            : SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.all(16.0.w),
                   child: Column(
                     children: [
-                      FlightticketrowFromPricing(
-                        flightdetails: flightdetails,
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(_createRoute());
+                        },
+                        child: Column(
+                          children: [
+                            FlightticketrowFromPricing(
+                              flightdetails: flightdetails,
+                            ),
+                            Airportdetails(
+                              flightSearchData: FlightOfferFromPricing(),
+                            ),
+                            Line(upperpadding: 5, lowerpadding: 2),
+                          ],
+                        ),
                       ),
-                      Airportdetails(
-                        flightSearchData: FlightOfferFromPricing(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(_createRoute());
+                        },
+                        child: Column(
+                          children: [
+                            FlightticketrowFromPricing(
+                              flightdetails: flightdetails,
+                            ),
+                            Airportdetails(
+                              flightSearchData: FlightOfferFromPricing(),
+                            ),
+                            Line(upperpadding: 5, lowerpadding: 2),
+                          ],
+                        ),
                       ),
-                      Line(upperpadding: 5, lowerpadding: 2),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(_createRoute());
+                        },
+                        child: Column(
+                          children: [
+                            FlightticketrowFromPricing(
+                              flightdetails: flightdetails,
+                            ),
+                            Airportdetails(
+                              flightSearchData: FlightOfferFromPricing(),
+                            ),
+                            Line(upperpadding: 5, lowerpadding: 2),
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(_createRoute());
+                        },
+                        child: Column(
+                          children: [
+                            FlightticketrowFromPricing(
+                              flightdetails: flightdetails,
+                            ),
+                            Airportdetails(
+                              flightSearchData: FlightOfferFromPricing(),
+                            ),
+                            Line(upperpadding: 5, lowerpadding: 2),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(_createRoute());
-                  },
-                  child: Column(
-                    children: [
-                      FlightticketrowFromPricing(
-                        flightdetails: flightdetails,
-                      ),
-                      Airportdetails(
-                        flightSearchData: FlightOfferFromPricing(),
-                      ),
-                      Line(upperpadding: 5, lowerpadding: 2),
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(_createRoute());
-                  },
-                  child: Column(
-                    children: [
-                      FlightticketrowFromPricing(
-                        flightdetails: flightdetails,
-                      ),
-                      Airportdetails(
-                        flightSearchData: FlightOfferFromPricing(),
-                      ),
-                      Line(upperpadding: 5, lowerpadding: 2),
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(_createRoute());
-                  },
-                  child: Column(
-                    children: [
-                      FlightticketrowFromPricing(
-                        flightdetails: flightdetails,
-                      ),
-                      Airportdetails(
-                        flightSearchData: FlightOfferFromPricing(),
-                      ),
-                      Line(upperpadding: 5, lowerpadding: 2),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
+              ));
   }
 
   Route _createRoute() {

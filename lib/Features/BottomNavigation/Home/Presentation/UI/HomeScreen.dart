@@ -36,26 +36,8 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FlightCubit, FlightState>(
-      listener: (context, state) {
-        if (context.read<FlightCubit>().state is GetSearchedFlightsResult) {
-          if (context.read<FlightCubit>().flightsearchmodel.isNotEmpty) {
-            context.pushNamed(Routes.search,
-                arguments: context.read<FlightCubit>().flightsearchmodel);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('No flights found')));
-          }
-        } else if (context.read<FlightCubit>().state is FlightError) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('An error occured')));
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-        if (state is FlightLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
         return Scaffold(
           backgroundColor: ColorManager.homescreenBackgroundColor,
           drawer: buildDrawer(context: context),
@@ -227,21 +209,21 @@ class _HomescreenState extends State<Homescreen> {
           alignment: Alignment.centerRight,
           children: [
             _swap
-                ? Column(
+                ? const Column(
                     children: [
                       BuildFromCity(
                         label: 'Form',
                         icon: Icons.flight_takeoff,
                       ),
-                      const BuildToCity(
+                      BuildToCity(
                         label: 'To',
                         icon: Icons.flight_land,
                       )
                     ],
                   )
-                : Column(
+                : const Column(
                     children: [
-                      const BuildToCity(
+                      BuildToCity(
                         label: 'To',
                         icon: Icons.flight_land,
                       ),
@@ -268,7 +250,7 @@ class _HomescreenState extends State<Homescreen> {
         SizedBox(height: 10.h),
         _buildDateSelectors(),
         SizedBox(height: 10.h),
-        ItemSelected(),
+        const ItemSelected(),
         SizedBox(height: 10.h),
       ],
     );

@@ -6,7 +6,6 @@ import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/f
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsPage.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/core/Extensions/navigation.dart';
-import 'package:takeed/core/Routes/app_routes.dart';
 import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
@@ -50,13 +49,13 @@ class FlightCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 328.w,
-      height: 224.h,
+      height: 210.h,
       child: Card(
         elevation: 2,
         color: Colors.white,
         margin: EdgeInsets.symmetric(vertical: 8.0.h),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 10.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -161,20 +160,29 @@ class FlightCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10.0.h),
-              AppTextButton(
-                  buttonText: 'Check',
-                  textStyle: TextStyles.font18WhiteRegular,
-                  onPressed: () async {
-                    await context
-                        .read<FlightCubit>()
-                        .createFlightOfferFromPricing(flightoffer: index);
-                    context.pushPage(Routes.flightDetails,
-                        page: FlightDetailsPage(
-                          flightdetails: context
-                              .read<FlightCubit>()
-                              .flightOfferFromPricing,
-                        ));
-                  })
+              BlocListener<FlightCubit, FlightState>(
+                listener: (context, state) {
+                  if (state is GetFlightOfferFromPricingResult) {
+                    context.pushPage(
+                      Routes.flightDetails,
+                      page: FlightDetailsPage(
+                        flightdetails: state.flightOfferFromPricing,
+                      ),
+                    );
+                  } else if (state is FlightError) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(state.error)));
+                  }
+                },
+                child: AppTextButton(
+                    buttonText: 'Check',
+                    textStyle: TextStyles.font18WhiteRegular,
+                    onPressed: () async {
+                      await context
+                          .read<FlightCubit>()
+                          .createFlightOfferFromPricing(flightoffer: index);
+                    }),
+              )
             ],
           ),
         ),

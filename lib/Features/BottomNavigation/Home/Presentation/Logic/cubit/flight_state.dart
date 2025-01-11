@@ -25,7 +25,10 @@ class GetSearchedFlightsResult extends FlightState {
   GetSearchedFlightsResult({required this.flightsearchmodel});
 }
 
-class GetFlightOfferFromPricingResult extends FlightState {}
+class GetFlightOfferFromPricingResult extends FlightState {
+  FlightOfferFromPricing flightOfferFromPricing;
+  GetFlightOfferFromPricingResult({required this.flightOfferFromPricing});
+}
 
 class GetFromAirportsResult extends FlightState {
   List<AirportData> ariportsmodel;

@@ -8,10 +8,30 @@ import 'package:takeed/components/Line/line.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 // ignore: must_be_immutable
-class Flightdetailsbody extends StatelessWidget {
+class Flightdetailsbody extends StatefulWidget {
   FlightOfferFromPricing flightdetails;
 
   Flightdetailsbody({super.key, required this.flightdetails});
+
+  @override
+  State<Flightdetailsbody> createState() => _FlightdetailsbodyState();
+}
+
+class _FlightdetailsbodyState extends State<Flightdetailsbody> {
+  List<String> directions = [];
+  @override
+  void initState() {
+    getDirection();
+    super.initState();
+  }
+
+  void getDirection() {
+    widget.flightdetails.flightOffers!.first.itineraries!.first.segments!
+        .forEach((segment) {
+      directions.add(
+          '${segment.departure!.iataCode} -> ${segment.arrival!.iataCode}');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +63,7 @@ class Flightdetailsbody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Tayer',
+                    'Takeed',
                     style: TextStyles.font32BlueBold,
                   )
                 ],
@@ -51,13 +71,22 @@ class Flightdetailsbody extends StatelessWidget {
             ),
             Line(upperpadding: 0, lowerpadding: 16),
             FlightticketrowFromPricing(
-              flightdetails: flightdetails,
+              flightdetails: widget.flightdetails,
             ),
             Airportdetails(
-              flightSearchData: flightdetails,
+              flightSearchData: widget.flightdetails,
             ),
             Line(upperpadding: 6, lowerpadding: 6),
             const Flightdatetime(),
+            Line(upperpadding: 6, lowerpadding: 10),
+            Column(
+              children: directions
+                  .map((direction) => Text(
+                        direction,
+                        style: TextStyles.font16BlackRegular,
+                      ))
+                  .toList(),
+            ),
             Line(upperpadding: 6, lowerpadding: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +95,8 @@ class Flightdetailsbody extends StatelessWidget {
                   'Price',
                   style: TextStyles.font24BlackRegular,
                 ),
-                Text(' \$${flightdetails.price!.grandTotal}',
+                Text(
+                    ' \$${widget.flightdetails.flightOffers!.first.price!.grandTotal}',
                     style: TextStyles.font32BlackBold),
               ],
             ),

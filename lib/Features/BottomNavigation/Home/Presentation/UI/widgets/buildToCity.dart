@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/loadingShimmer.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
@@ -90,6 +91,11 @@ class _BuildToCityState extends State<BuildToCity> {
           BlocBuilder<FlightCubit, FlightState>(
             builder: (context, state) {
               final flight = context.watch<FlightCubit>();
+              if (state is LoadingText) {
+                return SizedBox(
+                    height: flight.toAirports.isEmpty ? 0 : 300.h,
+                    child: buildShimmersearchList());
+              }
               if (state is GetToAirportsResult) {
                 return SizedBox(
                   height: flight.toAirports.isEmpty ? 0 : 300.h,
@@ -97,13 +103,21 @@ class _BuildToCityState extends State<BuildToCity> {
                     itemCount: flight.toAirports.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(flight.toAirports[index].cityName!),
-                        subtitle: Text(flight.toAirports[index].countryName!),
-                        leading: const Icon(Icons.flight_takeoff),
+                        title: Text(
+                            "${flight.toAirports[index].cityName!} ${flight.toAirports[index].countryName!}"),
+                        subtitle: Text(
+                            "${flight.toAirports[index].countryName!} ${flight.toAirports[index].name!}"),
+                        leading: const Icon(Icons.flight),
+                        trailing: Container(
+                            color: Colors.grey.shade300,
+                            padding: const EdgeInsets.all(3),
+                            child: Text(flight.toAirports[index].code!)),
                         onTap: () {
-                          controller.text = flight.toAirports[index].cityName!;
-                          context.read<FlightCubit>().toairport =
-                              flight.toAirports[index];
+                          controller.text =
+                              "${flight.toAirports[index].countryName!} ${flight.toAirports[index].name!}";
+                          context.read<FlightCubit>().setAirport(
+                              airport: flight.toAirports[index],
+                              airportType: flight.toAirports);
                           context.read<FlightCubit>().clearlist(
                               airportType:
                                   context.read<FlightCubit>().toAirports);

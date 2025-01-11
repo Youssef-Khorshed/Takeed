@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/ariportsModel.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
@@ -147,7 +149,12 @@ class FlightsRemoteImplementation implements FlightsRemote {
     try {
       final res = await apiService.postRequest(Appstrings.flightOfferPricing,
           body: Appstrings.flightOfferPricingBody(flight: flightoffer));
-      final data = res['tayarResult']['data']['flightOffers'][0];
+      final data = res['tayarResult']['data'];
+      debugPrint('----------------');
+      debugPrint(FlightOfferFromPricing.fromJson(data)
+          .flightOffers!
+          .length
+          .toString());
       return FetchResult.success(FlightOfferFromPricing.fromJson(data));
     } on NoInternetException {
       return FetchResult.error(

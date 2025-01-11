@@ -4,7 +4,7 @@ import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/trave
 
 class Appstrings {
   static String baseUrl =
-      'http://api.taiiar.com/api/v1/air'; // https://takeed.runasp.net/api/v1/air
+      'https://api.takeed.co/api/v1/air'; // https://takeed.runasp.net/api/v1/air
   static String airPortsSuggestions({required String keyword}) =>
       '$baseUrl/utilities/airport-city-localized-search-by-keyword?keyword=$keyword';
 
@@ -76,7 +76,10 @@ class Appstrings {
           "ticketingAgreement": {"option": "DELAY_TO_CANCEL", "delay": "6D"},
           "contacts": [
             {
-              "addresseeName": {"firstName": "PABLO", "lastName": "RODRIGUEZ"},
+              "addresseeName": {
+                "firstName": "${travelers.first.name!.firstName}",
+                "lastName": "${travelers.first.name!.lastName}"
+              },
               "companyName": "INCREIBLE VIAJES",
               "purpose": "STANDARD",
               "phones": [
@@ -91,7 +94,7 @@ class Appstrings {
                   "number": "480080072"
                 }
               ],
-              "emailAddress": "support@increibleviajes.es",
+              "emailAddress": "${travelers.first.contact!.emailAddress}",
               "address": {
                 "lines": ["Calle Prado, 16"],
                 "postalCode": "28014",
@@ -102,9 +105,11 @@ class Appstrings {
           ],
           "formOfPayments": [
             {
-              "other": {
-                "method": "CASH",
-                "flightOfferIds": [1]
+              "creditCard": {
+                "brand": "EASYPAY",
+                "number": "5164700100000005",
+                "expiryDate": "2022-01",
+                "flightOfferIds": ["${flightRequest.flightOffers!.first.id}"]
               }
             }
           ]

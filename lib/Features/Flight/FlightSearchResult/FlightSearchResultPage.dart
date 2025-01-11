@@ -59,7 +59,7 @@ class _FlightSearchResultPageState extends State<FlightSearchResultPage> {
                     shrinkWrap: true,
                     physics:
                         const NeverScrollableScrollPhysics(), // Prevent scrolling
-                    itemCount: itemsToShow < flight!.length
+                    itemCount: itemsToShow < flight.length
                         ? itemsToShow
                         : flight.length,
                     itemBuilder: (context, index) {

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/components/LabelItem/labelItem.dart';
 import 'package:takeed/components/button/button.dart';
-import 'package:takeed/core/Extensions/navigation.dart';
-import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
@@ -28,7 +26,7 @@ class ProfilePage extends StatelessWidget {
         ),
         leading: IconButton(
           onPressed: () {
-            context.pushNamed(Routes.bottomnavigation);
+            Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
@@ -133,7 +131,8 @@ class ProfilePage extends StatelessWidget {
               SizedBox(height: 14.h),
               TextButton(
                 onPressed: () {
-                  context.pushNamed(Routes.bottomnavigation);
+                  //  context.pushNamed(Routes.bottomnavigation);
+                  Navigator.pop(context);
                 },
                 child: Text(
                   "Skip",

@@ -24,9 +24,7 @@ class Flightdetailsfooter extends StatelessWidget {
     return Column(
       children: [
         ExpansionTile(
-            title: const Text('Add Travelers Information'), //
-            //
-
+            title: const Text('Add Travelers Information'),
             children: <Widget>[
               buildTravelers(context: context),
             ]),

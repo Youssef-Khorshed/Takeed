@@ -17,7 +17,7 @@ class PricingOptions {
     return PricingOptions(
       includedCheckedBagsOnly: json['includedCheckedBagsOnly'] as bool?,
       fareType: (json['fareType'] as List<dynamic>?)
-          ?.map((toElement) => toElement.toString())
+          ?.map((toElement) => toElement as String)
           .toList(),
       refundableFare: json['refundableFare'] as bool?,
       noRestrictionFare: json['noRestrictionFare'] as bool?,

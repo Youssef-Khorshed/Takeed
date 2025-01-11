@@ -7,7 +7,6 @@ import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/f
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsBody.dart';
 import 'package:takeed/Features/Flight/FlightDetails/flightDetailsFooter.dart';
 import 'package:takeed/Features/Payment/PaymentPage.dart';
-import 'package:takeed/core/Routes/routes.dart';
 
 // ignore: must_be_immutable
 class FlightDetailsPage extends StatelessWidget {
