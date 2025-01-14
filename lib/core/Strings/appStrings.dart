@@ -1,8 +1,11 @@
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/traveller.dart';
 
 class Appstrings {
+  static String kToken = '';
+
   static String baseUrl =
       'https://api.takeed.co/api/v1/air'; // https://takeed.runasp.net/api/v1/air
   static String airPortsSuggestions({required String keyword}) =>
@@ -32,38 +35,14 @@ class Appstrings {
   static Map<String, dynamic> createFilghtBody({
     required FlightOfferFromPricing flightRequest,
     required List<Traveller> travelers,
+    required Address address,
   }) =>
       {
-        //   "data": {
-        //     "type": "<string>",
-        //     "flightOffers": [flightRequest.toJson()],
-        //     "travelers": travelers.map(((element) => element.toJson())).toList(),
-        //     "remarks": {
-        //       "general": [
-        //         {
-        //           "subType": "GENERAL_MISCELLANEOUS",
-        //           "text": "ONLINE BOOKING FROM INCREIBLE VIAJE"
-        //         }
-        //       ]
-        //     },
-        //     "contacts": [
-        //       {
-        //         "emailAddress": "mahmoudsabiha51@gmail.com",
-        //         "phones": [
-        //           {
-        //             "deviceType": "MOBILE",
-        //             "countryCallingCode": "20",
-        //             "number": "1008895982"
-        //           }
-        //         ]
-        //       }
-        //     ],
-        //     "ticketingAgreement": {"option": "DELAY_TO_CANCEL", "delay": "6D"}
-        //   }
-
         "data": {
           "type": "flight-order",
-          "flightOffers": [flightRequest.toJson()],
+          "flightOffers": flightRequest.flightOffers!
+              .map(((element) => element.toJson()))
+              .toList(),
           "travelers": travelers.map(((element) => element.toJson())).toList(),
           "remarks": {
             "general": [
@@ -77,30 +56,14 @@ class Appstrings {
           "contacts": [
             {
               "addresseeName": {
-                "firstName": "${travelers.first.name!.firstName}",
-                "lastName": "${travelers.first.name!.lastName}"
+                "firstName": travelers.first.name!.firstName,
+                "lastName": travelers.first.name!.lastName
               },
               "companyName": "INCREIBLE VIAJES",
               "purpose": "STANDARD",
-              "phones": [
-                {
-                  "deviceType": "LANDLINE",
-                  "countryCallingCode": "34",
-                  "number": "480080071"
-                },
-                {
-                  "deviceType": "MOBILE",
-                  "countryCallingCode": "33",
-                  "number": "480080072"
-                }
-              ],
-              "emailAddress": "${travelers.first.contact!.emailAddress}",
-              "address": {
-                "lines": ["Calle Prado, 16"],
-                "postalCode": "28014",
-                "cityName": "Madrid",
-                "countryCode": "ES"
-              }
+              "phones": travelers.first.contact!.phones,
+              "emailAddress": travelers.first.contact!.emailAddress,
+              "address": address.toJson()
             }
           ],
           "formOfPayments": [
@@ -108,8 +71,8 @@ class Appstrings {
               "creditCard": {
                 "brand": "EASYPAY",
                 "number": "5164700100000005",
-                "expiryDate": "2022-01",
-                "flightOfferIds": ["${flightRequest.flightOffers!.first.id}"]
+                "expiryDate": "2025-01",
+                "flightOfferIds": [flightRequest.flightOffers!.first.id]
               }
             }
           ]

@@ -9,8 +9,6 @@ import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/Ho
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/drawer.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/itemSelected.dart';
 import 'package:takeed/components/LabelItem/labelItem.dart';
-import 'package:takeed/core/Extensions/navigation.dart';
-import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 

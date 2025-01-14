@@ -17,11 +17,11 @@ class ItemSelected extends StatefulWidget {
 class _ItemSelectedState extends State<ItemSelected> {
   bool _switchValue = true;
   int travellers = 0;
-  CounterRow adult = CounterRow(
+  CounterRow adult = const CounterRow(
     label: 'Adults',
   );
-  CounterRow child = CounterRow(label: 'Children');
-  CounterRow baby = CounterRow(label: 'Infants');
+  CounterRow child = const CounterRow(label: 'Children');
+  CounterRow baby = const CounterRow(label: 'Infants');
   String classType = 'Economy';
   int get getTravellers => travellers;
 

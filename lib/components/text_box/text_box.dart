@@ -30,11 +30,9 @@ class _MyTextBoxState extends State<MyTextBox> {
   void initState() {
     _focusNode = FocusNode();
 
-    // Request focus when the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_focusNode);
     });
-    // TODO: implement initState
     super.initState();
   }
 
@@ -56,7 +54,7 @@ class _MyTextBoxState extends State<MyTextBox> {
           ),
           contentPadding: const EdgeInsets.symmetric(
             vertical: 15.0,
-            horizontal: 15.0,
+            horizontal: 10.0,
           ),
         ),
       ),

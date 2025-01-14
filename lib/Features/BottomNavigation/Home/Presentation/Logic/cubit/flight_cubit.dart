@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
@@ -45,12 +45,14 @@ class FlightCubit extends Cubit<FlightState> {
         emit(LoadingText());
         final result = await flightsRepositoryImplementation
             .fetchAirplanesSuggestions(keyword: keyword);
-        result.fold((r) {
+        result.fold((left) {
+          emit(FlightError(error: left));
+        }, (r) {
           if (r.data!.isNotEmpty) {
             fromairports = r.data!;
           }
           emit(GetFromAirportsResult(ariportsmodel: fromairports));
-        }, (onError) => emit(FlightError(error: onError.message)));
+        });
       } else {
         clearlist(airportType: fromairports);
       }
@@ -63,10 +65,12 @@ class FlightCubit extends Cubit<FlightState> {
         emit(LoadingText());
         final result = await flightsRepositoryImplementation
             .fetchAirplanesSuggestions(keyword: keyword);
-        result.fold((onSuccess) {
-          toAirports = onSuccess.data!;
+        result.fold((left) {
+          emit(FlightError(error: left));
+        }, (r) {
+          toAirports = r.data!;
           emit(GetToAirportsResult(ariportsmodel: toAirports));
-        }, (onError) => emit(FlightError(error: onError.message)));
+        });
       } else {
         clearlist(airportType: toAirports);
       }
@@ -105,18 +109,20 @@ class FlightCubit extends Cubit<FlightState> {
     }
   }
 
-  Future<void> createFlightOrder(
-      {required FlightOfferFromPricing flightRequest,
-      required List<Traveller> travelers}) async {
+  Future<void> createFlightOrder({
+    required FlightOfferFromPricing flightRequest,
+    required List<Traveller> travelers,
+    required Address address,
+  }) async {
     emit(FlightLoading());
     final result = await flightsRepositoryImplementation.createFlightOrder(
-      flightRequest: flightRequest,
-      travelers: travelers,
-    );
-    result.fold((r) {
+        flightRequest: flightRequest, travelers: travelers, address: address);
+    result.fold((left) {
+      emit(FlightError(error: left));
+    }, (r) {
       flightOrder = r;
       emit(GetFlightOrderResult(flight: flightOrder));
-    }, (l) => emit(FlightError(error: l)));
+    });
   }
 
   Future<void> getSearchedFlights(
@@ -140,12 +146,11 @@ class FlightCubit extends Cubit<FlightState> {
         children: children,
         infants: infants,
         max: max);
-    result.fold((onSuccess) {
-      flightsearchmodel = onSuccess;
+    result.fold((left) {
+      emit(FlightError(error: left));
+    }, (r) {
+      flightsearchmodel = r;
       emit(GetSearchedFlightsResult(flightsearchmodel: flightsearchmodel));
-    }, (onError) {
-      debugPrint(onError.message.toString());
-      emit(FlightError(error: onError.message));
     });
   }
 
@@ -154,12 +159,12 @@ class FlightCubit extends Cubit<FlightState> {
     emit(FlightLoading());
     final res = await flightsRepositoryImplementation
         .createFlightOfferFromPricing(flightoffer: flightoffer);
-    res.fold((onSuccess) {
-      flightOfferFromPricing = onSuccess;
+    res.fold((left) {
+      emit(FlightError(error: left));
+    }, (r) {
+      flightOfferFromPricing = r;
 
-      emit(GetFlightOfferFromPricingResult(flightOfferFromPricing: onSuccess));
-    }, (onError) {
-      emit(FlightError(error: onError.message));
+      emit(GetFlightOfferFromPricingResult(flightOfferFromPricing: r));
     });
   }
 
@@ -219,15 +224,9 @@ class FlightCubit extends Cubit<FlightState> {
       final matchdepatureTime = compareTimeAgainstRanges(
           FlightCard.getTime(time: segment.first.departure!.at ?? ''),
           depatureTime);
-      // final matchairline = airlines.isEmpty ||
-      //     airlines
-      //         .contains(segment.first.carrierCode) || // for depature airlines
-      //     airlines.contains(segment.last.carrierCode); // for arrival airlines
-      return matchstops && matchprice && matcharrivalTime && matchdepatureTime
-          //  && matchairline
-          ;
+
+      return matchstops && matchprice && matcharrivalTime && matchdepatureTime;
     }).toList();
-    print(filterList.length);
 
     emit(FilterSearch());
   }
@@ -244,7 +243,6 @@ class FlightCubit extends Cubit<FlightState> {
       final matchprice = flightPrice >= minPrice && flightPrice <= maxPrice;
       return matchprice;
     }).toList();
-    print(filterList.length);
 
     emit(FilterSearch());
   }
@@ -263,7 +261,6 @@ class FlightCubit extends Cubit<FlightState> {
           arrivalTime);
       return matcharrivalTime;
     }).toList();
-    print(filterList.length);
 
     emit(FilterSearch());
   }
@@ -280,7 +277,6 @@ class FlightCubit extends Cubit<FlightState> {
           depatureTime);
       return matchDepature;
     }).toList();
-    print(filterList.length);
 
     emit(FilterSearch());
   }
@@ -297,11 +293,9 @@ class FlightCubit extends Cubit<FlightState> {
       final matchstops = segment.length == stopsnumber;
       return matchstops;
     }).toList();
-    print(filterList.length);
     emit(FilterSearch());
   }
 
-  // Compare the two times
   bool compareTimeAgainstRanges(String timeIn24Hour, String arrivalTime) {
     if (arrivalTime.contains('Before')) {
       if (timeIn24Hour.compareTo('06:00') < 0) {
@@ -323,6 +317,6 @@ class FlightCubit extends Cubit<FlightState> {
       }
     }
 
-    return false; // Return the last key if none of the conditions are met
+    return false;
   }
 }

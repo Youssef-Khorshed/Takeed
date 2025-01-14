@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/HomeScreen.dart';
@@ -9,7 +7,6 @@ import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/lo
 import 'package:takeed/Features/BottomNavigation/MyBooking/mybooking.dart';
 import 'package:takeed/Features/BottomNavigation/Offers/offers.dart';
 import 'package:takeed/Features/BottomNavigation/Profile/profile.dart';
-import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultCard.dart';
 import 'package:takeed/core/Extensions/navigation.dart';
 import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';

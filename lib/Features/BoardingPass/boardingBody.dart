@@ -51,7 +51,7 @@ class Boardingbody extends StatelessWidget {
         Airportdetails(
           flightSearchData: FlightOfferFromPricing(),
         ),
-        const Flightdatetime(),
+        // Flightdatetime(),
         const SizedBox(height: 24),
         // Flight Info
         Row(

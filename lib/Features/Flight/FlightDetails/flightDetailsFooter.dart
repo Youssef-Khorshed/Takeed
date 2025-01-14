@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 import 'package:takeed/Features/Flight/FlightDetails/travellerDetails.dart';
@@ -57,10 +58,19 @@ class Flightdetailsfooter extends StatelessWidget {
                         buttonText: 'Confirm',
                         textStyle: TextStyles.font18WhiteRegular,
                         onPressed: () {
-                          context.read<FlightCubit>().createFlightOrder(
-                              flightRequest: flightSearchData,
-                              travelers:
-                                  context.read<FlightCubit>().travellers);
+                          final cubit = context.read<FlightCubit>();
+                          if (cubit.travellers.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please add travelers'),
+                              ),
+                            );
+                          } else {
+                            cubit.createFlightOrder(
+                                address: Address(),
+                                flightRequest: flightSearchData,
+                                travelers: cubit.travellers);
+                          }
                         }),
                   ),
                 ],
@@ -86,7 +96,7 @@ class Flightdetailsfooter extends StatelessWidget {
                       builder: (context) {
                         return SizedBox(
                             child: TravellerForm(
-                                onSubmit: (traveller) => context
+                                onSubmit: (traveller, address) => context
                                     .read<FlightCubit>()
                                     .travellers
                                     .add(traveller)));
@@ -97,13 +107,7 @@ class Flightdetailsfooter extends StatelessWidget {
               );
             });
           } else {
-            return [
-              const SizedBox()
-              // ListTile(
-              //   title: Text(element.key),
-              //   trailing: Text('${element.value}'),
-              // ),
-            ];
+            return [const SizedBox()];
           }
         }).toList());
   }

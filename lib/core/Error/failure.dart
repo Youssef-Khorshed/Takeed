@@ -7,45 +7,32 @@ abstract class Failure {
   List<Object?> get props => [message];
 }
 
-/// server Error
 class ServerFailure extends Failure {
   ServerFailure({required super.message});
-  static String fromDioError(DioException dioError) {
-    if (dioError.response != null) {
-      if (dioError.response?.data['error'] != null) {
-        return dioError.response?.data['error'];
-      }
 
-      return dioError.response?.data['message'];
-    } else {
-      switch (dioError.type) {
-        case DioExceptionType.connectionTimeout:
-          return 'Connection Timeout';
-        case DioExceptionType.sendTimeout:
-          return 'Send Timeout';
-        case DioExceptionType.receiveTimeout:
-          return 'Receive Timeout';
-        case DioExceptionType.badCertificate:
-          return 'Bad Certificate';
-        case DioExceptionType.badResponse:
-          return 'Bad Response';
-        case DioExceptionType.cancel:
-          return 'Request Cancelled';
-        case DioExceptionType.connectionError:
-          return 'Connection Error';
-        case DioExceptionType.unknown:
-          return 'Unknown Error';
-        default:
-          return 'Opps Something went wrong';
-      }
+  static String fromDio(DioException error) {
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return 'Connection timeout';
+      case DioExceptionType.badResponse:
+        return fromResponse(error.response!);
+      case DioExceptionType.connectionError:
+        return 'No internet connection';
+      default:
+        return error.message ?? 'Unexpected error occurred';
     }
   }
 
-  static String fromResponse(Response<dynamic>? response) {
-    if (response != null) {
-      return response.data['error'];
+  static String fromResponse(Response response) {
+    final data = response.data;
+    if (data is String) {
+      return data;
+    } else if (data is Map) {
+      return data['message'] ?? data['error']['message'] ?? 'Unknown error';
     } else {
-      switch (response?.statusCode) {
+      switch (response.statusCode) {
         case 200 || 201:
           return "Success! Data fetched.";
         case 400:
@@ -65,7 +52,7 @@ class ServerFailure extends Failure {
         case 503:
           return "Service Unavailable: The service is temporarily down.";
         default:
-          return "Unexpected error: ${response?.statusCode}. Please try again later.";
+          return "Unexpected error: ${response.statusCode}. Please try again later.";
       }
     }
   }

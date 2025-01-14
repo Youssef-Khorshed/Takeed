@@ -14,10 +14,10 @@ class Paymentbody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _username = TextEditingController();
-    TextEditingController _expiredate = TextEditingController();
-    TextEditingController _cvv = TextEditingController();
-    TextEditingController _cardnumber = TextEditingController();
+    TextEditingController username = TextEditingController();
+    TextEditingController expiredate = TextEditingController();
+    TextEditingController cvv = TextEditingController();
+    TextEditingController cardnumber = TextEditingController();
 
     return Column(
       children: [
@@ -67,7 +67,7 @@ class Paymentbody extends StatelessWidget {
               style: TextStyles.font16BlackRegular,
             ),
             TextField(
-              controller: _cardnumber,
+              controller: cardnumber,
               decoration: const InputDecoration(
                 hintText: '0000 0000 0000 0000',
               ),
@@ -83,7 +83,7 @@ class Paymentbody extends StatelessWidget {
               style: TextStyles.font16BlackRegular,
             ),
             TextField(
-              controller: _username,
+              controller: username,
               decoration: const InputDecoration(
                 hintText: 'John Doe',
               ),
@@ -102,7 +102,7 @@ class Paymentbody extends StatelessWidget {
                     style: TextStyles.font16BlackRegular,
                   ),
                   TextField(
-                    controller: _cvv,
+                    controller: cvv,
                     decoration: const InputDecoration(
                       hintText: '000',
                     ),
@@ -120,7 +120,7 @@ class Paymentbody extends StatelessWidget {
                     style: TextStyles.font16BlackRegular,
                   ),
                   TextField(
-                    controller: _expiredate,
+                    controller: expiredate,
                     decoration: const InputDecoration(
                       hintText: '09/26',
                     ),
@@ -132,7 +132,7 @@ class Paymentbody extends StatelessWidget {
         ),
         Paymentfooter(
           cardFormModel: CardFormModel(
-              name: _username.text, cvc: _cvv.text, month: '10', year: '26'),
+              name: username.text, cvc: cvv.text, month: '10', year: '26'),
           amount: double.parse(flightdetails.flightOffers!.first.price!.total!),
         )
       ],

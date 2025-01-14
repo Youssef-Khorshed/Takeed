@@ -26,11 +26,11 @@ class _FlightdetailsbodyState extends State<Flightdetailsbody> {
   }
 
   void getDirection() {
-    widget.flightdetails.flightOffers!.first.itineraries!.first.segments!
-        .forEach((segment) {
+    for (var segment in widget
+        .flightdetails.flightOffers!.first.itineraries!.first.segments!) {
       directions.add(
           '${segment.departure!.iataCode} -> ${segment.arrival!.iataCode}');
-    });
+    }
   }
 
   @override
@@ -77,7 +77,9 @@ class _FlightdetailsbodyState extends State<Flightdetailsbody> {
               flightSearchData: widget.flightdetails,
             ),
             Line(upperpadding: 6, lowerpadding: 6),
-            const Flightdatetime(),
+            Flightdatetime(
+              flightSearchData: widget.flightdetails,
+            ),
             Line(upperpadding: 6, lowerpadding: 10),
             Column(
               children: directions

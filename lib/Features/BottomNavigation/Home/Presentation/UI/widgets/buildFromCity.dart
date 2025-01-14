@@ -5,7 +5,6 @@ import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/f
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/loadingShimmer.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
-import 'package:shimmer/shimmer.dart';
 
 class BuildFromCity extends StatefulWidget {
   final String label;
