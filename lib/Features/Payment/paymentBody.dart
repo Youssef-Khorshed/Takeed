@@ -58,78 +58,80 @@ class Paymentbody extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16.h),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Card number',
-              style: TextStyles.font16BlackRegular,
-            ),
-            TextField(
-              controller: cardnumber,
-              decoration: const InputDecoration(
-                hintText: '0000 0000 0000 0000',
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10.h),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Card holder name',
-              style: TextStyles.font16BlackRegular,
-            ),
-            TextField(
-              controller: username,
-              decoration: const InputDecoration(
-                hintText: 'John Doe',
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10.h),
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'CVV',
-                    style: TextStyles.font16BlackRegular,
-                  ),
-                  TextField(
-                    controller: cvv,
-                    decoration: const InputDecoration(
-                      hintText: '000',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Expiry date',
-                    style: TextStyles.font16BlackRegular,
-                  ),
-                  TextField(
-                    controller: expiredate,
-                    decoration: const InputDecoration(
-                      hintText: '09/26',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+
+        // SizedBox(height: 16.h),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text(
+        //       'Card number',
+        //       style: TextStyles.font16BlackRegular,
+        //     ),
+        //     TextField(
+        //       controller: cardnumber,
+        //       decoration: const InputDecoration(
+        //         hintText: '0000 0000 0000 0000',
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(height: 10.h),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text(
+        //       'Card holder name',
+        //       style: TextStyles.font16BlackRegular,
+        //     ),
+        //     TextField(
+        //       controller: username,
+        //       decoration: const InputDecoration(
+        //         hintText: 'John Doe',
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(height: 10.h),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Text(
+        //             'CVV',
+        //             style: TextStyles.font16BlackRegular,
+        //           ),
+        //           TextField(
+        //             controller: cvv,
+        //             decoration: const InputDecoration(
+        //               hintText: '000',
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     const SizedBox(width: 16),
+        //     Expanded(
+        //       child: Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Text(
+        //             'Expiry date',
+        //             style: TextStyles.font16BlackRegular,
+        //           ),
+        //           TextField(
+        //             controller: expiredate,
+        //             decoration: const InputDecoration(
+        //               hintText: '09/26',
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
+
         Paymentfooter(
           cardFormModel: CardFormModel(
               name: username.text, cvc: cvv.text, month: '10', year: '26'),

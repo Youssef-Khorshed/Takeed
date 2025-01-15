@@ -20,6 +20,7 @@ class _FlightSearchResultPageState extends State<FlightSearchResultPage> {
     super.initState();
   }
 
+  int _activeIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,11 +72,18 @@ class _FlightSearchResultPageState extends State<FlightSearchResultPage> {
                               ? Text(flight.length.toString())
                               : const SizedBox(),
                           FlightCard(
-                            index: flight[index],
-                            airlineLogo:
-                                segment.carrierCode, // Placeholder for logo
-                            airlineName: segment.carrierCode ??
-                                '', // You can map this to the actual name if needed
+                            onPressed: () async {
+                              _activeIndex = index;
+                              setState(() {});
+                              await context
+                                  .read<FlightCubit>()
+                                  .createFlightOfferFromPricing(
+                                      flightoffer: flight[index]);
+                            },
+                            activeindex: _activeIndex == index,
+                            flightOffers: flight[index],
+                            airlineLogo: segment.carrierCode,
+                            airlineName: segment.carrierCode ?? '',
                             flightNumber: segment.number ?? '',
                             departureTime: segment.departure!.at ?? '',
                             arrivalTime: segment.arrival!.at ?? '',

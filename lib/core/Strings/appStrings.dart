@@ -55,15 +55,28 @@ class Appstrings {
           "ticketingAgreement": {"option": "DELAY_TO_CANCEL", "delay": "6D"},
           "contacts": [
             {
-              "addresseeName": {
-                "firstName": travelers.first.name!.firstName,
-                "lastName": travelers.first.name!.lastName
-              },
+              "addresseeName": {"firstName": "PABLO", "lastName": "RODRIGUEZ"},
               "companyName": "INCREIBLE VIAJES",
               "purpose": "STANDARD",
-              "phones": travelers.first.contact!.phones,
-              "emailAddress": travelers.first.contact!.emailAddress,
-              "address": address.toJson()
+              "phones": [
+                {
+                  "deviceType": "LANDLINE",
+                  "countryCallingCode": "34",
+                  "number": "480080071"
+                },
+                {
+                  "deviceType": "MOBILE",
+                  "countryCallingCode": "33",
+                  "number": "480080072"
+                }
+              ],
+              "emailAddress": "support@increibleviajes.es",
+              "address": {
+                "lines": ["Calle Prado, 16"],
+                "postalCode": "28014",
+                "cityName": "Madrid",
+                "countryCode": "ES"
+              }
             }
           ],
           "formOfPayments": [

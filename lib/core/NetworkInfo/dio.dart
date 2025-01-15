@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:takeed/core/DI/dependencyInjection.dart';
 import 'package:takeed/core/Enums/localization.dart';
 import 'package:takeed/core/Error/failure.dart';
@@ -9,93 +10,36 @@ import 'package:takeed/core/NetworkInfo/logger.dart';
 import 'package:takeed/core/lang/LocalCubit/local_cubit.dart';
 import 'package:takeed/core/utils/secure_token.dart';
 
-class DioFactory {
+class HttpFactory {
   final InternetConnectivity internetConnectivity;
-  static Dio? _dio;
+  static http.Client? _client;
   final Duration timeOut = const Duration(seconds: 30);
 
-  DioFactory({required this.internetConnectivity});
+  HttpFactory({required this.internetConnectivity}) {
+    _client ??= http.Client();
+  }
 
-  Future<Dio> getDio({
+  Future<Map<String, String>> _getHeaders({
     String? outerToken,
     String? contentType,
     Map<String, dynamic>? headers,
   }) async {
     final token = await SecureToken.getToken();
-
-    if (_dio == null) {
-      _dio = Dio()
-        ..options.connectTimeout = timeOut
-        ..options.receiveTimeout = timeOut;
-
-      _addDioInterceptor();
-    }
-
     final language = getit.get<LocalCubit>().localizationThemeState ==
             LocalizationThemeState.ar
         ? "ar"
         : "en";
 
-    _addDioHeaders(
-      language: language,
-      token: token ?? outerToken,
-      contentType: contentType,
-      headers: headers,
-    );
-
-    return _dio!;
-  }
-
-  static void _addDioHeaders({
-    String? token,
-    String? language,
-    String? contentType,
-    Map<String, dynamic>? headers,
-  }) {
-    _dio?.options.contentType = contentType ?? 'application/json';
-    _dio?.options.headers = headers ??
+    return headers?.cast<String, String>() ??
         {
-          // 'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
-          //   if (language != null) 'X-Locale': language,
+          'Accept': 'application/json',
+          'Content-Type': contentType ?? 'application/json',
+          'Authorization': 'Bearer ${token ?? outerToken}',
+          'X-Locale': language,
         };
   }
 
-  void _addDioInterceptor() {
-    _dio?.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          Logger.logRequest(
-            method: options.method,
-            url: options.uri.toString(),
-            headers: options.headers.cast<String, String>(),
-            body: options.data,
-          );
-          return handler.next(options);
-        },
-        onResponse: (response, handler) {
-          final requestTime =
-              response.requestOptions.extra['requestTime'] as DateTime?;
-          final duration = requestTime != null
-              ? DateTime.now().difference(requestTime)
-              : const Duration();
-
-          Logger.logResponse(
-            statusCode: response.statusCode ?? 0,
-            body: response.data.toString(),
-            duration: duration,
-          );
-          return handler.next(response);
-        },
-        onError: (error, handler) {
-          Logger.logError(error);
-          return handler.next(error);
-        },
-      ),
-    );
-  }
-
-  Future<Either<String, Response>> getRequest({
+  Future<Either<String, http.Response>> getRequest({
     required String url,
     Object? body,
     String? contentType,
@@ -103,33 +47,49 @@ class DioFactory {
     Map<String, dynamic>? headers,
   }) async {
     try {
-      if (!await internetConnectivity.isConnected) {
-        return const Left('No internet Connection');
+      if (await internetConnectivity.isConnected) {
+        final requestHeaders = await _getHeaders(
+          outerToken: outerToken,
+          contentType: contentType,
+          headers: headers,
+        );
+
+        Logger.logRequest(
+          method: 'GET',
+          url: url,
+          headers: requestHeaders,
+          body: body,
+        );
+
+        final stopwatch = Stopwatch()..start();
+        final response = await http
+            .get(
+              Uri.parse(url),
+              headers: requestHeaders,
+            )
+            .timeout(timeOut);
+        stopwatch.stop();
+
+        Logger.logResponse(
+          statusCode: response.statusCode,
+          body: response.body,
+          duration: stopwatch.elapsed,
+        );
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return Right(response);
+        } else {
+          return Left(_handleErrorResponse(response));
+        }
       }
-
-      final dio = await getDio(
-        outerToken: outerToken,
-        headers: headers,
-        contentType: contentType,
-      );
-
-      final response = await dio.get(url, data: body);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(response);
-      } else {
-        return Left(ServerFailure.fromResponse(response));
-      }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDio(e));
-    } on TimeoutException {
-      return const Left('Connection timeout');
+      return const Left('No internet Connection');
     } catch (e) {
-      return const Left('Unexpected error occurred');
+      Logger.logError(e);
+      return Left(_handleException(e));
     }
   }
 
-  Future<Either<String, Response>> postRequest({
+  Future<Either<String, http.Response>> postRequest({
     required String url,
     Object? body,
     String? contentType,
@@ -137,33 +97,51 @@ class DioFactory {
     Map<String, dynamic>? headers,
   }) async {
     try {
-      if (!await internetConnectivity.isConnected) {
-        return const Left('No internet Connection');
+      if (await internetConnectivity.isConnected) {
+        final requestHeaders = await _getHeaders(
+          outerToken: outerToken,
+          contentType: contentType,
+          headers: headers,
+        );
+
+        final encodedBody = body != null ? json.encode(body) : null;
+        Logger.logRequest(
+          method: 'POST',
+          url: url,
+          headers: requestHeaders,
+          body: encodedBody,
+        );
+
+        final stopwatch = Stopwatch()..start();
+        final response = await http
+            .post(
+              Uri.parse(url),
+              body: encodedBody,
+              headers: requestHeaders,
+            )
+            .timeout(timeOut);
+        stopwatch.stop();
+
+        Logger.logResponse(
+          statusCode: response.statusCode,
+          body: response.body,
+          duration: stopwatch.elapsed,
+        );
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return Right(response);
+        } else {
+          return Left(ServerFailure.fromResponse(response));
+        }
       }
-
-      final dio = await getDio(
-        outerToken: outerToken,
-        headers: headers,
-        contentType: contentType,
-      );
-
-      final response = await dio.post(url, data: body);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(response);
-      } else {
-        return Left(ServerFailure.fromResponse(response));
-      }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDio(e));
-    } on TimeoutException {
-      return const Left('Connection timeout');
+      return const Left('No internet Connection');
     } catch (e) {
-      return const Left('Unexpected error occurred');
+      Logger.logError(e);
+      return Left(_handleException(e));
     }
   }
 
-  Future<Either<String, Response>> putRequest({
+  Future<Either<String, http.Response>> putRequest({
     required String url,
     Object? body,
     String? contentType,
@@ -171,33 +149,51 @@ class DioFactory {
     Map<String, dynamic>? headers,
   }) async {
     try {
-      if (!await internetConnectivity.isConnected) {
-        return const Left('No internet Connection');
+      if (await internetConnectivity.isConnected) {
+        final requestHeaders = await _getHeaders(
+          outerToken: outerToken,
+          contentType: contentType,
+          headers: headers,
+        );
+
+        final encodedBody = body != null ? json.encode(body) : null;
+        Logger.logRequest(
+          method: 'PUT',
+          url: url,
+          headers: requestHeaders,
+          body: encodedBody,
+        );
+
+        final stopwatch = Stopwatch()..start();
+        final response = await http
+            .put(
+              Uri.parse(url),
+              body: encodedBody,
+              headers: requestHeaders,
+            )
+            .timeout(timeOut);
+        stopwatch.stop();
+
+        Logger.logResponse(
+          statusCode: response.statusCode,
+          body: response.body,
+          duration: stopwatch.elapsed,
+        );
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return Right(response);
+        } else {
+          return Left(ServerFailure.fromResponse(response));
+        }
       }
-
-      final dio = await getDio(
-        outerToken: outerToken,
-        headers: headers,
-        contentType: contentType,
-      );
-
-      final response = await dio.put(url, data: body);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(response);
-      } else {
-        return Left(ServerFailure.fromResponse(response));
-      }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDio(e));
-    } on TimeoutException {
-      return const Left('Connection timeout');
+      return const Left('No internet Connection');
     } catch (e) {
-      return const Left('Unexpected error occurred');
+      Logger.logError(e);
+      return Left(_handleException(e));
     }
   }
 
-  Future<Either<String, Response>> deleteRequest({
+  Future<Either<String, http.Response>> deleteRequest({
     required String url,
     Object? body,
     String? contentType,
@@ -205,29 +201,63 @@ class DioFactory {
     Map<String, dynamic>? headers,
   }) async {
     try {
-      if (!await internetConnectivity.isConnected) {
-        return const Left('No internet Connection');
+      if (await internetConnectivity.isConnected) {
+        final requestHeaders = await _getHeaders(
+          outerToken: outerToken,
+          contentType: contentType,
+          headers: headers,
+        );
+
+        final encodedBody = body != null ? json.encode(body) : null;
+        Logger.logRequest(
+          method: 'DELETE',
+          url: url,
+          headers: requestHeaders,
+          body: encodedBody,
+        );
+
+        final stopwatch = Stopwatch()..start();
+        final response = await http
+            .delete(
+              Uri.parse(url),
+              body: encodedBody,
+              headers: requestHeaders,
+            )
+            .timeout(timeOut);
+        stopwatch.stop();
+
+        Logger.logResponse(
+          statusCode: response.statusCode,
+          body: response.body,
+          duration: stopwatch.elapsed,
+        );
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return Right(response);
+        } else {
+          return Left(ServerFailure.fromResponse(response));
+        }
       }
-
-      final dio = await getDio(
-        outerToken: outerToken,
-        headers: headers,
-        contentType: contentType,
-      );
-
-      final response = await dio.delete(url, data: body);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(response);
-      } else {
-        return Left(ServerFailure.fromResponse(response));
-      }
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDio(e));
-    } on TimeoutException {
-      return const Left('Connection timeout');
+      return const Left('No internet Connection');
     } catch (e) {
-      return const Left('Unexpected error occurred');
+      Logger.logError(e);
+      return Left(_handleException(e));
     }
+  }
+
+  String _handleErrorResponse(http.Response response) {
+    try {
+      final body = json.decode(response.body);
+      return body['message'] ?? 'Server Error';
+    } catch (e) {
+      return 'Server Error';
+    }
+  }
+
+  String _handleException(dynamic error) {
+    if (error is TimeoutException) {
+      return 'Connection timeout';
+    }
+    return 'Unexpected error occurred';
   }
 }

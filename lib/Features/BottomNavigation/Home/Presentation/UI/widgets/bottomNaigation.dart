@@ -75,9 +75,9 @@ class _HomeScreenButtomNavigationState
               content: Text('No flights found'),
             ));
           }
-        } else if (context.read<FlightCubit>().state is FlightError) {
+        } else if (state is FlightError) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('An error occured')));
+              .showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       builder: (context, state) {

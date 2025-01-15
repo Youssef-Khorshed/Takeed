@@ -1,27 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:io';
+
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/contact.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/name.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/phone.dart';
-import 'package:takeed/Features/Flight/FlightDetails/addressDetails.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
+import 'package:takeed/Features/Flight/FlightDetails/documentsDetails.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/text_box/authTextfield.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 import 'package:takeed/core/Validation/check_emptyText.dart';
-
 import '../../BottomNavigation/Home/Data/Model/traveller/traveller.dart';
 
 // ignore: must_be_immutable
 class TravellerForm extends StatefulWidget {
-  void Function(Traveller traveller, Address address) onSubmit;
-  TravellerForm({
+  const TravellerForm({
     super.key,
-    required this.onSubmit,
   });
 
   @override
@@ -35,11 +35,10 @@ class _TravellerFormState extends State<TravellerForm> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-
   final TextEditingController _dobController = TextEditingController();
   String _gender = 'MALE';
   List<Phone> phones = [];
-  String _countryCode = '+966';
+  String _countryCode = 'RUH';
 
   @override
   void initState() {
@@ -48,8 +47,14 @@ class _TravellerFormState extends State<TravellerForm> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
+      final trav = context.read<FlightCubit>().travellers;
+      phones.add(Phone(
+        deviceType: getDeviceType(),
+        countryCallingCode: _countryCode,
+        number: _phoneController.text,
+      ));
       final traveller = Traveller(
-        id: '1',
+        id: (trav.length + 1).toString(),
         contact: Contact(
           phones: phones,
           emailAddress: _emailController.text,
@@ -61,23 +66,10 @@ class _TravellerFormState extends State<TravellerForm> {
         dateOfBirth: _dobController.text,
         gender: _gender,
       );
-      setState(() {
-        widget.onSubmit(
-            traveller,
-            Address(
-              lines: [],
-              postalCode: '',
-              cityName: '',
-              countryCode: _countryCode,
-            ));
-      });
-
+      trav.add(traveller);
       Navigator.pop(context);
       showBottomSheet(
-          context: context,
-          builder: (context) => AddressdetailsForm(
-                onSubmit: (address, traveller) {},
-              ));
+          context: context, builder: (context) => const Documentsdetails());
     }
   }
 
@@ -109,9 +101,7 @@ class _TravellerFormState extends State<TravellerForm> {
               AppTextFormField(
                 controller: _dobController,
                 hintText: 'Birth Date',
-                validator: (value) {
-                  return Checktext.validateEmptyText(value, 'Birth Date');
-                },
+                validator: birthDateValidation,
               ),
               SizedBox(height: 20.h),
               DropdownButtonFormField<String>(
@@ -133,9 +123,7 @@ class _TravellerFormState extends State<TravellerForm> {
               AppTextFormField(
                 controller: _emailController,
                 hintText: 'Email',
-                validator: (value) {
-                  return Checktext.validateEmptyText(value, 'email');
-                },
+                validator: emailValidation,
               ),
               SizedBox(height: 20.h),
               AppTextFormField(
@@ -177,5 +165,35 @@ class _TravellerFormState extends State<TravellerForm> {
         ),
       ),
     );
+  }
+
+  emailValidation(value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your Email';
+    }
+    if (!Checktext.isValidEmail(value)) {
+      return 'Invalid email format';
+    }
+    return null;
+  }
+
+  birthDateValidation(value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a date';
+    }
+    if (!Checktext.isValidDate(value)) {
+      return 'Invalid date format. Please use YYYY-MM-DD';
+    }
+    return null;
+  }
+
+  String getDeviceType() {
+    if (Platform.isAndroid) {
+      return 'MOBILE';
+    } else if (Platform.isIOS) {
+      return 'MOBILE';
+    } else {
+      return 'TABLET';
+    }
   }
 }

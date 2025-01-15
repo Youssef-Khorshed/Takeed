@@ -30,6 +30,33 @@ class GetFlightOfferFromPricingResult extends FlightState {
   GetFlightOfferFromPricingResult({required this.flightOfferFromPricing});
 }
 
+class GetFlightOfferFromPricingLoading extends FlightState {}
+
+class GetFlightOfferFromPricingError extends FlightState {
+  final String error;
+  GetFlightOfferFromPricingError({required this.error});
+}
+
+class AddTravellerAddress extends FlightState {
+  Address travelleraddress;
+  AddTravellerAddress({required this.travelleraddress});
+}
+
+class AddTravellerDocument extends FlightState {
+  Document document;
+  AddTravellerDocument({required this.document});
+}
+
+class AddTraveller extends FlightState {
+  Traveller traveller;
+  AddTraveller({required this.traveller});
+}
+
+class CreateFlightorderError extends FlightState {
+  String message;
+  CreateFlightorderError({required this.message});
+}
+
 class GetFromAirportsResult extends FlightState {
   List<AirportData> ariportsmodel;
   GetFromAirportsResult({required this.ariportsmodel});

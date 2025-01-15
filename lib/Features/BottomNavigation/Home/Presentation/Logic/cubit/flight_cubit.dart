@@ -5,6 +5,7 @@ import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_o
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/document.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/traveller.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultCard.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/ariportsModel.dart';
@@ -18,6 +19,8 @@ class FlightCubit extends Cubit<FlightState> {
   TextEditingController toCityController = TextEditingController();
   List<AirportData> fromairports = [];
   List<AirportData> toAirports = [];
+  Address address = Address();
+  Document document = Document();
   FlightOfferFromPricing flightOfferFromPricing = FlightOfferFromPricing();
   List<String> currencyCode = ['SAR', 'USD'];
   AirportData fromairport = AirportData();
@@ -82,6 +85,21 @@ class FlightCubit extends Cubit<FlightState> {
     emit(ClearList());
   }
 
+  void addTravellerAddress({required Address travelleraddress}) {
+    address = travelleraddress;
+    emit(AddTravellerAddress(travelleraddress: address));
+  }
+
+  void addTraveller({required Traveller traveller}) {
+    travellers.add(traveller);
+    emit(AddTraveller(traveller: traveller));
+  }
+
+  void addTravellerDocument({required Document travellerdocument}) {
+    document = travellerdocument;
+    emit(AddTravellerDocument(document: document));
+  }
+
   void setAirport(
       {required AirportData airport, required List<AirportData> airportType}) {
     if (airportType == fromairports) {
@@ -118,7 +136,7 @@ class FlightCubit extends Cubit<FlightState> {
     final result = await flightsRepositoryImplementation.createFlightOrder(
         flightRequest: flightRequest, travelers: travelers, address: address);
     result.fold((left) {
-      emit(FlightError(error: left));
+      emit(CreateFlightorderError(message: left));
     }, (r) {
       flightOrder = r;
       emit(GetFlightOrderResult(flight: flightOrder));
@@ -156,11 +174,11 @@ class FlightCubit extends Cubit<FlightState> {
 
   Future<void> createFlightOfferFromPricing(
       {required GetFlightOffers flightoffer}) async {
-    emit(FlightLoading());
+    emit(GetFlightOfferFromPricingLoading());
     final res = await flightsRepositoryImplementation
         .createFlightOfferFromPricing(flightoffer: flightoffer);
     res.fold((left) {
-      emit(FlightError(error: left));
+      emit(GetFlightOfferFromPricingError(error: left));
     }, (r) {
       flightOfferFromPricing = r;
 

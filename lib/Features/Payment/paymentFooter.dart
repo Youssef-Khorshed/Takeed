@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:moyasar/moyasar.dart';
+import 'package:takeed/Features/Payment/moyaser.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/button/button2.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
@@ -33,6 +35,11 @@ class Paymentfooter extends StatelessWidget {
                   textStyle: TextStyles.font18WhiteRegular,
                   onPressed: () {
                     //  context.pushNamed(Routes.boardingPass);
+                    showBottomSheet(
+                        context: context,
+                        builder: (builder) => PaymentMethods(
+                              amount: amount.toInt(),
+                            ));
                   }),
               SizedBox(
                 height: 13.w,
@@ -42,21 +49,7 @@ class Paymentfooter extends StatelessWidget {
                   buttonWidth: 296.w,
                   buttonHeight: 56.h,
                   textStyle: TextStyles.font18orangeRegular,
-                  onPressed: () async {
-                    final paymentConfig = PaymentConfig(
-                      publishableApiKey:
-                          'sk_test_4QWt1E6vHwuwACr9NzVTLD1xF6TzyQ7xSRuLVAi6',
-                      amount: amount.round() * 100,
-                      description: 'order #1324',
-                      metadata: {'size': '250g'},
-                      creditCard:
-                          CreditCardConfig(saveCard: false, manual: false),
-                    );
-                    final request = CardPaymentRequestSource(
-                        creditCardData: cardFormModel,
-                        tokenizeCard: false,
-                        manualPayment: false);
-                  }),
+                  onPressed: () async {}),
             ],
           ),
         ],

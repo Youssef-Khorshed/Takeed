@@ -10,6 +10,7 @@ import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
+// ignore: must_be_immutable
 class FlightCard extends StatelessWidget {
   final String? airlineLogo;
   final String airlineName;
@@ -20,12 +21,16 @@ class FlightCard extends StatelessWidget {
   final String departureAirport;
   final String arrivalAirport;
   final String price;
-  final GetFlightOffers index;
+  final bool? activeindex;
+  final GetFlightOffers flightOffers;
+  void Function() onPressed;
 
-  const FlightCard({
+  FlightCard({
     super.key,
     this.airlineLogo,
-    required this.index,
+    this.activeindex = false,
+    required this.flightOffers,
+    required this.onPressed,
     required this.airlineName,
     required this.flightNumber,
     required this.departureTime,
@@ -175,13 +180,14 @@ class FlightCard extends StatelessWidget {
                   }
                 },
                 child: AppTextButton(
-                    buttonText: 'Check',
-                    textStyle: TextStyles.font18WhiteRegular,
-                    onPressed: () async {
-                      await context
-                          .read<FlightCubit>()
-                          .createFlightOfferFromPricing(flightoffer: index);
-                    }),
+                  buttonText: context.watch<FlightCubit>().state
+                              is GetFlightOfferFromPricingLoading &&
+                          activeindex!
+                      ? 'Loading'
+                      : 'Check',
+                  textStyle: TextStyles.font18WhiteRegular,
+                  onPressed: onPressed,
+                ),
               )
             ],
           ),

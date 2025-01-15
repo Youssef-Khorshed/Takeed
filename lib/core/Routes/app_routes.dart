@@ -15,6 +15,7 @@ import 'package:takeed/Features/BottomNavigation/MyBooking/mybookingDetails.dart
 import 'package:takeed/Features/BottomNavigation/Offers/offers.dart';
 import 'package:takeed/Features/BottomNavigation/Profile/profile.dart';
 import 'package:takeed/Features/Payment/PaymentPage.dart';
+import 'package:takeed/Features/Payment/moyaser.dart';
 import 'package:takeed/core/DI/dependencyInjection.dart';
 import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultPage.dart';
@@ -95,6 +96,12 @@ class AppRoutes {
             },
           ),
         );
+
+      case Routes.paymentmethods:
+        return MaterialPageRoute(
+            builder: (context) => PaymentMethods(
+                  amount: 0,
+                ));
 
       default:
         return MaterialPageRoute(

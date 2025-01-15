@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 abstract class Failure {
   final String message;
@@ -10,27 +11,12 @@ abstract class Failure {
 class ServerFailure extends Failure {
   ServerFailure({required super.message});
 
-  static String fromDio(DioException error) {
-    switch (error.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        return 'Connection timeout';
-      case DioExceptionType.badResponse:
-        return fromResponse(error.response!);
-      case DioExceptionType.connectionError:
-        return 'No internet connection';
-      default:
-        return error.message ?? 'Unexpected error occurred';
-    }
-  }
-
-  static String fromResponse(Response response) {
-    final data = response.data;
+  static String fromResponse(http.Response response) {
+    final data = json.decode(response.body);
     if (data is String) {
       return data;
     } else if (data is Map) {
-      return data['message'] ?? data['error']['message'] ?? 'Unknown error';
+      return data['Message'] ?? data['error']['Message'] ?? 'Unknown error';
     } else {
       switch (response.statusCode) {
         case 200 || 201:

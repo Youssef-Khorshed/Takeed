@@ -1,44 +1,33 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/contact.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/name.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/phone.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
+import 'package:takeed/Features/Flight/FlightDetails/IDPassword.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/text_box/authTextfield.dart';
-import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 import 'package:takeed/core/Validation/check_emptyText.dart';
 
-import '../../BottomNavigation/Home/Data/Model/traveller/traveller.dart';
-
 // ignore: must_be_immutable
-class AddressdetailsForm extends StatefulWidget {
-  void Function(Traveller traveller, Address address) onSubmit;
-  AddressdetailsForm({
+class Documentsdetails extends StatefulWidget {
+  const Documentsdetails({
     super.key,
-    required this.onSubmit,
   });
 
   @override
   // ignore: library_private_types_in_public_api
-  _AddressdetailsFormState createState() => _AddressdetailsFormState();
+  _DocumentsdetailsState createState() => _DocumentsdetailsState();
 }
 
-class _AddressdetailsFormState extends State<AddressdetailsForm> {
+class _DocumentsdetailsState extends State<Documentsdetails> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-
-  final TextEditingController _dobController = TextEditingController();
-  String _gender = 'MALE';
-  List<Phone> phones = [];
-  String _countryCode = '+966';
+  final TextEditingController _linesController = TextEditingController();
+  final TextEditingController _postalcodeController = TextEditingController();
+  final TextEditingController _countrycodeController = TextEditingController();
+  final TextEditingController _citynameController = TextEditingController();
 
   @override
   void initState() {
@@ -47,30 +36,13 @@ class _AddressdetailsFormState extends State<AddressdetailsForm> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
-      final traveller = Traveller(
-        id: '1',
-        contact: Contact(
-          phones: phones,
-          emailAddress: _emailController.text,
-        ),
-        name: Name(
-          firstName: _firstNameController.text,
-          lastName: _lastNameController.text,
-        ),
-        dateOfBirth: _dobController.text,
-        gender: _gender,
-      );
-      setState(() {
-        widget.onSubmit(
-            traveller,
-            Address(
-              lines: [],
-              postalCode: '',
-              cityName: '',
-              countryCode: _countryCode,
-            ));
-      });
-
+      context.read<FlightCubit>().addTravellerAddress(
+              travelleraddress: Address(
+            lines: [_linesController.text],
+            postalCode: _postalcodeController.text,
+            cityName: _citynameController.text,
+            countryCode: _countrycodeController.text,
+          ));
       Navigator.pop(context);
     }
   }
@@ -84,8 +56,9 @@ class _AddressdetailsFormState extends State<AddressdetailsForm> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
+              IDPassportRadioButton(onselectedvalue: (onselectedvalue) {}),
               AppTextFormField(
-                controller: _firstNameController,
+                controller: _linesController,
                 hintText: 'Lines',
                 validator: (value) {
                   return Checktext.validateEmptyText(value, 'First Name');
@@ -93,7 +66,7 @@ class _AddressdetailsFormState extends State<AddressdetailsForm> {
               ),
               SizedBox(height: 20.h),
               AppTextFormField(
-                controller: _lastNameController,
+                controller: _postalcodeController,
                 hintText: 'Postal code',
                 validator: (value) {
                   return Checktext.validateEmptyText(value, 'Postal code');
@@ -101,7 +74,7 @@ class _AddressdetailsFormState extends State<AddressdetailsForm> {
               ),
               SizedBox(height: 20.h),
               AppTextFormField(
-                controller: _dobController,
+                controller: _citynameController,
                 hintText: 'City Name',
                 validator: (value) {
                   return Checktext.validateEmptyText(value, 'City Name');
@@ -109,7 +82,7 @@ class _AddressdetailsFormState extends State<AddressdetailsForm> {
               ),
               SizedBox(height: 20.h),
               AppTextFormField(
-                controller: _emailController,
+                controller: _countrycodeController,
                 hintText: 'Country Code',
                 validator: (value) {
                   return Checktext.validateEmptyText(value, 'Country Code');

@@ -13,7 +13,7 @@ class Phone {
 
   Map<String, dynamic> toJson() => {
         'deviceType': deviceType,
-        'countryCallingCode': countryCallingCode,
+        'countryCallingCode': countryCallingCode!.substring(1),
         'number': number,
       };
 }

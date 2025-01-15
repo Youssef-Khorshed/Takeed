@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 import 'package:takeed/Features/Flight/FlightDetails/travellerDetails.dart';
@@ -67,7 +66,7 @@ class Flightdetailsfooter extends StatelessWidget {
                             );
                           } else {
                             cubit.createFlightOrder(
-                                address: Address(),
+                                address: cubit.address,
                                 flightRequest: flightSearchData,
                                 travelers: cubit.travellers);
                           }
@@ -94,12 +93,7 @@ class Flightdetailsfooter extends StatelessWidget {
                   showBottomSheet(
                       context: context,
                       builder: (context) {
-                        return SizedBox(
-                            child: TravellerForm(
-                                onSubmit: (traveller, address) => context
-                                    .read<FlightCubit>()
-                                    .travellers
-                                    .add(traveller)));
+                        return const SizedBox(child: TravellerForm());
                       });
                 },
                 title: Text(element.key),

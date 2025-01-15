@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -14,7 +16,7 @@ import 'package:takeed/core/Strings/appStrings.dart';
 
 class FlightsRemoteImplementation implements FlightsRemote {
   Dio dio;
-  DioFactory apiService = DioFactory(
+  HttpFactory apiService = HttpFactory(
       internetConnectivity: MobileConnectivity(connectivity: Connectivity()));
   FlightsRemoteImplementation({required this.dio});
   @override
@@ -23,7 +25,7 @@ class FlightsRemoteImplementation implements FlightsRemote {
     final res = await apiService.getRequest(
         url: Appstrings.airPortsSuggestions(keyword: keyword));
     return res.fold((ifLeft) => Left(ifLeft),
-        (ifRight) => Right(Ariportsmodel.fromJson(ifRight.data)));
+        (ifRight) => Right(Ariportsmodel.fromJson(jsonDecode(ifRight.body))));
   }
 
   @override
@@ -49,7 +51,8 @@ class FlightsRemoteImplementation implements FlightsRemote {
             infants: infants,
             max: max));
     return res.fold((ifLeft) => Left(ifLeft), (ifRight) {
-      final List<dynamic> flights = ifRight.data['tayarResult']['data'];
+      final List<dynamic> flights =
+          jsonDecode(ifRight.body)['tayarResult']['data'];
       final List<GetFlightOffers> flightOffers =
           flights.map((flight) => GetFlightOffers.fromJson(flight)).toList();
       return Right(flightOffers);
@@ -71,8 +74,8 @@ class FlightsRemoteImplementation implements FlightsRemote {
 
     return res.fold(
         (ifLeft) => Left(ifLeft),
-        (ifRight) => Right(
-            CreateFlightOrder.fromJson(ifRight.data['tayarResult']['data'])));
+        (ifRight) => Right(CreateFlightOrder.fromJson(
+            jsonDecode(ifRight.body)['tayarResult']['data'])));
   }
 
   @override
@@ -85,6 +88,6 @@ class FlightsRemoteImplementation implements FlightsRemote {
     return res.fold(
         (ifLeft) => Left(ifLeft),
         (ifRight) => Right(FlightOfferFromPricing.fromJson(
-            ifRight.data['tayarResult']['data'])));
+            jsonDecode(ifRight.body)['tayarResult']['data'])));
   }
 }

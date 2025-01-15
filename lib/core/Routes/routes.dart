@@ -14,4 +14,5 @@ class Routes {
   static const String ocr = '/ocr';
   static const String bottomnavigation = '/bottomnavigation';
   static const String mybookingdetails = '/mybookingdetails';
+  static const String paymentmethods = '/paymentmethods';
 }

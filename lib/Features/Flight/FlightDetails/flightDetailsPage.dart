@@ -20,6 +20,9 @@ class FlightDetailsPage extends StatelessWidget {
         if (state is GetFlightOrderResult) {
           Navigator.of(context).pushReplacement(CupertinoPageRoute(
               builder: (_) => PaymentScreen(flightdetails: state.flight)));
+        } else if (state is CreateFlightorderError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message.substring(6))));
         }
       },
       child: Scaffold(
@@ -31,6 +34,7 @@ class FlightDetailsPage extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
+              context.read<FlightCubit>().travellers.clear();
               Navigator.pop(context);
             },
           ),
