@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultCard.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 // ignore: must_be_immutable
-class Flightticketrow extends StatefulWidget {
-  GetFlightOffers flightdetails;
+class FlightticketrowForBoarding extends StatefulWidget {
+  CreateFlightOrder flightdetails;
 
-  Flightticketrow({super.key, required this.flightdetails});
+  FlightticketrowForBoarding({super.key, required this.flightdetails});
 
   @override
-  State<Flightticketrow> createState() => _FlightticketrowState();
+  State<FlightticketrowForBoarding> createState() =>
+      _FlightticketrowForBoardingState();
 }
 
-class _FlightticketrowState extends State<Flightticketrow> {
+class _FlightticketrowForBoardingState
+    extends State<FlightticketrowForBoarding> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,12 +30,12 @@ class _FlightticketrowState extends State<Flightticketrow> {
               children: [
                 Text(
                     FlightCard.getTime(
-                        time: widget.flightdetails.itineraries!.first.segments!
-                            .first.departure!.at!),
+                        time: widget.flightdetails.flightOffers!.first
+                            .itineraries!.first.segments!.first.departure!.at!),
                     style: TextStyles.font18BlackBold),
                 Text(
-                    widget.flightdetails.itineraries!.first.segments!.first
-                        .departure!.iataCode!,
+                    widget.flightdetails.flightOffers!.first.itineraries!.first
+                        .segments!.first.departure!.iataCode!,
                     style: TextStyles.font14BlackRegular),
               ],
             ),
@@ -69,12 +71,12 @@ class _FlightticketrowState extends State<Flightticketrow> {
               children: [
                 Text(
                     FlightCard.getTime(
-                        time: widget.flightdetails.itineraries!.first.segments!
-                            .first.arrival!.at!),
+                        time: widget.flightdetails.flightOffers!.first
+                            .itineraries!.first.segments!.first.arrival!.at!),
                     style: TextStyles.font18BlackBold),
                 Text(
-                    widget.flightdetails.itineraries!.first.segments!.first
-                        .arrival!.iataCode!,
+                    widget.flightdetails.flightOffers!.first.itineraries!.first
+                        .segments!.first.arrival!.iataCode!,
                     style: TextStyles.font14BlackRegular),
               ],
             ),

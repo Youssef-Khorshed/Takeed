@@ -47,10 +47,7 @@ class LoginscreenFooter extends StatelessWidget {
                       text: 'Sign Up',
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          // context.pushReplacementNamed(Routes.register);
-                          showBottomSheet(
-                              context: context,
-                              builder: (builder) => const Documentsdetails());
+                          context.pushReplacementNamed(Routes.register);
                         },
                       style: TextStyles.font14orangeRegular,
                     )

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/Flight/FlightSearchResult/FlightSearchResultCard.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 // ignore: must_be_immutable
-class Airportdetails extends StatefulWidget {
-  FlightOfferFromPricing flightSearchData;
+class AirportdetailsForBoarding extends StatefulWidget {
+  CreateFlightOrder flightSearchData;
 
-  Airportdetails({super.key, required this.flightSearchData});
+  AirportdetailsForBoarding({super.key, required this.flightSearchData});
 
   @override
-  State<Airportdetails> createState() => _AirportdetailsState();
+  State<AirportdetailsForBoarding> createState() =>
+      _AirportdetailsForBoardingState();
 }
 
-class _AirportdetailsState extends State<Airportdetails> {
+class _AirportdetailsForBoardingState extends State<AirportdetailsForBoarding> {
   @override
   Widget build(BuildContext context) {
     return widget.flightSearchData.flightOffers!.first.itineraries == null

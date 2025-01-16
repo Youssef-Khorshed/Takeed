@@ -22,20 +22,8 @@ class PaymentScreen extends StatelessWidget {
           },
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.h),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Paymentbody(
-                flightdetails: flightdetails,
-              ),
-              SizedBox(height: 20.h),
-            ],
-          ),
-        ),
+      body: Paymentbody(
+        flightdetails: flightdetails,
       ),
     );
   }

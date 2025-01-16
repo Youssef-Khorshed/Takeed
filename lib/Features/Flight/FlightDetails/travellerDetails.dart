@@ -49,7 +49,7 @@ class _TravellerFormState extends State<TravellerForm> {
     if (_formKey.currentState?.validate() ?? false) {
       final trav = context.read<FlightCubit>().travellers;
       phones.add(Phone(
-        deviceType: getDeviceType(),
+        deviceType: Checktext.getDeviceType(),
         countryCallingCode: _countryCode,
         number: _phoneController.text,
       ));
@@ -69,7 +69,10 @@ class _TravellerFormState extends State<TravellerForm> {
       trav.add(traveller);
       Navigator.pop(context);
       showBottomSheet(
-          context: context, builder: (context) => const Documentsdetails());
+          context: context,
+          builder: (context) => Documentsdetails(
+                country: _countryCode,
+              ));
     }
   }
 
@@ -101,7 +104,7 @@ class _TravellerFormState extends State<TravellerForm> {
               AppTextFormField(
                 controller: _dobController,
                 hintText: 'Birth Date',
-                validator: birthDateValidation,
+                validator: Checktext.birthDateValidation,
               ),
               SizedBox(height: 20.h),
               DropdownButtonFormField<String>(
@@ -123,7 +126,7 @@ class _TravellerFormState extends State<TravellerForm> {
               AppTextFormField(
                 controller: _emailController,
                 hintText: 'Email',
-                validator: emailValidation,
+                validator: Checktext.emailValidation,
               ),
               SizedBox(height: 20.h),
               AppTextFormField(
@@ -165,35 +168,5 @@ class _TravellerFormState extends State<TravellerForm> {
         ),
       ),
     );
-  }
-
-  emailValidation(value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your Email';
-    }
-    if (!Checktext.isValidEmail(value)) {
-      return 'Invalid email format';
-    }
-    return null;
-  }
-
-  birthDateValidation(value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a date';
-    }
-    if (!Checktext.isValidDate(value)) {
-      return 'Invalid date format. Please use YYYY-MM-DD';
-    }
-    return null;
-  }
-
-  String getDeviceType() {
-    if (Platform.isAndroid) {
-      return 'MOBILE';
-    } else if (Platform.isIOS) {
-      return 'MOBILE';
-    } else {
-      return 'TABLET';
-    }
   }
 }

@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:moyasar/moyasar.dart';
+
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/Payment/moyaser.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/button/button2.dart';
@@ -10,11 +11,11 @@ import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 // ignore: must_be_immutable
 class Paymentfooter extends StatelessWidget {
-  CardFormModel cardFormModel;
-  double amount;
+  CreateFlightOrder createFlightOrder;
+  int amount;
   Paymentfooter({
     super.key,
-    required this.cardFormModel,
+    required this.createFlightOrder,
     required this.amount,
   });
 
@@ -38,7 +39,20 @@ class Paymentfooter extends StatelessWidget {
                     showBottomSheet(
                         context: context,
                         builder: (builder) => PaymentMethods(
-                              amount: amount.toInt(),
+                              offers: createFlightOrder,
+                              paymentConfig: PaymentConfig(
+                                publishableApiKey:
+                                    'pk_test_3XNnbvssL1F9oQbd2THeavNshC8WRiW6uUwyTq1T',
+                                amount: amount.toInt(),
+                                description: 'Buy A new Ticket',
+                                metadata: {'description': 'A new Ticket'},
+                                creditCard: CreditCardConfig(
+                                    saveCard: true, manual: false),
+                                applePay: ApplePayConfig(
+                                    merchantId: 'YOUR_MERCHANT_ID',
+                                    label: 'YOUR_STORE_NAME',
+                                    manual: false),
+                              ),
                             ));
                   }),
               SizedBox(
@@ -55,5 +69,17 @@ class Paymentfooter extends StatelessWidget {
         ],
       ),
     ]);
+  }
+
+  int convertStringToInt(String str) {
+    try {
+      str = str.trim(); // Remove leading/trailing whitespaces
+      str = str.replaceAll(
+          ',', '.'); // Replace commas with periods (if necessary)
+      double num = double.parse(str);
+      return num.toInt();
+    } catch (e) {
+      throw FormatException("Invalid number format: $str");
+    }
   }
 }

@@ -85,7 +85,6 @@ class _BoardingfooterState extends State<Boardingfooter> {
 
       // Save the PDF document to a file
       await file.writeAsBytes(await pdf.save());
-      print(file.path);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('PDF saved to ${file.path}')),
       );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/BoardingPass/boardingBody.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
 
 class Mybookingdetails extends StatelessWidget {
   const Mybookingdetails({super.key});
@@ -20,8 +22,12 @@ class Mybookingdetails extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
-          child: const Column(
-            children: [Boardingbody()],
+          child: Column(
+            children: [
+              Boardingbody(
+                offers: CreateFlightOrder(),
+              )
+            ],
           ),
         ),
       ),

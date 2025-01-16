@@ -1,16 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:takeed/Features/BoardingPass/airprotDetialsForBoarding.dart';
+import 'package:takeed/Features/BoardingPass/fligtTicketRowForBoarding.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
 import 'package:takeed/components/Flight/airportDetails.dart';
-import 'package:takeed/components/Flight/flightDateTime.dart';
-import 'package:takeed/components/Flight/flightTicketRow.dart';
 import 'package:takeed/components/Line/line.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';
 
 class Boardingbody extends StatelessWidget {
-  const Boardingbody({super.key});
+  final CreateFlightOrder offers;
+  const Boardingbody({
+    super.key,
+    required this.offers,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +44,17 @@ class Boardingbody extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Text('Indigo', style: TextStyles.font14DarkBlueRegular),
+            Text('Tayer', style: TextStyles.font14DarkBlueRegular),
           ],
         ),
         SizedBox(height: 24.h),
         // Flight Details
         Line(upperpadding: 6, lowerpadding: 6),
-        Flightticketrow(
-          flightdetails: GetFlightOffers(),
+        FlightticketrowForBoarding(
+          flightdetails: offers,
         ),
-        Airportdetails(
-          flightSearchData: FlightOfferFromPricing(),
+        AirportdetailsForBoarding(
+          flightSearchData: offers,
         ),
         // Flightdatetime(),
         const SizedBox(height: 24),

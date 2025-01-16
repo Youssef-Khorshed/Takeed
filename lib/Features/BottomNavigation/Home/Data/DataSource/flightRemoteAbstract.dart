@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:http/http.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/ariportsModel.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
@@ -28,5 +29,10 @@ abstract class FlightsRemote {
 
   Future<Either<String, FlightOfferFromPricing>> createFlightOfferFromPricing({
     required GetFlightOffers flightoffer,
+  });
+
+  Future<Either<String, Response>> confirmFlightPayment({
+    required String reservationGUID,
+    required String payemntId,
   });
 }

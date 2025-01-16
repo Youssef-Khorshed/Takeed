@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:takeed/Features/BottomNavigation/Home/Data/DataSource/flightRemoteAbstract.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/ariportsModel.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
@@ -89,5 +90,15 @@ class FlightsRemoteImplementation implements FlightsRemote {
         (ifLeft) => Left(ifLeft),
         (ifRight) => Right(FlightOfferFromPricing.fromJson(
             jsonDecode(ifRight.body)['tayarResult']['data'])));
+  }
+
+  @override
+  Future<Either<String, http.Response>> confirmFlightPayment(
+      {required String reservationGUID, required String payemntId}) async {
+    final res = await apiService.multipartRequest(
+        contentType: Headers.multipartFormDataContentType,
+        url: Appstrings.confirmPayment,
+        body: {'ReservationGUID': reservationGUID, 'PayemntId': payemntId});
+    return res.fold((ifLeft) => Left(ifLeft), (ifRight) => Right(ifRight));
   }
 }

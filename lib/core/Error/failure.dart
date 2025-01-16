@@ -16,7 +16,10 @@ class ServerFailure extends Failure {
     if (data is String) {
       return data;
     } else if (data is Map) {
-      return data['Message'] ?? data['error']['Message'] ?? 'Unknown error';
+      return data['Message'] ??
+          data['title'] ??
+          data['errors'] ??
+          'Unknown error';
     } else {
       switch (response.statusCode) {
         case 200 || 201:

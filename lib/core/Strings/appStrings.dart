@@ -6,8 +6,8 @@ import 'package:takeed/Features/BottomNavigation/Home/Data/Model/traveller/trave
 class Appstrings {
   static String kToken = '';
 
-  static String baseUrl =
-      'https://api.takeed.co/api/v1/air'; // https://takeed.runasp.net/api/v1/air
+  static String baseUrl = "https://takeed.runasp.net/api/v1/air";
+  //'https://api.takeed.co/api/v1/air';  https://takeed.runasp.net/api/v1/air
   static String airPortsSuggestions({required String keyword}) =>
       '$baseUrl/utilities/airport-city-localized-search-by-keyword?keyword=$keyword';
 
@@ -26,6 +26,7 @@ class Appstrings {
   static String flightOfferPricing =
       '$baseUrl/search_and_shopping/post-flight-offers-pricing';
 
+  static String confirmPayment = "$baseUrl/booking/add-payment";
   static List<Map<String, dynamic>> flightOfferPricingBody(
           {required GetFlightOffers flight}) =>
       [flight.toJson()];

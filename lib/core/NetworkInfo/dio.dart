@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:takeed/core/DI/dependencyInjection.dart';
@@ -141,6 +142,107 @@ class HttpFactory {
     }
   }
 
+  Future<Either<String, http.Response>> multipartRequest({
+    required String url,
+    Object? body,
+    String? contentType,
+    String? outerToken,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      if (await internetConnectivity.isConnected) {
+        final requestHeaders = await _getHeaders(
+          outerToken: outerToken,
+          contentType: contentType,
+          headers: headers,
+        );
+
+        if (contentType == 'multipart/form-data') {
+          final uri = Uri.parse(url);
+          final request = http.MultipartRequest('POST', uri);
+          request.headers.addAll(requestHeaders);
+
+          if (body != null) {
+            if (body is Map<String, dynamic>) {
+              body.forEach((key, value) {
+                if (value is File) {
+                  request.files.add(
+                    http.MultipartFile(
+                      key,
+                      value.readAsBytes().asStream(),
+                      value.lengthSync(),
+                      filename: value.uri.pathSegments.last,
+                    ),
+                  );
+                } else {
+                  request.fields[key] = value.toString();
+                }
+              });
+            }
+          }
+
+          Logger.logRequest(
+            method: 'POST',
+            url: url,
+            headers: requestHeaders,
+            body: body.toString(),
+          );
+
+          final stopwatch = Stopwatch()..start();
+          final streamedResponse = await request.send().timeout(timeOut);
+          final response = await http.Response.fromStream(streamedResponse);
+          stopwatch.stop();
+
+          Logger.logResponse(
+            statusCode: response.statusCode,
+            body: response.body,
+            duration: stopwatch.elapsed,
+          );
+
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            return Right(response);
+          } else {
+            return Left(ServerFailure.fromResponse(response));
+          }
+        } else {
+          final encodedBody = body != null ? json.encode(body) : null;
+          Logger.logRequest(
+            method: 'POST',
+            url: url,
+            headers: requestHeaders,
+            body: encodedBody,
+          );
+
+          final stopwatch = Stopwatch()..start();
+          final response = await http
+              .post(
+                Uri.parse(url),
+                body: encodedBody,
+                headers: requestHeaders,
+              )
+              .timeout(timeOut);
+          stopwatch.stop();
+
+          Logger.logResponse(
+            statusCode: response.statusCode,
+            body: response.body,
+            duration: stopwatch.elapsed,
+          );
+
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            return Right(response);
+          } else {
+            return Left(ServerFailure.fromResponse(response));
+          }
+        }
+      }
+      return const Left('No internet Connection');
+    } catch (e) {
+      Logger.logError(e);
+      return Left(_handleException(e));
+    }
+  }
+
   Future<Either<String, http.Response>> putRequest({
     required String url,
     Object? body,
@@ -256,6 +358,8 @@ class HttpFactory {
 
   String _handleException(dynamic error) {
     if (error is TimeoutException) {
+      return 'Connection timeout';
+    } else if (error is FormatException) {
       return 'Connection timeout';
     }
     return 'Unexpected error occurred';

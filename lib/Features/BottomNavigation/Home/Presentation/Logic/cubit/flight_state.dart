@@ -37,6 +37,15 @@ class GetFlightOfferFromPricingError extends FlightState {
   GetFlightOfferFromPricingError({required this.error});
 }
 
+class ConfirmPaymentFailure extends FlightState {
+  final String error;
+  ConfirmPaymentFailure({required this.error});
+}
+
+class ConfirmPaymentSuccess extends FlightState {
+  ConfirmPaymentSuccess();
+}
+
 class AddTravellerAddress extends FlightState {
   Address travelleraddress;
   AddTravellerAddress({required this.travelleraddress});

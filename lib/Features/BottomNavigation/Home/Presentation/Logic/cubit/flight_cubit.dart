@@ -39,6 +39,7 @@ class FlightCubit extends Cubit<FlightState> {
     'Infants': 0
   };
   List<GetFlightOffers> filterList = [];
+
   FlightCubit({required this.flightsRepositoryImplementation})
       : super(FlightInitial());
 
@@ -98,6 +99,14 @@ class FlightCubit extends Cubit<FlightState> {
   void addTravellerDocument({required Document travellerdocument}) {
     document = travellerdocument;
     emit(AddTravellerDocument(document: document));
+  }
+
+  Future<void> confirmPayment(
+      {required String reservationGUID, required String payemntId}) async {
+    final res = await flightsRepositoryImplementation.confirmFlightPayment(
+        reservationGUID: reservationGUID, payemntId: payemntId);
+    res.fold((ifLeft) => emit(ConfirmPaymentFailure(error: ifLeft)),
+        (ifRight) => emit(ConfirmPaymentSuccess()));
   }
 
   void setAirport(

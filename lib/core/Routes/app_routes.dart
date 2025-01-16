@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moyasar/moyasar.dart';
 import 'package:takeed/Features/Auth/Logic/LoginCubit/logincubit.dart';
 import 'package:takeed/Features/Auth/Login/LoginScreen.dart';
 import 'package:takeed/Features/Auth/Login/otp.dart';
@@ -8,6 +9,7 @@ import 'package:takeed/Features/BoardingPass/boardingPass.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/flight_offer.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/price.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/HomeScreen.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/bottomNaigation.dart';
@@ -41,7 +43,10 @@ class AppRoutes {
       //           ));
 
       case Routes.boardingPass:
-        return MaterialPageRoute(builder: (context) => const BoardingPass());
+        return MaterialPageRoute(
+            builder: (context) => BoardingPass(
+                  offer: settings.arguments as CreateFlightOrder,
+                ));
       case Routes.otp:
         return MaterialPageRoute(builder: (context) => const OtpScreen());
 
@@ -100,7 +105,8 @@ class AppRoutes {
       case Routes.paymentmethods:
         return MaterialPageRoute(
             builder: (context) => PaymentMethods(
-                  amount: 0,
+                  offers: settings.arguments as CreateFlightOrder,
+                  paymentConfig: settings.arguments as PaymentConfig,
                 ));
 
       default:

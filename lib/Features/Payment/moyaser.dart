@@ -1,28 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:moyasar/moyasar.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 
 class PaymentMethods extends StatelessWidget {
-  int amount;
-  PaymentMethods({
+  final PaymentConfig paymentConfig;
+  final CreateFlightOrder offers;
+  const PaymentMethods({
     super.key,
-    required this.amount,
+    required this.paymentConfig,
+    required this.offers,
   });
-
-  PaymentConfig paymentConfig = PaymentConfig(
-    publishableApiKey: 'pk_test_3XNnbvssL1F9oQbd2THeavNshC8WRiW6uUwyTq1T',
-    amount: 62500, // SAR 257.58
-    description: 'Buy A new Ticket',
-    metadata: {'description': 'A new Ticket'},
-    creditCard: CreditCardConfig(saveCard: true, manual: false),
-    applePay: ApplePayConfig(
-        merchantId: 'YOUR_MERCHANT_ID',
-        label: 'YOUR_STORE_NAME',
-        manual: false),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -41,26 +32,30 @@ class PaymentMethods extends StatelessWidget {
           const Text("or"),
           CreditCard(
             config: paymentConfig,
-            onPaymentResult: onPaymentResult,
+            onPaymentResult: (result) {
+              onPaymentResult(result, context: context);
+            },
           )
         ],
       ),
     );
   }
 
-  bool onPaymentResult(result) {
+  bool onPaymentResult(result, {required BuildContext context}) {
     if (result is PaymentResponse) {
       switch (result.status) {
         case PaymentStatus.paid:
+          result.id;
+          context.read<FlightCubit>().confirmPayment(
+              reservationGUID: offers.reservationGuid!, payemntId: result.id);
+          //  context.pushNamed(Routes.boardingPass, arguments: offers);
           return true;
-          break;
         case PaymentStatus.failed:
           // handle failure.
           return false;
         default:
           // handle other cases.
           return false;
-          break;
       }
     }
     return false;

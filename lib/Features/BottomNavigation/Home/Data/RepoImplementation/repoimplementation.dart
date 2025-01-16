@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:http/http.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/DataSource/flightRemoteAbstract.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/ariportsModel.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/address.dart';
@@ -14,6 +15,13 @@ class FlightsRepositoryImplementation {
   Future<Either<String, Ariportsmodel>> fetchAirplanesSuggestions(
       {required String keyword}) async {
     final res = await flightsRemote.fetchAirplanesSuggestions(keyword: keyword);
+    return res.fold((ifLeft) => Left(ifLeft), (ifRight) => Right(ifRight));
+  }
+
+  Future<Either<String, Response>> confirmFlightPayment(
+      {required String reservationGUID, required String payemntId}) async {
+    final res = await flightsRemote.confirmFlightPayment(
+        reservationGUID: reservationGUID, payemntId: payemntId);
     return res.fold((ifLeft) => Left(ifLeft), (ifRight) => Right(ifRight));
   }
 

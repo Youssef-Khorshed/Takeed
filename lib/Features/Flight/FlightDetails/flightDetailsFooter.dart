@@ -61,7 +61,14 @@ class Flightdetailsfooter extends StatelessWidget {
                           if (cubit.travellers.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Please add travelers'),
+                                content: Text('Please add travelers Details'),
+                              ),
+                            );
+                          } else if (cubit.travellers.length ==
+                              cubit.getTravelersCount.length) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please confirm the trip'),
                               ),
                             );
                           } else {
@@ -90,11 +97,22 @@ class Flightdetailsfooter extends StatelessWidget {
             return List.generate(element.value, (index) {
               return ListTile(
                 onTap: () {
-                  showBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return const SizedBox(child: TravellerForm());
-                      });
+                  if (x.travellers.length == element.value) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please confirm the trip'),
+                      ),
+                    );
+                  } else {
+                    showBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return const SizedBox(child: TravellerForm());
+                        });
+                  }
+
+                  debugPrint((element.value).toString());
+                  debugPrint((x.travellers.length).toString());
                 },
                 title: Text(element.key),
                 trailing: Text('${index + 1}'),
