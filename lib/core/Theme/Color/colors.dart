@@ -13,4 +13,8 @@ class ColorManager {
   static const DarkGrayColor = Color(0xff555555);
   static const DarkBlueColor = Color(0xff2E3192);
   static const LightOrangeColor = Color(0xffFAD3CA);
+
+  static const primarycolor = Color(0xff1F2F53);
+
+  //
 }

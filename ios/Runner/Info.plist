@@ -49,8 +49,8 @@
 		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
-		<key>com.apple.security.network.client</key> 
-        <true/>
+		<key>com.apple.security.network.client</key>
+		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UIStatusBarHidden</key>

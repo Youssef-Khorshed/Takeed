@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moyasar/moyasar.dart';
-import 'package:takeed/Features/Auth/Logic/LoginCubit/logincubit.dart';
-import 'package:takeed/Features/Auth/Login/LoginScreen.dart';
-import 'package:takeed/Features/Auth/Login/otp.dart';
-import 'package:takeed/Features/Auth/Signup/signupScreen.dart';
+import 'package:takeed/Features/Auth/Presentation/Logic/LoginCubit/logincubit.dart';
+import 'package:takeed/Features/Auth/Presentation/UI/Login/LoginScreen.dart';
+import 'package:takeed/Features/Auth/Presentation/UI/Login/otp.dart';
+import 'package:takeed/Features/Auth/Presentation/UI/Signup/signupScreen.dart';
+import 'package:takeed/Features/Auth/Presentation/UI/Splash/splashScreen.dart';
 import 'package:takeed/Features/BoardingPass/boardingPass.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/flight_offer.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/price.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/get_flight_offers/get_flight_offers.dart';
+import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/Logic/cubit/flight_cubit.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/HomeScreen.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Presentation/UI/widgets/bottomNaigation.dart';
+import 'package:takeed/Features/BottomNavigation/MyBooking/mybooking.dart';
 import 'package:takeed/Features/BottomNavigation/MyBooking/mybookingDetails.dart';
 import 'package:takeed/Features/BottomNavigation/Offers/offers.dart';
 import 'package:takeed/Features/BottomNavigation/Profile/profile.dart';
@@ -36,11 +36,14 @@ class AppRoutes {
         return MaterialPageRoute(
             builder: (context) => const FlightSearchResultPage());
 
-      // case Routes.payment:
-      //   return MaterialPageRoute(
-      //       builder: (context) => PaymentScreen(
-      //             flightdetails: GetFlightOffers(),
-      //           ));
+      case Routes.splash:
+        return MaterialPageRoute(builder: (context) => const SplashScreen());
+
+      case Routes.payment:
+        return MaterialPageRoute(
+            builder: (context) => PaymentScreen(
+                  flightdetails: settings.arguments as CreateFlightOrder,
+                ));
 
       case Routes.boardingPass:
         return MaterialPageRoute(
@@ -50,11 +53,11 @@ class AppRoutes {
       case Routes.otp:
         return MaterialPageRoute(builder: (context) => const OtpScreen());
 
-      // case Routes.mybooking:
-      //   return MaterialPageRoute(
-      //       builder: (context) => Mybooking(
-      //             flightdetails: GetFlightOffers(),
-      //           ));
+      case Routes.mybooking:
+        return MaterialPageRoute(
+            builder: (context) => Mybooking(
+                  flightdetails: settings.arguments as FlightOfferFromPricing,
+                ));
 
       case Routes.profile:
         return MaterialPageRoute(builder: (context) => ProfilePage());
@@ -68,23 +71,6 @@ class AppRoutes {
 
       case Routes.register:
         return MaterialPageRoute(builder: (context) => const Signupscrenn());
-
-      case Routes.payment:
-        return MaterialPageRoute(
-            builder: (context) => PaymentScreen(
-                  flightdetails: CreateFlightOrder(flightOffers: [
-                    FlightOffer(
-                      price: Price(
-                        total: '300',
-                        grandTotal: '300',
-                        base: '300',
-                        tayarrFees: '0',
-                        tayarrTaxes: '0',
-                        fees: [],
-                      ),
-                    )
-                  ]),
-                ));
 
       case Routes.offers:
         return MaterialPageRoute(builder: (context) => OffersPage());

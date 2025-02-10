@@ -2,11 +2,12 @@ import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/Auth/Logic/LoginCubit/logincubit.dart';
+import 'package:takeed/Features/Auth/Presentation/Logic/LoginCubit/logincubit.dart';
 import 'package:takeed/components/text_box/authTextfield.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Validation/check_emptyText.dart';
 
+// ignore: must_be_immutable
 class ToggleEmailPhone extends StatefulWidget {
   String? selectedChoice;
   ToggleEmailPhone({super.key, this.selectedChoice});
@@ -50,23 +51,6 @@ class _ToggleEmailPhoneState extends State<ToggleEmailPhone> {
 
             SizedBox(width: 16.w),
             _buildChoiceChip('Phone', context),
-            // ChoiceChip(
-            //   label: Text('Phone Number'),
-            //   labelStyle: TextStyles.font14BlackRegular,
-            //   backgroundColor: Colors.white,
-            //   selectedColor: Colors.white,
-            //   side: const BorderSide(
-            //     color: Colors.transparent,
-            //     width: 2,
-            //   ),
-            //   showCheckmark: false,
-            //   selected: selectedChoice == 'Phone Number',
-            //   onSelected: (isSelected) {
-            //     setState(() {
-            //       selectedChoice = isSelected ? 'Phone Number' : null;
-            //     });
-            //   },
-            // ),
           ],
         ),
         SizedBox(

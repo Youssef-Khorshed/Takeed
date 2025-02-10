@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:takeed/Features/Auth/Logic/LoginCubit/loginState.dart';
+import 'package:takeed/Features/Auth/Presentation/Logic/LoginCubit/loginState.dart';
 
 class Logincubit extends Cubit<Loginstate> {
   String? selectChoice;

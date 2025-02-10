@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:takeed/Features/Flight/FlightDetails/documentsDetails.dart';
 import 'package:takeed/core/Extensions/navigation.dart';
 import 'package:takeed/core/Routes/routes.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';

@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:takeed/Features/BoardingPass/airprotDetialsForBoarding.dart';
 import 'package:takeed/Features/BoardingPass/fligtTicketRowForBoarding.dart';
 import 'package:takeed/Features/BottomNavigation/Home/Data/Model/create_flight_order/create_flight_order.dart';
-import 'package:takeed/Features/BottomNavigation/Home/Data/Model/flight_offer_from_pricing/flight_offer_from_pricing.dart';
-import 'package:takeed/components/Flight/airportDetails.dart';
 import 'package:takeed/components/Line/line.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
 import 'package:takeed/core/Theme/Styles/textStyles.dart';

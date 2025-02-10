@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:takeed/Features/Auth/Login/LoginLogic.dart';
-import 'package:takeed/Features/Auth/Login/email_phoneChoice.dart';
+import 'package:takeed/Features/Auth/Presentation/UI/Login/LoginLogic.dart';
+import 'package:takeed/Features/Auth/Presentation/UI/Login/email_phoneChoice.dart';
 import 'package:takeed/components/button/button.dart';
 import 'package:takeed/components/text_box/authTextfield.dart';
 import 'package:takeed/core/Theme/Color/colors.dart';
