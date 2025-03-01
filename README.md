@@ -1,2 +1,3 @@
-# Tayer
+# Takeed
+
 Flights booking app
